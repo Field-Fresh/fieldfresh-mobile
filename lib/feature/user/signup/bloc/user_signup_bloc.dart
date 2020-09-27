@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
 
   @override
-  UserSignUpState get initialState => throw SignUpStateEmpty();
+  UserSignUpState get initialState => SignUpStateEmpty();
 
   @override
   void onTransition(Transition<UserSignUpEvent, UserSignUpState> transition) {
@@ -26,8 +26,9 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
 
   // This is where the business logic required to interface with the
   // api will go
-  Stream _mapUserSignUpRequestEventToState(UserSignUpRequestEvent event) async* {
+  Stream<UserSignUpState> _mapUserSignUpRequestEventToState(UserSignUpRequestEvent event) async* {
     if (event.password != event.retypedPassword) {
+      print(event);
       yield SignUpStateFailed(S.SIGNUP_PASSWORD_RETYPE_NOT_MATCH_ERROR);
     }
   }

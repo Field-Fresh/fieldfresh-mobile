@@ -14,25 +14,20 @@ class FieldFreshApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.deepOrange,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserSignUpBloc>(
+          create: (context) => UserSignUpBloc(),
+        )
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.deepOrange,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: SingUpScreen(),
       ),
-      home: SingUpScreen(),
     );
   }
 }
@@ -68,35 +63,28 @@ class _SingUpFormState extends State<SingUpForm> {
       TextField(
         controller: _emailFieldController,
         decoration: InputDecoration(
-            prefix: Padding(
-              padding: EdgeInsets.only(right: 5),
-              child: Text("Email:"),
-            ),
-            hintText: S.SIGNUP_EMAIL_PLACEHOLDER),
+            hintText: S.SIGNUP_EMAIL_PLACEHOLDER
+        ),
       ),
       TextField(
         controller: _passwordFieldController,
+        obscureText: true,
         decoration: InputDecoration(
-            prefix: Padding(
-              padding: EdgeInsets.only(right: 5),
-              child: Text("Password:"),
-            ),
-            hintText: S.SIGNUP_PASSWORD_PLACEHOLDER),
+            hintText: S.SIGNUP_PASSWORD_PLACEHOLDER
+        ),
       ),
       TextField(
         controller: _retypedPasswordFieldController,
+        obscureText: true,
         decoration: InputDecoration(
-            prefix: Padding(
-              padding: EdgeInsets.only(right: 5),
-              child: Text("Confirm Password:"),
-            ),
-            hintText: S.SIGNUP_PASSWORD_PLACEHOLDER),
+            hintText: S.SIGNUP_PASSWORD_PLACEHOLDER
+        ),
       ),
       RaisedButton(
+        child: Text("Sign Up"),
         onPressed: () {
           String password = _passwordFieldController.value.text;
-          String retypedPassword =
-              _retypedPasswordFieldController.value.text;
+          String retypedPassword = _retypedPasswordFieldController.value.text;
           String email = _emailFieldController.value.text;
           _userSignUpBloc.add(UserSignUpRequestEvent(
             email: email,
@@ -106,11 +94,6 @@ class _SingUpFormState extends State<SingUpForm> {
         },
       )
     ]);
-    // return BlocBuilder<UserSignUpBloc, UserSignUpState>(
-    //     bloc: BlocProvider.of<UserSignUpBloc>(context),
-    //     builder: (BuildContext context, UserSignUpState state) {
-    //
-    //     });
   }
 }
 
