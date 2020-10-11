@@ -11,15 +11,14 @@ class SignUpStateLoading extends UserSignUpState {
   String toString() => 'SignUpStateLoading';
 }
 
-class SignUpStateSuccess extends UserSignUpState {
+class SignUpStateVerification extends UserSignUpState {
 
   final User user;
-  final bool verificationRequired;
 
-  SignUpStateSuccess(this.user, this.verificationRequired) : super([user, verificationRequired]);
+  SignUpStateVerification({this.user}) : super([user]);
 
   @override
-  String toString() => 'SignUpStateSuccess';
+  String toString() => 'SignUpStateVerification';
 }
 
 class SignUpStateFailed extends UserSignUpState {
@@ -30,4 +29,14 @@ class SignUpStateFailed extends UserSignUpState {
 
   @override
   String toString() => 'SignUpStateFailed';
+}
+
+class SignUpStateVerificationSuccess extends UserSignUpState {
+
+  final String email;
+
+  SignUpStateVerificationSuccess(this.email) : super([email]);
+
+  @override
+  String toString() => 'SignUpStateVerificationSuccess';
 }
