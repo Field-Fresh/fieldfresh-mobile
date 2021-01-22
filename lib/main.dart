@@ -1,5 +1,6 @@
 import 'package:fieldfreshmobile/feature/user/signup/ui/signup_page.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
+import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'feature/home/ui/home.dart';
@@ -19,10 +20,7 @@ class FieldFreshApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Field Fresh',
-        theme: ThemeData(
-          primarySwatch: Colors.deepOrange,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
+        theme: AppTheme.lightTheme,
         initialRoute: "/",
         routes: {
           "/": (context) => LoginScreen(),
