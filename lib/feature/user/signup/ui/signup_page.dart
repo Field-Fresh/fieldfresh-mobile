@@ -7,6 +7,9 @@ import 'package:fieldfreshmobile/feature/user/verify/ui/verify_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
+import 'package:fieldfreshmobile/widgets/ThemedTextFieldFactory.dart';
+import 'package:fieldfreshmobile/theme/app_theme.dart';
 
 import '../../../../injection_container.dart';
 
@@ -50,7 +53,20 @@ class _SingUpFormState extends State<SingUpForm> {
 
   List<Widget> _formFromState(BuildContext context, UserSignUpState state) {
     final List<Widget> formCols = [];
-    formCols.add(SvgPicture.asset('graphics/placeholder-logo.svg'));
+    formCols.add(Column(
+      children: [
+        SvgPicture.asset(
+          'graphics/app-logo-small.svg',
+          width: 600,
+          height: 100,
+        ),
+        SvgPicture.asset(
+          'graphics/signup-message-large.svg',
+          width: 600,
+          height: 250,
+        )
+      ],
+    ));
 
     if (state is SignUpStateFailed) {
       formCols.add(Text(
@@ -75,49 +91,41 @@ class _SingUpFormState extends State<SingUpForm> {
 
   List<Widget> _formForSignup(BuildContext context) {
     return [
-      Padding(
-        padding: const EdgeInsets.all(8),
-        child: Text(
-          "Please enter the info below",
-          style: TextStyle(
-              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
-        ),
-      ),
       Container(
-        margin: EdgeInsets.only(left: 18, right: 18, top: 12, bottom: 12),
-        child: TextField(
-          controller: _emailFieldController,
-          decoration: InputDecoration(hintText: "Email"),
-        ),
-      ),
+          margin: EdgeInsets.only(left: 18, right: 18, top: 12, bottom: 12),
+          child:
+              ThemedTextFieldFactory.create(TextEditingController(), "Name")),
       Container(
-        margin: EdgeInsets.only(bottom: 12, left: 18, right: 18),
-        child: TextField(
-          controller: _passwordFieldController,
-          obscureText: true,
-          decoration: InputDecoration(hintText: "Password"),
-        ),
-      ),
+          margin: EdgeInsets.only(bottom: 12, left: 18, right: 18),
+          child: ThemedTextFieldFactory.create(
+              _emailFieldController, "Email Address")),
       Container(
-        margin: EdgeInsets.only(bottom: 12, left: 18, right: 18),
-        child: TextField(
-          controller: _retypedPasswordFieldController,
-          obscureText: true,
-          decoration: InputDecoration(hintText: "Confirm Password"),
+          margin: EdgeInsets.only(bottom: 12, left: 18, right: 18),
+          child: ThemedTextFieldFactory.createForSensitive(
+              _passwordFieldController, "Password")),
+      Container(
+          margin: EdgeInsets.only(bottom: 12, left: 18, right: 18),
+          child: ThemedTextFieldFactory.createForSensitive(
+              _retypedPasswordFieldController, "Comfirm Password")),
+      ThemedButtonFactory.create(200, 50, 24, "Sign Up", () {
+        String password = _passwordFieldController.value.text;
+        String retypedPassword = _retypedPasswordFieldController.value.text;
+        String email = _emailFieldController.value.text;
+        _userSignUpBloc.add(UserSignUpRequestEvent(
+          email: email,
+          password: password,
+          retypedPassword: retypedPassword,
+        ));
+      }),
+      Container(
+        margin: EdgeInsets.only(top: 12),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, "/");
+          },
+          child: Text('Go back',
+              style: TextStyle(color: AppTheme.colors.white, fontSize: 16)),
         ),
-      ),
-      RaisedButton(
-        child: Text("Sign Up"),
-        onPressed: () {
-          String password = _passwordFieldController.value.text;
-          String retypedPassword = _retypedPasswordFieldController.value.text;
-          String email = _emailFieldController.value.text;
-          _userSignUpBloc.add(UserSignUpRequestEvent(
-            email: email,
-            password: password,
-            retypedPassword: retypedPassword,
-          ));
-        },
       )
     ];
   }
@@ -128,10 +136,10 @@ class SingUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-          child: Padding(
-            padding: EdgeInsets.all(8),
-            child: SingUpForm(),
-          ),
-        ));
+      child: Padding(
+        padding: EdgeInsets.all(8),
+        child: SingUpForm(),
+      ),
+    ));
   }
 }
