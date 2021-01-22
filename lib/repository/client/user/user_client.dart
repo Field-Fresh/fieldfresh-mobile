@@ -51,7 +51,7 @@ class UserClient {
       return true;
     } else {
       print(results);
-      throw Error();
+      throw Exception(results["message"]);
     }
   }
 

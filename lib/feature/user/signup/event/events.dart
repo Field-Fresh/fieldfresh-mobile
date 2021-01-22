@@ -5,17 +5,19 @@ import 'package:fieldfreshmobile/models/user/user.dart';
 import 'package:flutter/foundation.dart';
 
 class UserSignUpRequestEvent extends UserSignUpEvent {
+  final String name;
   final String email;
   final String password;
   final String retypedPassword;
 
   UserSignUpRequestEvent(
       {
+        @required this.name,
         @required this.email,
         @required this.password,
         @required this.retypedPassword
       }
-    ) : super([email, password, retypedPassword]);
+    ) : super([name, email, password, retypedPassword]);
 
   @override
   String toString() => 'UserSignUpRequestEvent';

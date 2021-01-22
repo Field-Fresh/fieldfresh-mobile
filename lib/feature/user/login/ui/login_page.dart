@@ -6,6 +6,7 @@ import 'package:fieldfreshmobile/feature/user/verify/ui/verify_form.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
 import 'package:fieldfreshmobile/widgets/ThemedTextFieldFactory.dart';
+import 'package:fieldfreshmobile/widgets/no_glow_single_child_scrollview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -56,7 +57,7 @@ class _LoginFormState extends State<LoginForm> {
       SvgPicture.asset(
         'graphics/app-logo-large.svg',
         width: 600,
-        height: 350,
+        height: 300,
       ),
     ];
 
@@ -76,7 +77,7 @@ class _LoginFormState extends State<LoginForm> {
                 child: Text(
                   "Not you? Click to login with different email.",
                   style: TextStyle(
-                      color: Colors.black87,
+                      color: AppTheme.colors.white,
                       decoration: TextDecoration.underline),
                 )))
       ]);
@@ -146,26 +147,10 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: LoginForm(),
+        body: NoGlowSingleChildScrollView(
+      child: Center(
+        child: LoginForm(),
+      ),
     ));
   }
 }
-
-// RaisedButton(
-// child: Padding(
-// padding: const EdgeInsets.all(8.0),
-// child: Text(
-// "Sign Up",
-// style:
-// TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-// ),
-// ),
-// color: Colors.orangeAccent,
-// onPressed: () {
-// Navigator.pushReplacementNamed(context, "/signup");
-// },
-// ),
-// ],
-// alignment: MainAxisAlignment.center,
-// ),
