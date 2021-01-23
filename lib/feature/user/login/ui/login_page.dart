@@ -45,21 +45,32 @@ class _LoginFormState extends State<LoginForm> {
         bloc: _userLoginBloc,
         builder: (context, state) {
           return Column(
-            children: _formFromState(context, state),
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  SvgPicture.asset(
+                    'graphics/app-logo-large.svg',
+                    height: 350,
+                    fit: BoxFit.fitHeight,
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: _formFromState(context, state),
+              )
+            ],
           );
         });
   }
 
   List<Widget> _formFromState(BuildContext context, UserLoginState state) {
-    final List<Widget> formCols = [
-      SvgPicture.asset(
-        'graphics/app-logo-large.svg',
-        width: 600,
-        height: 300,
-      ),
-    ];
+    final List<Widget> formCols = [];
 
     if (state is UserLoginStateEmpty) {
       formCols.addAll(_formForLogin(context));
@@ -147,10 +158,10 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: NoGlowSingleChildScrollView(
-      child: Center(
-        child: LoginForm(),
-      ),
-    ));
+        body: Center(
+          child: NoGlowSingleChildScrollView(
+      child: LoginForm(),
+    ),
+        ));
   }
 }
