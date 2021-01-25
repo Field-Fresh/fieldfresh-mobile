@@ -5,6 +5,7 @@ import 'package:fieldfreshmobile/feature/user/signup/event/events.dart';
 import 'package:fieldfreshmobile/feature/user/signup/state/states.dart';
 import 'package:fieldfreshmobile/feature/user/verify/ui/verify_form.dart';
 import 'package:fieldfreshmobile/widgets/no_glow_single_child_scrollview.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +23,6 @@ class SingUpForm extends StatefulWidget {
 
 class _SingUpFormState extends State<SingUpForm> {
   final _emailFieldController = TextEditingController();
-  final _nameFieldController = TextEditingController();
   final _passwordFieldController = TextEditingController();
   final _retypedPasswordFieldController = TextEditingController();
   UserSignUpBloc _userSignUpBloc;
@@ -36,7 +36,6 @@ class _SingUpFormState extends State<SingUpForm> {
   @override
   void dispose() {
     _emailFieldController.dispose();
-    _nameFieldController.dispose();
     _passwordFieldController.dispose();
     _retypedPasswordFieldController.dispose();
     super.dispose();
@@ -68,32 +67,36 @@ class _SingUpFormState extends State<SingUpForm> {
     if (state is SignUpStateVerification) {
       formCols.add(SvgPicture.asset(
         'graphics/app-logo-small.svg',
-        width: 600,
-        height: 250,
+        height: 100,
+        fit: BoxFit.fitWidth,
       ));
       _emailFieldController.clear();
-      _nameFieldController.clear();
       _passwordFieldController.clear();
       _retypedPasswordFieldController.clear();
       formCols.add(Container(
-          margin: EdgeInsets.symmetric(vertical: 18),
+          margin: EdgeInsets.symmetric(vertical: 32),
           child: VerifyForm(state.user.email)));
     } else {
       formCols.addAll(
         [
           SvgPicture.asset(
             'graphics/app-logo-small.svg',
-            width: 600,
             height: 100,
+            fit: BoxFit.fitHeight,
           ),
-          SvgPicture.asset(
-            'graphics/signup-message-large.svg',
-            width: 600,
-            height: 250,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SvgPicture.asset(
+              'graphics/signup-message-large.svg',
+              height: 250,
+              fit: BoxFit.fitHeight,
+            ),
           )
         ],
       );
-      formCols.addAll(_formForSignup(context));
+      formCols.add(Container(
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 18),
+          child: Column(children: _formForSignup(context))));
     }
 
     return formCols;
@@ -102,32 +105,30 @@ class _SingUpFormState extends State<SingUpForm> {
   List<Widget> _formForSignup(BuildContext context) {
     return [
       Container(
-          margin: EdgeInsets.only(left: 18, right: 18, top: 12, bottom: 12),
-          child: ThemedTextFieldFactory.create(_nameFieldController, "Name")),
-      Container(
-          margin: EdgeInsets.only(bottom: 12, left: 18, right: 18),
+          margin: EdgeInsets.only(bottom: 18),
           child: ThemedTextFieldFactory.create(
               _emailFieldController, "Email Address")),
       Container(
-          margin: EdgeInsets.only(bottom: 12, left: 18, right: 18),
+          margin: EdgeInsets.only(bottom: 18),
           child: ThemedTextFieldFactory.createForSensitive(
               _passwordFieldController, "Password")),
       Container(
-          margin: EdgeInsets.only(bottom: 12, left: 18, right: 18),
+          margin: EdgeInsets.only(bottom: 18),
           child: ThemedTextFieldFactory.createForSensitive(
               _retypedPasswordFieldController, "Confirm Password")),
-      ThemedButtonFactory.create(200, 50, 24, "Sign Up", () {
-        String password = _passwordFieldController.value.text;
-        String retypedPassword = _retypedPasswordFieldController.value.text;
-        String email = _emailFieldController.value.text;
-        String name = _nameFieldController.value.text;
-        _userSignUpBloc.add(UserSignUpRequestEvent(
-          name: name,
-          email: email,
-          password: password,
-          retypedPassword: retypedPassword,
-        ));
-      }),
+      Container(
+        margin: EdgeInsets.only(top: 18),
+        child: ThemedButtonFactory.create(200, 50, 24, "Sign Up", () {
+          String password = _passwordFieldController.value.text;
+          String retypedPassword = _retypedPasswordFieldController.value.text;
+          String email = _emailFieldController.value.text;
+          _userSignUpBloc.add(UserSignUpRequestEvent(
+            email: email,
+            password: password,
+            retypedPassword: retypedPassword,
+          ));
+        }),
+      ),
       Container(
         margin: EdgeInsets.only(top: 12),
         child: GestureDetector(
@@ -142,15 +143,16 @@ class _SingUpFormState extends State<SingUpForm> {
   }
 }
 
-class SingUpScreen extends StatelessWidget {
+class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: NoGlowSingleChildScrollView(
-            child: Center(
-                child: Padding(
-      padding: EdgeInsets.all(8),
-      child: SingUpForm(),
-    ))));
+        body: Center(
+      child: NoGlowSingleChildScrollView(
+          child: Padding(
+        padding: EdgeInsets.all(8),
+        child: SingUpForm(),
+      )),
+    ));
   }
 }

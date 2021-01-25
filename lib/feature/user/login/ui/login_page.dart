@@ -115,7 +115,8 @@ class _LoginFormState extends State<LoginForm> {
     return [
       Container(
           margin: EdgeInsets.only(bottom: 16, left: 24, right: 24),
-          child: ThemedTextFieldFactory.create(_emailFieldController, "Email")),
+          child: ThemedTextFieldFactory.create(_emailFieldController, "Email",
+              type: TextInputType.emailAddress)),
       Container(
           margin: EdgeInsets.only(bottom: 24, left: 24, right: 24),
           child: ThemedTextFieldFactory.createForSensitive(
@@ -159,9 +160,9 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-          child: NoGlowSingleChildScrollView(
-      child: LoginForm(),
-    ),
-        ));
+      child: NoGlowSingleChildScrollView(
+        child: LoginForm(),
+      ),
+    ));
   }
 }

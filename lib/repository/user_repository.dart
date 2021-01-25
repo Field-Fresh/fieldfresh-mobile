@@ -1,4 +1,4 @@
-import 'package:fieldfreshmobile/models/user/user.dart';
+import 'package:fieldfreshmobile/models/api/user/user.dart';
 import 'package:fieldfreshmobile/repository/client/user/requests.dart';
 import 'package:fieldfreshmobile/repository/client/user/responses.dart';
 import 'package:fieldfreshmobile/repository/client/user/user_client.dart';
@@ -12,6 +12,10 @@ class UserRepository {
     return userClient.createUser(
       CreateUserRequest(email: email, password: password)
     );
+  }
+
+  Future<User> updateUser(User user) async {
+    return user;
   }
 
   Future<bool> verifyUserCode(String email, String code) async {

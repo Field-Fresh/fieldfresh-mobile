@@ -1,20 +1,19 @@
 import 'package:fieldfreshmobile/feature/user/signup/ui/signup_page.dart';
+import 'package:fieldfreshmobile/feature/user/signup/ui/user_details.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'feature/home/ui/home.dart';
-import 'feature/user/login/ui/login_page.dart';
+import 'feature/user/signup/ui/proxy_details.dart';
 
 void main() async {
-
   await init();
 
   runApp(FieldFreshApp());
 }
 
 class FieldFreshApp extends StatelessWidget {
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -23,10 +22,9 @@ class FieldFreshApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         initialRoute: "/",
         routes: {
-          "/": (context) => LoginScreen(),
-          "/signup": (context) => SingUpScreen(),
+          "/": (context) => SignUpScreen(),
+          "/signup": (context) => SignUpScreen(),
           "/home": (context) => HomeScreen(),
-        }
-    );
+        });
   }
 }

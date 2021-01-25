@@ -1,5 +1,6 @@
-import 'package:fieldfreshmobile/models/user/tokens.dart';
-import 'package:fieldfreshmobile/models/user/user.dart';
+
+import 'package:fieldfreshmobile/models/api/user/tokens.dart';
+import 'package:fieldfreshmobile/models/api/user/user.dart';
 
 class LoginResponse {
   final User user;

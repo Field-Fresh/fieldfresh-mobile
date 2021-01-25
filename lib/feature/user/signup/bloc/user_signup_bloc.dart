@@ -6,6 +6,9 @@ import 'package:fieldfreshmobile/feature/user/signup/event/events.dart';
 import 'package:fieldfreshmobile/feature/user/signup/state/states.dart';
 import 'package:fieldfreshmobile/feature/user/verify/bloc/verify_bloc.dart';
 import 'package:fieldfreshmobile/feature/user/verify/state/states.dart';
+import 'package:fieldfreshmobile/models/api/proxy/proxy.dart';
+import 'package:fieldfreshmobile/models/api/user/user.dart';
+import 'package:fieldfreshmobile/repository/proxy_repository.dart';
 import 'package:fieldfreshmobile/repository/user_repository.dart';
 import 'package:fieldfreshmobile/resources/strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,11 +16,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // This is technically a state reducer for the signup page
 class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
   final UserRepository _userRepository;
+  final ProxyRepository _proxyRepository;
   final VerifyBloc _verifyBloc;
+
+  User user = User();
+  Proxy proxy = Proxy();
 
   StreamSubscription _verifySubscription;
 
-  UserSignUpBloc(this._userRepository, this._verifyBloc) {
+  UserSignUpBloc(
+      this._userRepository, this._verifyBloc, this._proxyRepository) {
     _verifySubscription = _verifyBloc.listen((verifyState) {
       if (state is SignUpStateVerificationSuccess) {
         if (verifyState is VerifySuccessState) {
@@ -53,6 +61,12 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
       yield* _mapUserVerificationSuccessEventToState(event);
     } else if (event is UserVerificationFailureEvent) {
       yield* _mapUserVerificationFailureEventToState(event);
+    } else if (event is UserDetailsSubmittedEvent) {
+      yield* _mapUserDetailsToState(event);
+    } else if (event is ProxyDetailsSubmittedEvent) {
+      yield* _mapProxyDetailsToState(event);
+    } else if (event is ProxyLocationSubmittedEvent) {
+      yield* _mapProxySearchToState(event);
     }
   }
 
@@ -76,10 +90,73 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
     }
     try {
       final result =
-      await _userRepository.createUser(event.email, event.password);
+          await _userRepository.createUser(event.email, event.password);
+      user.email = event.email;
       yield SignUpStateVerification(user: result);
     } catch (e) {
       yield SignUpStateFailed("Error creating User!");
     }
+  }
+
+  Stream<UserSignUpState> _mapUserDetailsToState(
+      UserDetailsSubmittedEvent event) async* {
+    if (event.firstName.isEmpty) {
+      yield SignUpStateFailed("Need First Name");
+      return;
+    }
+
+    if (event.lastName.isEmpty) {
+      yield SignUpStateFailed("Need Last Name");
+      return;
+    }
+
+    if ((event.phoneNumber?.isNotEmpty ?? false) &&
+        event.phoneNumber.length > 10) {
+      yield SignUpStateFailed("Please enter valid 10 digit phone number.");
+      return;
+    }
+
+    try {
+      user.firstName = event.firstName;
+      user.lastName = event.lastName;
+      user.phone = event.phoneNumber;
+      user = await _userRepository.updateUser(user);
+      yield UserDetailsSuccessState(user);
+    } catch (e) {
+      yield SignUpStateFailed("Error creating User!");
+    }
+  }
+
+  Stream<UserSignUpState> _mapProxyDetailsToState(
+      ProxyDetailsSubmittedEvent event) async* {
+    if (event.proxyName.isEmpty) {
+      yield SignUpStateFailed("Need Business Name");
+      return;
+    }
+
+    if (event.proxyDescription.isEmpty) {
+      yield SignUpStateFailed("Need Business Description");
+      return;
+    }
+
+    try {
+      proxy.name = event.proxyName;
+      proxy.description = event.proxyDescription;
+      proxy = await _proxyRepository.createProxy(proxy);
+      yield ProxyDetailsSuccessState(proxy);
+    } catch (e) {
+      yield SignUpStateFailed("Error creating Proxy!");
+    }
+  }
+
+  Stream<UserSignUpState> _mapProxySearchToState(
+      ProxyLocationSubmittedEvent event) async* {
+    proxy.streetAddress = event.components.streetAddress;
+    proxy.city = event.components.city;
+    proxy.province = event.components.province;
+    proxy.country = event.components.country;
+    proxy.postalCode = event.components.postalCode;
+    proxy.lat = event.lat;
+    proxy.long = event.long;
   }
 }

@@ -2,7 +2,7 @@
 import 'dart:collection';
 import 'dart:convert';
 
-import 'package:fieldfreshmobile/models/user/user.dart';
+import 'package:fieldfreshmobile/models/api/user/user.dart';
 import 'package:fieldfreshmobile/repository/client/field_fresh_api_client.dart';
 import 'package:fieldfreshmobile/repository/client/user/requests.dart';
 import 'package:fieldfreshmobile/repository/client/user/responses.dart';
