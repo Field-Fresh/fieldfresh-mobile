@@ -71,7 +71,7 @@ class _ProxyDetailsFormState extends State<ProxyDetailsForm> {
 
   Container _infoImageContainer() => Container(
         child: SvgPicture.asset(
-          'graphics/signup-message-large.svg',
+          'graphics/proxy-details-message-large.svg',
           height: 250,
           fit: BoxFit.fitHeight,
         ),

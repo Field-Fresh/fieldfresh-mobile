@@ -68,7 +68,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
 
   Container _infoImageContainer() => Container(
         child: SvgPicture.asset(
-          'graphics/signup-message-large.svg',
+          'graphics/user-details-message-large.svg',
           height: 250,
           fit: BoxFit.fitHeight,
         ),
@@ -89,7 +89,9 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                   margin: EdgeInsets.symmetric(vertical: 18),
                   child: ThemedTextFieldFactory.create(
                       _phoneNumberFieldController, "Phone Number (optional)",
-                      type: TextInputType.phone, maxLength: 10, hideCounter: true)),
+                      type: TextInputType.phone,
+                      maxLength: 10,
+                      hideCounter: true)),
             ],
           ),
         ),
