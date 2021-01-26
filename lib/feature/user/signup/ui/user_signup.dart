@@ -3,6 +3,7 @@ import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_state.dart
 import 'package:fieldfreshmobile/feature/user/signup/event/events.dart';
 import 'package:fieldfreshmobile/feature/user/signup/state/states.dart';
 import 'package:fieldfreshmobile/feature/user/signup/ui/proxy_details.dart';
+import 'package:fieldfreshmobile/feature/user/signup/ui/user_details.dart';
 import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
 import 'package:fieldfreshmobile/widgets/ThemedTextFieldFactory.dart';
 import 'package:fieldfreshmobile/widgets/no_glow_single_child_scrollview.dart';
@@ -14,15 +15,15 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../injection_container.dart';
 
-class UserDetailsForm extends StatefulWidget {
+class UserSignUpForm extends StatefulWidget {
   @override
-  _UserDetailsFormState createState() => _UserDetailsFormState();
+  _UserSignUpFormState createState() => _UserSignUpFormState();
 }
 
-class _UserDetailsFormState extends State<UserDetailsForm> {
-  final _firstNameFieldController = TextEditingController();
-  final _lastNameFieldController = TextEditingController();
-  final _phoneNumberFieldController = TextEditingController();
+class _UserSignUpFormState extends State<UserSignUpForm> {
+  final _emailFieldController = TextEditingController();
+  final _passwordFieldController = TextEditingController();
+  final _confirmPasswordFieldController = TextEditingController();
   UserSignUpBloc _userSignUpBloc;
 
   @override
@@ -36,12 +37,12 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
     return BlocBuilder<UserSignUpBloc, UserSignUpState>(
         bloc: _userSignUpBloc,
         builder: (context, state) {
-          if (state is UserDetailsSuccessState) {
+          if (state is SignUpStateSuccess) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ProxyDetailsScreen()));
+                      builder: (context) => UserDetailsScreen()));
             });
           }
 
@@ -82,14 +83,14 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
               Container(
                   margin: EdgeInsets.symmetric(vertical: 18),
                   child: ThemedTextFieldFactory.create(
-                      _firstNameFieldController, "First Name")),
-              ThemedTextFieldFactory.create(
-                  _lastNameFieldController, "Last Name"),
+                      _emailFieldController, "Email",
+                      type: TextInputType.emailAddress)),
+              ThemedTextFieldFactory.createForSensitive(
+                  _passwordFieldController, "Password"),
               Container(
                   margin: EdgeInsets.symmetric(vertical: 18),
-                  child: ThemedTextFieldFactory.create(
-                      _phoneNumberFieldController, "Phone Number (optional)",
-                      type: TextInputType.phone, maxLength: 10, hideCounter: true)),
+                  child: ThemedTextFieldFactory.createForSensitive(
+                      _confirmPasswordFieldController, "Confirm Password")),
             ],
           ),
         ),
@@ -97,25 +98,20 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
 
   Container _buttonContainer() => Container(
         child: ThemedButtonFactory.create(200, 50, 24, "Next", () {
-          String firstName = _firstNameFieldController.value.text;
-          String lastName = _lastNameFieldController.value.text;
-          String phoneNumber = _phoneNumberFieldController.value.text;
-          _userSignUpBloc.add(UserDetailsSubmittedEvent(
-            firstName: firstName,
-            lastName: lastName,
-            phoneNumber: phoneNumber,
+          String email = _emailFieldController.value.text;
+          String password = _passwordFieldController.value.text;
+          String confirmPassword = _confirmPasswordFieldController.value.text;
+          _userSignUpBloc.add(UserSignUpSubmittedEvent(
+            email: email,
+            password: password,
+            retypedPassword: confirmPassword,
           ));
         }),
       );
 
-  @override
-  void dispose() {
-    _userSignUpBloc.close();
-    super.dispose();
-  }
 }
 
-class UserDetailsScreen extends StatelessWidget {
+class UserSignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +119,7 @@ class UserDetailsScreen extends StatelessWidget {
       child: NoGlowSingleChildScrollView(
           child: Padding(
         padding: EdgeInsets.all(8),
-        child: UserDetailsForm(),
+        child: UserSignUpForm(),
       )),
     ));
   }

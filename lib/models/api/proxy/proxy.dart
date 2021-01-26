@@ -1,6 +1,7 @@
 import '../field_fresh_model.dart';
 
 class Proxy extends FieldFreshModel {
+  String userId;
   String name;
   String description;
   String streetAddress;
@@ -21,6 +22,7 @@ class Proxy extends FieldFreshModel {
       this.postalCode,
       this.lat,
       this.long,
+      this.userId,
       id})
       : super(id: id);
 

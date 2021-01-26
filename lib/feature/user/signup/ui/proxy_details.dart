@@ -3,6 +3,7 @@ import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_bloc.dart'
 import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_state.dart';
 import 'package:fieldfreshmobile/feature/user/signup/event/events.dart';
 import 'package:fieldfreshmobile/feature/user/signup/state/states.dart';
+import 'package:fieldfreshmobile/feature/user/signup/ui/user_verification.dart';
 import 'package:fieldfreshmobile/models/address_components.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
@@ -30,7 +31,7 @@ class _ProxyDetailsFormState extends State<ProxyDetailsForm> {
   @override
   void initState() {
     super.initState();
-    _userSignUpBloc = sl<UserSignUpBloc>();
+    _userSignUpBloc = BlocProvider.of<UserSignUpBloc>(context);
   }
 
   @override
@@ -40,9 +41,10 @@ class _ProxyDetailsFormState extends State<ProxyDetailsForm> {
         builder: (context, state) {
           if (state is ProxyDetailsSuccessState) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
-
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()));
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => UserVerificationScreen()));
             });
           }
 
@@ -84,12 +86,16 @@ class _ProxyDetailsFormState extends State<ProxyDetailsForm> {
                   width: double.infinity,
                   margin: EdgeInsets.only(top: 18),
                   child: SearchMapPlaceWidget(
-                    onSearch: (place) async { _locationSearchDelegate(place); },
+                    onSearch: (place) async {
+                      _locationSearchDelegate(place);
+                    },
                     iconColor: AppTheme.colors.light.primary,
                     apiKey: "AIzaSyBIZQuRKHy2TvmE9ul0ulTBV_PgRLEo9Nw",
                     placeType: PlaceType.address,
                     placeholder: "Please enter your business location...",
-                    onSelected: (place) async { _locationSearchDelegate(place); },
+                    onSelected: (place) async {
+                      _locationSearchDelegate(place);
+                    },
                   )),
               Container(
                   margin: EdgeInsets.symmetric(vertical: 18),
@@ -131,8 +137,7 @@ class _ProxyDetailsFormState extends State<ProxyDetailsForm> {
     if (coord == null) {
       return;
     }
-    AddressComponents components =
-    AddressComponents.fromGeolocation(geo);
+    AddressComponents components = AddressComponents.fromGeolocation(geo);
     _userSignUpBloc.add(ProxyLocationSubmittedEvent(
         components, coord.longitude, coord.latitude));
   }

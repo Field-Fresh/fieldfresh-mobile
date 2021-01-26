@@ -13,7 +13,6 @@ import 'package:fieldfreshmobile/repository/user_repository.dart';
 import 'package:fieldfreshmobile/resources/strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// This is technically a state reducer for the signup page
 class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
   final UserRepository _userRepository;
   final ProxyRepository _proxyRepository;
@@ -21,6 +20,7 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
 
   User user = User();
   Proxy proxy = Proxy();
+  String _password;
 
   StreamSubscription _verifySubscription;
 
@@ -35,6 +35,7 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
               error: verifyState.error));
         }
       }
+      _password = null;
     });
   }
 
@@ -55,8 +56,8 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
 
   @override
   Stream<UserSignUpState> mapEventToState(UserSignUpEvent event) async* {
-    if (event is UserSignUpRequestEvent) {
-      yield* _mapUserSignUpRequestEventToState(event);
+    if (event is UserSignUpSubmittedEvent) {
+      yield* _mapUserSignUpToState(event);
     } else if (event is UserVerificationSuccessEvent) {
       yield* _mapUserVerificationSuccessEventToState(event);
     } else if (event is UserVerificationFailureEvent) {
@@ -80,22 +81,15 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
     yield SignUpStateFailed(event.error);
   }
 
-  // This is where the business logic required to interface with the
-  // api will go
-  Stream<UserSignUpState> _mapUserSignUpRequestEventToState(
-      UserSignUpRequestEvent event) async* {
+  Stream<UserSignUpState> _mapUserSignUpToState(
+      UserSignUpSubmittedEvent event) async* {
     if (event.password != event.retypedPassword) {
       print(event);
       yield SignUpStateFailed(S.SIGNUP_PASSWORD_RETYPE_NOT_MATCH_ERROR);
     }
-    try {
-      final result =
-          await _userRepository.createUser(event.email, event.password);
-      user.email = event.email;
-      yield SignUpStateVerification(user: result);
-    } catch (e) {
-      yield SignUpStateFailed("Error creating User!");
-    }
+    user.email = event.email;
+    _password = event.password;
+    yield SignUpStateSuccess(user);
   }
 
   Stream<UserSignUpState> _mapUserDetailsToState(
@@ -120,7 +114,6 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
       user.firstName = event.firstName;
       user.lastName = event.lastName;
       user.phone = event.phoneNumber;
-      user = await _userRepository.updateUser(user);
       yield UserDetailsSuccessState(user);
     } catch (e) {
       yield SignUpStateFailed("Error creating User!");
@@ -142,6 +135,8 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
     try {
       proxy.name = event.proxyName;
       proxy.description = event.proxyDescription;
+      user = await _userRepository.createUser(user, _password);
+      proxy.userId = user.id;
       proxy = await _proxyRepository.createProxy(proxy);
       yield ProxyDetailsSuccessState(proxy);
     } catch (e) {

@@ -8,9 +8,14 @@ class UserRepository {
 
   UserRepository(this.userClient);
   
-  Future<User> createUser(String email, String password) async {
+  Future<User> createUser(User user, String password) async {
     return userClient.createUser(
-      CreateUserRequest(email: email, password: password)
+      CreateUserRequest(
+        email: user.email,
+        password: password,
+        firstName: user.firstName,
+        lastName: user.lastName
+      )
     );
   }
 

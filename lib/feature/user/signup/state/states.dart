@@ -13,6 +13,16 @@ class SignUpStateLoading extends UserSignUpState {
   String toString() => 'SignUpStateLoading';
 }
 
+class SignUpStateSuccess extends UserSignUpState {
+
+  final User user;
+
+  SignUpStateSuccess(this.user);
+  
+  @override
+  String toString() => "SignUpStateSuccess";
+}
+
 class SignUpStateVerification extends UserSignUpState {
 
   final User user;
