@@ -26,4 +26,19 @@ class Proxy extends FieldFreshModel {
       id})
       : super(id: id);
 
+  static Proxy fromJson(Map<String, dynamic> json) {
+    return Proxy(
+      name: json['displayName'],
+      description: json['description'],
+      streetAddress: json['streetAddress'],
+      country: json['country'],
+      city: json['city'],
+      province: json['province'],
+      postalCode: json['postalCode'],
+      lat: json['latitude'],
+      long: json['longitude'],
+      userId: json['userId'],
+      id: json['id'],
+    );
+  }
 }
