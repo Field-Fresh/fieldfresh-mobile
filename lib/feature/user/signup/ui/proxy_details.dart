@@ -125,12 +125,6 @@ class _ProxyDetailsFormState extends State<ProxyDetailsForm> {
         }),
       );
 
-  @override
-  void dispose() {
-    _userSignUpBloc.close();
-    super.dispose();
-  }
-
   void _locationSearchDelegate(Place place) async {
     var geo = await place.geolocation;
     LatLng coord = geo.coordinates;

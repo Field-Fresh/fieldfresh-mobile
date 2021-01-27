@@ -63,11 +63,6 @@ class _UserVerificationFormState extends State<UserVerificationForm> {
         ),
       );
 
-  @override
-  void dispose() {
-    _userSignUpBloc.close();
-    super.dispose();
-  }
 }
 
 class UserVerificationScreen extends StatelessWidget {

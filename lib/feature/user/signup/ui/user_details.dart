@@ -109,12 +109,6 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
           ));
         }),
       );
-
-  @override
-  void dispose() {
-    _userSignUpBloc.close();
-    super.dispose();
-  }
 }
 
 class UserDetailsScreen extends StatelessWidget {
