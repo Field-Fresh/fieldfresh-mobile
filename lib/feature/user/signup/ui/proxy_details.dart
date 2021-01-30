@@ -52,7 +52,7 @@ class _ProxyDetailsFormState extends State<ProxyDetailsForm> {
             children: [
               _logoContainer(),
               _infoImageContainer(),
-              _userDetailsFormContent(),
+              _formContent(state),
               _buttonContainer()
             ],
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,7 +77,69 @@ class _ProxyDetailsFormState extends State<ProxyDetailsForm> {
         ),
       );
 
-  Container _userDetailsFormContent() => Container(
+  Container _businessToggle({toggled = false}) => Container(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 18),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Are you a business?", style: TextStyle(color: AppTheme.colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
+              Switch(
+                onChanged: (bool value) {
+                  print(value);
+                  print(_userSignUpBloc.isBusiness);
+                  _userSignUpBloc.add(ProxyDetailsBusinessToggleEvent(value));
+                },
+                value: _userSignUpBloc.isBusiness,
+              ),
+            ],
+          ),
+        ),
+      );
+
+  Container _formContent(state) {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          children: [
+            Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 18),
+                child: SearchMapPlaceWidget(
+                  onSearch: (place) async {
+                    _locationSearchDelegate(place);
+                  },
+                  iconColor: AppTheme.colors.light.primary,
+                  apiKey: "AIzaSyBIZQuRKHy2TvmE9ul0ulTBV_PgRLEo9Nw",
+                  placeType: PlaceType.address,
+                  placeholder: "Please enter your location...",
+                  onSelected: (place) async {
+                    _locationSearchDelegate(place);
+                  },
+                )),
+            _businessToggle(toggled: _userSignUpBloc.isBusiness),
+            if (_userSignUpBloc.isBusiness)
+              Container(
+                  margin: EdgeInsets.only(bottom: 18),
+                  child: ThemedTextFieldFactory.create(
+                      _proxyName, "Business Name",
+                      helperText: "Enter a display name for your business")),
+            if (_userSignUpBloc.isBusiness)
+              Container(
+                  margin: EdgeInsets.only(bottom: 18),
+                  child: ThemedTextFieldFactory.create(
+                      _proxyDescription, "Business Description",
+                      maxLength: 250,
+                      maxLines: 4,
+                      helperText: "What does your business do?")),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container _nonBusinessDetailsFormContent() => Container(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(

@@ -74,3 +74,15 @@ class ProxyDetailsSuccessState extends UserSignUpState {
   @override
   String toString() => 'ProxyDetailsSuccessState';
 }
+
+class ProxyIsBusinessToggledState extends UserSignUpState {
+
+  final bool isBusiness;
+  final String name;
+  final String description;
+
+  ProxyIsBusinessToggledState(this.isBusiness, this.name, this.description): super([isBusiness]);
+
+  @override
+  String toString() => 'ProxyIsBusinessToggledState';
+}

@@ -1,4 +1,5 @@
 import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_event.dart';
+import 'package:fieldfreshmobile/feature/user/signup/ui/user_signup.dart';
 import 'package:fieldfreshmobile/models/address_components.dart';
 import 'package:fieldfreshmobile/models/api/user/user.dart';
 import 'package:flutter/foundation.dart';
@@ -70,13 +71,23 @@ class UserDetailsSubmittedEvent extends UserSignUpEvent {
 class ProxyDetailsSubmittedEvent extends UserSignUpEvent {
   final String proxyName;
   final String proxyDescription;
+  final String isBusiness;
 
   ProxyDetailsSubmittedEvent(
-      {@required this.proxyName, @required this.proxyDescription})
-      : super([proxyName, proxyDescription]);
+      {this.proxyName, this.proxyDescription, this.isBusiness})
+      : super([proxyName, proxyDescription, isBusiness]);
 
   @override
   String toString() => 'ProxyDetailsSubmittedEvent';
+}
+
+class ProxyDetailsBusinessToggleEvent extends UserSignUpEvent {
+  final bool toggled;
+
+  ProxyDetailsBusinessToggleEvent(this.toggled);
+
+  @override
+  String toString() => 'ProxyDetailsBusinessToggleEvent';
 }
 
 class ProxyLocationSubmittedEvent extends UserSignUpEvent {

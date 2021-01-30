@@ -20,6 +20,7 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
 
   User user = User();
   Proxy proxy = Proxy();
+  bool isBusiness = false;
   String _password;
 
   StreamSubscription _verifySubscription;
@@ -68,7 +69,24 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
       yield* _mapProxyDetailsToState(event);
     } else if (event is ProxyLocationSubmittedEvent) {
       yield* _mapProxySearchToState(event);
+    } else if (event is ProxyDetailsBusinessToggleEvent) {
+      yield* _mapProxyIsBusinessToggle(event);
     }
+  }
+
+  Stream<UserSignUpState> _mapProxyIsBusinessToggle(
+      ProxyDetailsBusinessToggleEvent event) async* {
+    String name, description;
+    if (event.toggled) {
+      // is business
+      name = proxy.name;
+      description = proxy.description;
+    } else {
+      name = "${user.firstName}, ${user.lastName}";
+      description = null;
+    }
+    isBusiness = event.toggled;
+    yield ProxyIsBusinessToggledState(event.toggled, name, description);
   }
 
   Stream<UserSignUpState> _mapUserVerificationSuccessEventToState(
@@ -122,19 +140,22 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
 
   Stream<UserSignUpState> _mapProxyDetailsToState(
       ProxyDetailsSubmittedEvent event) async* {
-    if (event.proxyName.isEmpty) {
-      yield SignUpStateFailed("Need Business Name");
-      return;
-    }
+    if (this.isBusiness) {
+      if (event.proxyName.isEmpty) {
+        yield SignUpStateFailed("Need Business Name");
+        return;
+      }
 
-    if (event.proxyDescription.isEmpty) {
-      yield SignUpStateFailed("Need Business Description");
-      return;
-    }
-
-    try {
+      if (event.proxyDescription.isEmpty) {
+        yield SignUpStateFailed("Need Business Description");
+        return;
+      }
       proxy.name = event.proxyName;
       proxy.description = event.proxyDescription;
+    } else {
+      proxy.name = "${user.firstName}, ${user.lastName}";
+    }
+    try {
       user = await _userRepository.createUser(user, _password);
       proxy.userId = user.id;
       proxy = await _proxyRepository.createProxy(proxy);
