@@ -58,7 +58,7 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
         yield VerifyFailedState(event.email, event.code);
       }
     } catch(e) {
-      yield VerifyFailedState(event.email, event.code);
+      yield VerifyFailedState(event.email, event.code, error: "Invalid Code");
     }
   }
 }

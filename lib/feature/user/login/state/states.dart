@@ -1,6 +1,5 @@
 import 'package:fieldfreshmobile/feature/user/login/bloc/user_login_state.dart';
-import 'package:fieldfreshmobile/models/user/tokens.dart';
-import 'package:fieldfreshmobile/models/user/user.dart';
+import 'package:fieldfreshmobile/models/api/user/user.dart';
 
 class UserLoginStateEmpty extends UserLoginState {
   @override

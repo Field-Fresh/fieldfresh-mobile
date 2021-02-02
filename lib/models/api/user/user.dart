@@ -1,11 +1,13 @@
-class User {
-  String id;
+import '../field_fresh_model.dart';
+
+class User extends FieldFreshModel {
   String firstName;
   String lastName;
   String phone;
   String email;
 
-  User({this.email, this.firstName, this.lastName, this.phone, this.id});
+  User({this.email, this.firstName, this.lastName, this.phone, id})
+      : super(id: id);
 
   static User fromJson(Map<String, dynamic> json) {
     return User(

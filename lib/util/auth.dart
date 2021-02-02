@@ -1,4 +1,4 @@
-import 'package:fieldfreshmobile/models/user/tokens.dart';
+import 'package:fieldfreshmobile/models/api/user/tokens.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthUtil {

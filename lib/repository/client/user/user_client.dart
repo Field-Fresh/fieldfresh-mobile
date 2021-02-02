@@ -2,7 +2,7 @@
 import 'dart:collection';
 import 'dart:convert';
 
-import 'package:fieldfreshmobile/models/user/user.dart';
+import 'package:fieldfreshmobile/models/api/user/user.dart';
 import 'package:fieldfreshmobile/repository/client/field_fresh_api_client.dart';
 import 'package:fieldfreshmobile/repository/client/user/requests.dart';
 import 'package:fieldfreshmobile/repository/client/user/responses.dart';
@@ -24,7 +24,10 @@ class UserClient {
       headers: apiClient.basePostHeader,
       body: jsonEncode({
         "email": request.email,
-        "password": request.password
+        "password": request.password,
+        "firstName": request.firstName,
+        "lastName": request.lastName,
+        "phone": request.phone,
       })
     );
     final results = json.decode(response.body);
@@ -51,7 +54,7 @@ class UserClient {
       return true;
     } else {
       print(results);
-      throw Error();
+      throw Exception(results["message"]);
     }
   }
 

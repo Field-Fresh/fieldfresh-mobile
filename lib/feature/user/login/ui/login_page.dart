@@ -2,9 +2,12 @@ import 'package:fieldfreshmobile/feature/user/login/bloc/user_login_bloc.dart';
 import 'package:fieldfreshmobile/feature/user/login/bloc/user_login_state.dart';
 import 'package:fieldfreshmobile/feature/user/login/event/events.dart';
 import 'package:fieldfreshmobile/feature/user/login/state/states.dart';
-import 'package:fieldfreshmobile/feature/user/signup/ui/signup_page.dart';
 import 'package:fieldfreshmobile/feature/user/verify/ui/verify_form.dart';
-import 'package:fieldfreshmobile/util/auth.dart';
+import 'package:fieldfreshmobile/theme/app_theme.dart';
+import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
+import 'package:fieldfreshmobile/widgets/ThemedTextFieldFactory.dart';
+import 'package:fieldfreshmobile/widgets/no_glow_single_child_scrollview.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
@@ -42,17 +45,32 @@ class _LoginFormState extends State<LoginForm> {
         bloc: _userLoginBloc,
         builder: (context, state) {
           return Column(
-            children: _formFromState(context, state),
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  SvgPicture.asset(
+                    'graphics/app-logo-large.svg',
+                    height: 350,
+                    fit: BoxFit.fitHeight,
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: _formFromState(context, state),
+              )
+            ],
           );
         });
   }
 
   List<Widget> _formFromState(BuildContext context, UserLoginState state) {
-    final List<Widget> formCols = [
-      SvgPicture.asset('graphics/placeholder-logo.svg'),
-    ];
+    final List<Widget> formCols = [];
 
     if (state is UserLoginStateEmpty) {
       formCols.addAll(_formForLogin(context));
@@ -70,7 +88,7 @@ class _LoginFormState extends State<LoginForm> {
                 child: Text(
                   "Not you? Click to login with different email.",
                   style: TextStyle(
-                      color: Colors.black87,
+                      color: AppTheme.colors.white,
                       decoration: TextDecoration.underline),
                 )))
       ]);
@@ -96,56 +114,43 @@ class _LoginFormState extends State<LoginForm> {
   List<Widget> _formForLogin(BuildContext context) {
     return [
       Container(
-        margin: EdgeInsets.only(bottom: 16, left: 24, right: 24),
-        child: TextField(
-          controller: _emailFieldController,
-          decoration: InputDecoration(hintText: "Email"),
-        ),
-      ),
+          margin: EdgeInsets.only(bottom: 16, left: 24, right: 24),
+          child: ThemedTextFieldFactory.create(_emailFieldController, "Email",
+              type: TextInputType.emailAddress)),
       Container(
-        margin: EdgeInsets.only(bottom: 24, left: 24, right: 24),
-        child: TextField(
-          controller: _passwordFieldController,
-          obscureText: true,
-          decoration: InputDecoration(hintText: "Password"),
+          margin: EdgeInsets.only(bottom: 24, left: 24, right: 24),
+          child: ThemedTextFieldFactory.createForSensitive(
+              _passwordFieldController, "Password")),
+      ThemedButtonFactory.create(200, 50, 24, "Login", () {
+        String password = _passwordFieldController.value.text;
+        String email = _emailFieldController.value.text;
+        _userLoginBloc
+            .add(UserLoginRequestEvent(email: email, password: password));
+      }),
+      Container(
+        margin: EdgeInsets.only(top: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "New user?",
+              style: TextStyle(color: AppTheme.colors.white, fontSize: 24),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, "/signup");
+                  },
+                  child: Text(
+                    "Sign Up",
+                    style: TextStyle(
+                        color: AppTheme.colors.light.primary, fontSize: 24),
+                  )),
+            )
+          ],
         ),
-      ),
-      ButtonBar(
-        children: [
-          RaisedButton(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Login",
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
-            color: Colors.deepOrange,
-            onPressed: () {
-              String password = _passwordFieldController.value.text;
-              String email = _emailFieldController.value.text;
-              _userLoginBloc
-                  .add(UserLoginRequestEvent(email: email, password: password));
-            },
-          ),
-          RaisedButton(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Sign Up",
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
-            color: Colors.orangeAccent,
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, "/signup");
-            },
-          ),
-        ],
-        alignment: MainAxisAlignment.center,
-      ),
+      )
     ];
   }
 }
@@ -155,7 +160,9 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-          child: LoginForm(),
-        ));
+      child: NoGlowSingleChildScrollView(
+        child: LoginForm(),
+      ),
+    ));
   }
 }
