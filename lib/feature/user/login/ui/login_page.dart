@@ -6,6 +6,7 @@ import 'package:fieldfreshmobile/feature/user/verify/ui/verify_form.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
 import 'package:fieldfreshmobile/widgets/ThemedTextFieldFactory.dart';
+import 'package:fieldfreshmobile/widgets/no_glow_single_child_scrollview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -44,21 +45,32 @@ class _LoginFormState extends State<LoginForm> {
         bloc: _userLoginBloc,
         builder: (context, state) {
           return Column(
-            children: _formFromState(context, state),
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  SvgPicture.asset(
+                    'graphics/app-logo-large.svg',
+                    height: 350,
+                    fit: BoxFit.fitHeight,
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: _formFromState(context, state),
+              )
+            ],
           );
         });
   }
 
   List<Widget> _formFromState(BuildContext context, UserLoginState state) {
-    final List<Widget> formCols = [
-      SvgPicture.asset(
-        'graphics/app-logo-large.svg',
-        width: 600,
-        height: 350,
-      ),
-    ];
+    final List<Widget> formCols = [];
 
     if (state is UserLoginStateEmpty) {
       formCols.addAll(_formForLogin(context));
@@ -76,7 +88,7 @@ class _LoginFormState extends State<LoginForm> {
                 child: Text(
                   "Not you? Click to login with different email.",
                   style: TextStyle(
-                      color: Colors.black87,
+                      color: AppTheme.colors.white,
                       decoration: TextDecoration.underline),
                 )))
       ]);
@@ -103,7 +115,8 @@ class _LoginFormState extends State<LoginForm> {
     return [
       Container(
           margin: EdgeInsets.only(bottom: 16, left: 24, right: 24),
-          child: ThemedTextFieldFactory.create(_emailFieldController, "Email")),
+          child: ThemedTextFieldFactory.create(_emailFieldController, "Email",
+              type: TextInputType.emailAddress)),
       Container(
           margin: EdgeInsets.only(bottom: 24, left: 24, right: 24),
           child: ThemedTextFieldFactory.createForSensitive(
@@ -147,25 +160,9 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: LoginForm(),
+      child: NoGlowSingleChildScrollView(
+        child: LoginForm(),
+      ),
     ));
   }
 }
-
-// RaisedButton(
-// child: Padding(
-// padding: const EdgeInsets.all(8.0),
-// child: Text(
-// "Sign Up",
-// style:
-// TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-// ),
-// ),
-// color: Colors.orangeAccent,
-// onPressed: () {
-// Navigator.pushReplacementNamed(context, "/signup");
-// },
-// ),
-// ],
-// alignment: MainAxisAlignment.center,
-// ),

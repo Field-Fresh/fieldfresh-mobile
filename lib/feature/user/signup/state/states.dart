@@ -1,5 +1,7 @@
+
 import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_state.dart';
-import 'package:fieldfreshmobile/models/user/user.dart';
+import 'package:fieldfreshmobile/models/api/proxy/proxy.dart';
+import 'package:fieldfreshmobile/models/api/user/user.dart';
 
 class SignUpStateEmpty extends UserSignUpState {
   @override
@@ -9,6 +11,16 @@ class SignUpStateEmpty extends UserSignUpState {
 class SignUpStateLoading extends UserSignUpState {
   @override
   String toString() => 'SignUpStateLoading';
+}
+
+class SignUpStateSuccess extends UserSignUpState {
+
+  final User user;
+
+  SignUpStateSuccess(this.user);
+  
+  @override
+  String toString() => "SignUpStateSuccess";
 }
 
 class SignUpStateVerification extends UserSignUpState {
@@ -39,4 +51,38 @@ class SignUpStateVerificationSuccess extends UserSignUpState {
 
   @override
   String toString() => 'SignUpStateVerificationSuccess';
+}
+
+// User Details
+class UserDetailsSuccessState extends UserSignUpState {
+
+  final User user;
+
+  UserDetailsSuccessState(this.user) : super([user]);
+
+  @override
+  String toString() => 'UserDetailsSuccessState';
+}
+
+// Proxy Details
+class ProxyDetailsSuccessState extends UserSignUpState {
+
+  final Proxy proxy;
+
+  ProxyDetailsSuccessState(this.proxy) : super([proxy]);
+
+  @override
+  String toString() => 'ProxyDetailsSuccessState';
+}
+
+class ProxyIsBusinessToggledState extends UserSignUpState {
+
+  final bool isBusiness;
+  final String name;
+  final String description;
+
+  ProxyIsBusinessToggledState(this.isBusiness, this.name, this.description): super([isBusiness]);
+
+  @override
+  String toString() => 'ProxyIsBusinessToggledState';
 }

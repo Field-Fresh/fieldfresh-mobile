@@ -1,4 +1,3 @@
-import 'package:fieldfreshmobile/models/user/user.dart';
 import 'package:http/http.dart' as http;
 
 class FieldFreshApi {

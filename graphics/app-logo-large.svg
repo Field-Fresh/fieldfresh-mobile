@@ -60,9 +60,6 @@
 </g>
 </defs>
 <g id="surface1">
-<rect x="0" y="0" width="1125" height="1124.99995" style="fill:rgb(100%,100%,100%);fill-opacity:1;stroke:none;"/>
-<rect x="0" y="0" width="1125" height="1124.99995" style="fill:rgb(100%,100%,100%);fill-opacity:1;stroke:none;"/>
-<rect x="0" y="0" width="1125" height="1124.99995" style="fill:rgb(23.529053%,23.919678%,19.999695%);fill-opacity:1;stroke:none;"/>
 <g style="fill:rgb(100%,100%,100%);fill-opacity:1;">
   <use xlink:href="#glyph0-1" x="193.434062" y="621.691174"/>
 </g>

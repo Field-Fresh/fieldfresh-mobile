@@ -3,6 +3,8 @@ import 'package:fieldfreshmobile/feature/user/verify/bloc/verify_bloc.dart';
 import 'package:fieldfreshmobile/feature/user/verify/bloc/verify_state.dart';
 import 'package:fieldfreshmobile/feature/user/verify/event/events.dart';
 import 'package:fieldfreshmobile/feature/user/verify/state/states.dart';
+import 'package:fieldfreshmobile/theme/app_theme.dart';
+import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_verification_code_input/flutter_verification_code_input.dart';
@@ -35,9 +37,13 @@ class _VerifyFormState extends State<VerifyForm> {
     return BlocBuilder<VerifyBloc, VerifyState>(
         bloc: _verifyBloc,
         builder: (context, state) {
-          return Column(
-            children: _formFromState(context, state),
-            crossAxisAlignment: CrossAxisAlignment.center,
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 4),
+            child: Column(
+              children: _formFromState(context, state),
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+            ),
           );
         });
   }
@@ -47,14 +53,14 @@ class _VerifyFormState extends State<VerifyForm> {
 
     if (state is VerifyFailedState) {
       formCols.add(Text(
-        state.error,
+        state.error ?? "An Error has occured",
         style: TextStyle(color: Colors.red),
       ));
     }
 
-
     if (state is VerifySuccessState) {
       formCols.addAll(_widgetsForVerificaitonSuccess(context, state));
+      return formCols;
     } else {
       formCols.addAll(_formForVerification(context));
     }
@@ -63,20 +69,22 @@ class _VerifyFormState extends State<VerifyForm> {
     if (state is ResendVerifyCodeFailureState) {
       actionText = Text(
         "Failed to resend verification code",
-        style: TextStyle(
-            color: Colors.red, decoration: TextDecoration.underline),
+        style:
+        TextStyle(color: Colors.red, decoration: TextDecoration.underline),
       );
     } else if (state is ResendVerifyCodeSuccessState) {
       actionText = Text(
         "Successfully resent verification code",
         style: TextStyle(
-            color: Colors.green, decoration: TextDecoration.underline),
+            color: AppTheme.colors.light.primary,
+            decoration: TextDecoration.underline),
       );
     } else {
       actionText = Text(
         "Resend verification code",
         style: TextStyle(
-            color: Colors.black87, decoration: TextDecoration.underline),
+            color: AppTheme.colors.light.primary,
+            decoration: TextDecoration.underline),
       );
     }
     formCols.add(_actionTextForVerification(actionText));
@@ -86,14 +94,10 @@ class _VerifyFormState extends State<VerifyForm> {
 
   Widget _actionTextForVerification(Text actionText) {
     return GestureDetector(
-      onTap: () {
-        _verifyBloc.add(VerifyResendCodeRequestEvent(email: email));
-      },
-      child: Container(
-          margin: EdgeInsets.only(top: 24),
-          child: actionText
-      )
-    );
+        onTap: () {
+          _verifyBloc.add(VerifyResendCodeRequestEvent(email: email));
+        },
+        child: Container(margin: EdgeInsets.only(top: 24), child: actionText));
   }
 
   List<Widget> _formForVerification(BuildContext context) {
@@ -102,18 +106,28 @@ class _VerifyFormState extends State<VerifyForm> {
         margin: EdgeInsets.only(bottom: 16.0),
         child: Text(
           "Please enter your code below!",
-          style: TextStyle(fontSize: 24, color: Colors.black87),
+          style: TextStyle(fontSize: 24, color: AppTheme.colors.white),
         ),
       ),
       Container(
-        margin: EdgeInsets.only(bottom: 16.0),
-        child: Text(
-          "The verification code was sent to $email",
-          style: TextStyle(fontSize: 12, color: Colors.black54),
-        ),
+        child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: 'The verification code was sent to ',
+              style: TextStyle(color: AppTheme.colors.white),
+              children: <TextSpan>[
+                TextSpan(
+                    text: email,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.colors.light.primary)),
+              ],
+            )),
       ),
       VerificationCodeInput(
         keyboardType: TextInputType.number,
+        textStyle: TextStyle(
+            color: AppTheme.colors.light.primary, fontWeight: FontWeight.bold),
         length: 6,
         autofocus: true,
         onCompleted: (String value) {
@@ -129,35 +143,38 @@ class _VerifyFormState extends State<VerifyForm> {
       Icon(
         Icons.verified_user,
         size: 50,
-        color: Colors.green,
+        color: AppTheme.colors.light.primary,
       ),
       Container(
-        margin: EdgeInsets.only(bottom: 16.0, top: 16.0),
-        child: Text(
-          "Verified ${state.email} successfully!",
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
-        ),
-      ),
+          margin: EdgeInsets.only(bottom: 16.0, top: 16.0),
+          child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: 'Verified ',
+                style: TextStyle(color: AppTheme.colors.white),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: state.email,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.colors.light.primary)),
+                  TextSpan(
+                      text: " successfully",
+                      style: TextStyle(color: AppTheme.colors.white)),
+                ],
+              ))),
       Text(
         "Tap below to login!",
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+        style: TextStyle(
+            color: AppTheme.colors.white, fontWeight: FontWeight.bold),
       ),
       Container(
-        margin: EdgeInsets.only(top: 8.0),
-        child: RaisedButton(
-          color: Colors.deepOrange,
-          child: Text(
-            "Login",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          onPressed: () {
-            // Go back to login. MAy have to change this if we can get to signup from elsewhere
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => LoginScreen()));
-          },
-        ),
+        margin: EdgeInsets.symmetric(vertical: 24.0),
+        child: ThemedButtonFactory.create(200, 40, 16, "Login", () {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => LoginScreen()));
+        }),
       ),
     ];
   }
