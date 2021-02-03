@@ -118,7 +118,7 @@ class NavDrawerWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Divider(height: 2, color: AppTheme.colors.light.secondary.withOpacity(0.7),),
+            child: Divider(height: 1, color: AppTheme.colors.light.secondary.withOpacity(0.7),),
           )
         ],
       );
