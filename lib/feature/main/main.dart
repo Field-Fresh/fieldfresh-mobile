@@ -47,6 +47,8 @@ class _MainState extends State<Main> {
       return Container();
     } else if (item == NavItem.profile) {
       return Container();
+    } else {
+      return Container();
     }
   }
 }

@@ -11,7 +11,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class NavDrawerWidget extends StatelessWidget {
   final List<_NavigationItem> _listItems = [
     _NavigationItem(true, NavItem.profile, "Profile", null),
-    _NavigationItem(false, NavItem.home, "Home", Icons.home),
+    _NavigationItem(false, NavItem.home, "Home", Icons.trending_up),
+    _NavigationItem(false, NavItem.proxy, "Proxies", Icons.store),
+    _NavigationItem(false, NavItem.profile, "Profile", Icons.person),
+    _NavigationItem(false, NavItem.active_orders, "My Orders", Icons.toll),
+    _NavigationItem(false, NavItem.matches, "My Matches", Icons.check),
+    _NavigationItem(false, NavItem.history, "Order History", Icons.history),
   ];
 
   @override
