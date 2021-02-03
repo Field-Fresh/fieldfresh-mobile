@@ -8,6 +8,7 @@ import 'package:fieldfreshmobile/feature/user/verify/bloc/verify_bloc.dart';
 import 'package:fieldfreshmobile/feature/user/verify/state/states.dart';
 import 'package:fieldfreshmobile/repository/user_repository.dart';
 import 'package:fieldfreshmobile/util/auth.dart';
+import 'package:fieldfreshmobile/util/user_singleton.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // This is technically a state reducer for the signup page
@@ -66,7 +67,9 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
       if (result.verificationRequired) {
         yield UserLoginStateVerificationRequired(event.email);
       } else if (result.user != null && result.tokens != null) {
+        // TODO the singleton pattern might not be the best to use here
         AuthUtil.storeAuth(result.tokens);
+        UserSingleton().updateUser(result.user);
         yield UserLoginStateSuccess(result.user);
       }
     } catch (e) {

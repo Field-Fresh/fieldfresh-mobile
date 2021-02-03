@@ -8,7 +8,8 @@ import 'package:fieldfreshmobile/repository/proxy_repository.dart';
 import 'package:fieldfreshmobile/repository/user_repository.dart';
 import 'package:get_it/get_it.dart';
 
-import 'feature/home/bloc/home_bloc.dart';
+import 'feature/drawer/bloc/dashboard_bloc.dart';
+
 
 final sl = GetIt.instance;
 
@@ -29,10 +30,10 @@ final sl = GetIt.instance;
         sl()
     ));
 
-    sl.registerFactory(() => BottomNavigationBloc());
 
     sl.registerLazySingleton(() => UserRepository(sl()));
     sl.registerLazySingleton(() => ProxyRepository(sl()));
+    sl.registerFactory(() => NavDrawerBloc());
 
     sl.registerLazySingleton(() => UserClient(apiClient: sl()));
     sl.registerLazySingleton(() => ProxyClient(apiClient: sl()));

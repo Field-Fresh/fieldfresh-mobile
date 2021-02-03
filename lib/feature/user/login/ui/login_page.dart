@@ -104,7 +104,7 @@ class _LoginFormState extends State<LoginForm> {
     } else if (state is UserLoginStateSuccess) {
       formCols.addAll(_formForLogin(context));
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushReplacementNamed(context, "/home");
+        Navigator.pushReplacementNamed(context, "/main");
       });
     }
 
