@@ -19,8 +19,8 @@ class FieldFreshAppBar extends StatelessWidget with PreferredSizeWidget {
         centerTitle: true,
         title: SvgPicture.asset(
           'graphics/app-logo-small.svg',
-          width: 40,
-          height: 40,
+          width: 50,
+          height: 50,
         ));
   }
 }
