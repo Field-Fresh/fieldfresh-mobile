@@ -47,153 +47,149 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20, left: 6),
-                child: Text(
-                  'What is the market buying?',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20, right: 6),
-                child: GestureDetector(
-                  child: Text(
-                    'View All',
-                    style: TextStyle(
-                        color: AppTheme.colors.light.primary,
-                        fontSize: 15,
-                        decoration: TextDecoration.underline),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Container(
-            width: double.infinity,
-            height: 160,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: someList.length,
-                itemBuilder: (context, index) {
-                  return ProductCardListItem(someList[index]);
-                }),
-          ),
+          buildHomePageHeader2(),
+          buildProductCard("What is the market buying?", someList),
+          buildProductCard("What is the market selling?", someList),
+          buildProductCard("What is in season?", someList)
+        ],
+      ),
+    );
+  }
+}
 
-          //This is where the selling begins.
+//Helper functions
 
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20, left: 6),
-                child: Text(
-                  'What is the market selling?',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20, right: 6),
-                child: GestureDetector(
-                  child: Text(
-                    'View All',
-                    style: TextStyle(
-                        color: AppTheme.colors.light.primary,
-                        fontSize: 15,
-                        decoration: TextDecoration.underline),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Container(
-            width: double.infinity,
-            height: 160,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: someList.length,
-                itemBuilder: (context, index) {
-                  return ProductCardListItem(someList[index]);
-                }),
-          ),
-
-          //This is where the stats and logos starts.
-          Padding(
-            padding: const EdgeInsets.only(top: 20, left: 6),
-            child: Text(
-              'My Orders...',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            ),
-          ),
-
-          //logo container
-
-          Container(
+Widget buildProductCard(String stringTitle, List someList) {
+  return Container(
+    child: Card(
+        color: AppTheme.colors.light.secondaryDark,
+        elevation: 8,
+        margin: EdgeInsets.only(top: 8, left: 6, right: 6),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Container(
             child: Column(
               children: [
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 6, top: 10),
-                      color: AppTheme.colors.white.withOpacity(0.3),
-                      child: SvgPicture.asset(
-                        'graphics/matches_logo_home.svg',
-                        width: 75,
-                        height: 75,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 6),
+                      child: Text(
+                        stringTitle,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.left,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 30),
-                      child: Text("10",
-                          style: TextStyle(color: Colors.white, fontSize: 30)),
-                    )
+                      padding: const EdgeInsets.only(top: 10, right: 6),
+                      child: GestureDetector(
+                        child: Text(
+                          'View All',
+                          style: TextStyle(
+                              color: AppTheme.colors.light.primary,
+                              fontSize: 15,
+                              decoration: TextDecoration.underline),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 6, top: 10),
-                      color: AppTheme.colors.white.withOpacity(0.3),
-                      child: SvgPicture.asset(
-                        'graphics/orders_logo_home.svg',
-                        width: 75,
-                        height: 75,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 30),
-                      child: Text("10",
-                          style: TextStyle(color: Colors.white, fontSize: 30)),
-                    )
-                  ],
-                )
+                Container(
+                  width: double.infinity,
+                  height: 160,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: someList.length,
+                      itemBuilder: (context, index) {
+                        return ProductCardListItem(someList[index]);
+                      }),
+                ),
               ],
             ),
           ),
-        ],
+        )),
+  );
+}
+
+Widget buildHomePageHeader() {
+  return Row(
+    mainAxisSize: MainAxisSize.max,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Container(
+        margin: EdgeInsets.only(left: 6, top: 10),
+        color: AppTheme.colors.white.withOpacity(0.3),
+        child: Row(
+          children: [
+            SvgPicture.asset(
+              'graphics/matches_logo_home.svg',
+              width: 50,
+              height: 50,
+            ),
+            Text("10", style: TextStyle(color: Colors.white, fontSize: 25)),
+          ],
+        ),
       ),
-    );
-  }
+      Container(
+        margin: EdgeInsets.only(right: 6, top: 10),
+        color: AppTheme.colors.white.withOpacity(0.3),
+        child: Row(
+          children: [
+            SvgPicture.asset(
+              'graphics/orders_logo_home.svg',
+              width: 50,
+              height: 50,
+            ),
+            Text("10", style: TextStyle(color: Colors.white, fontSize: 25)),
+          ],
+        ),
+      ),
+    ],
+  );
+}
+
+Widget buildHomePageHeader2() {
+  return Container(
+    margin: EdgeInsets.only(bottom: 5),
+    child: Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              color: AppTheme.colors.light.primary,
+              border: Border.all(color: AppTheme.colors.light.primary),
+              borderRadius: BorderRadius.circular(20)),
+          margin: EdgeInsets.only(left: 6, top: 10),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Total Orders: 10',
+              style: TextStyle(color: AppTheme.colors.white),
+            ),
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+              color: AppTheme.colors.light.primary,
+              border: Border.all(color: AppTheme.colors.light.primary),
+              borderRadius: BorderRadius.circular(20)),
+          margin: EdgeInsets.only(right: 6, top: 10),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Total Matches: 20',
+              style: TextStyle(color: AppTheme.colors.white),
+            ),
+          ),
+        )
+      ],
+    ),
+  );
 }

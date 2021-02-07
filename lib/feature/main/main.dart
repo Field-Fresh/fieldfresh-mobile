@@ -7,6 +7,7 @@ import 'package:fieldfreshmobile/injection_container.dart';
 import 'package:fieldfreshmobile/models/api/user/user.dart';
 import 'package:fieldfreshmobile/util/user_singleton.dart';
 import 'package:fieldfreshmobile/widgets/app_bar.dart';
+import 'package:fieldfreshmobile/widgets/floating_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,7 @@ class _MainState extends State<Main> {
           return Scaffold(
             drawer: NavDrawerWidget(),
             appBar: FieldFreshAppBar(),
+            floatingActionButton: FieldFreshFAB(),
             body: SafeArea(
               child: _bodyForState(state, user),
             ),
