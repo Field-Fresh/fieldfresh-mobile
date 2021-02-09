@@ -1,7 +1,10 @@
+import 'package:fieldfreshmobile/feature/home/bloc/side_type.dart';
+import 'package:fieldfreshmobile/feature/products/pending/ui/pending_products.dart';
 import 'package:fieldfreshmobile/models/api/product/class_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/floating_action_button.dart';
+import 'package:fieldfreshmobile/widgets/no_glow_single_child_scrollview.dart';
 import 'package:fieldfreshmobile/widgets/product_card_listItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -12,111 +15,23 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-Product prod1 = Product(
-    type: 'Red',
-    catagory: 'Fruit',
-    family: 'Apple',
-    classType: ProductClass.A,
-    imgUrl: 'https://source.unsplash.com/daily',
-    value: 100,
-    units: 'lbs');
-
-Product prod2 = Product(
-    type: 'Fresh',
-    catagory: 'Fruit',
-    family: 'Banana',
-    classType: ProductClass.B,
-    imgUrl: 'https://source.unsplash.com/daily',
-    value: 250,
-    units: 'lbs');
-
-Product prod3 = Product(
-    type: 'Fresh',
-    catagory: 'Fruit',
-    family: 'Orange',
-    classType: ProductClass.C,
-    imgUrl: 'https://source.unsplash.com/daily',
-    value: 130,
-    units: 'lbs');
-
-var someList = [prod1, prod2, prod3];
-
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           buildHomePageHeader2(),
-          buildProductCard("What is the market buying?", someList),
-          buildProductCard("What is the market selling?", someList),
-          buildProductCard("What is in season?", someList)
+          PendingProductList(side: Side.BUY),
+          PendingProductList(side: Side.SELL),
         ],
       ),
     );
   }
 }
 
-//Helper functions
-
-Widget buildProductCard(String stringTitle, List someList) {
-  return Container(
-    child: Card(
-        color: AppTheme.colors.light.secondaryDark,
-        elevation: 8,
-        margin: EdgeInsets.only(top: 8, left: 6, right: 6),
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Container(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 6),
-                      child: Text(
-                        stringTitle,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, right: 6),
-                      child: GestureDetector(
-                        child: Text(
-                          'View All',
-                          style: TextStyle(
-                              color: AppTheme.colors.light.primary,
-                              fontSize: 15,
-                              decoration: TextDecoration.underline),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 160,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: someList.length,
-                      itemBuilder: (context, index) {
-                        return ProductCardListItem(someList[index]);
-                      }),
-                ),
-              ],
-            ),
-          ),
-        )),
-  );
-}
 
 Widget buildHomePageHeader() {
   return Row(
@@ -222,7 +137,7 @@ class HomeScreen extends StatelessWidget {
               backgroundColor: AppTheme.colors.light.primary),
         ],
       ),
-      body: HomePage(),
+      body: NoGlowSingleChildScrollView(child: HomePage()),
     );
   }
 }

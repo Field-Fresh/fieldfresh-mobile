@@ -1,3 +1,4 @@
+import 'package:fieldfreshmobile/models/api/product/pending_product.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/product_class_stamp.dart';
@@ -5,15 +6,16 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 class ProductCardListItem extends StatelessWidget {
-  final Product product;
+  final PendingProduct _pendingProduct;
 
   const ProductCardListItem(
-    this.product, {
+    this._pendingProduct, {
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Product product = _pendingProduct.product;
     return Container(
       color: AppTheme.colors.white.withOpacity(0.3),
       margin: EdgeInsets.only(left: 8, top: 10),
@@ -41,7 +43,7 @@ class ProductCardListItem extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          Text(product.value.toString() + " " + product.units,
+          Text(_pendingProduct.volume.toString() + " " + _pendingProduct.units,
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.w200))
         ],

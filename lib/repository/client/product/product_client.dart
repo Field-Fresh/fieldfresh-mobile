@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fieldfreshmobile/feature/home/bloc/side_type.dart';
 import 'package:fieldfreshmobile/repository/client/field_fresh_api_client.dart';
 
@@ -11,7 +13,7 @@ import 'package:enum_to_string/enum_to_string.dart';
 class ProductClient {
   final FieldFreshApi apiClient;
 
-  final String _productUrl = "/product";
+  final String _productUrl = "/products";
 
   ProductClient({@required this.apiClient});
 
@@ -19,8 +21,7 @@ class ProductClient {
     var sideType = EnumToString.convertToString(side);
 
     Uri url = Uri.http(
-        apiClient.baseURL, "$_productUrl/pending", {"pending": sideType});
-
+        apiClient.baseURL, "$_productUrl/pending", {"side": sideType});
     final response = await apiClient.httpClient.get(
       url,
     );

@@ -1,3 +1,4 @@
+import 'package:fieldfreshmobile/feature/products/pending/bloc/pending_product_bloc.dart';
 import 'package:fieldfreshmobile/feature/user/login/bloc/user_login_bloc.dart';
 import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_bloc.dart';
 import 'package:fieldfreshmobile/feature/user/verify/bloc/verify_bloc.dart';
@@ -20,6 +21,7 @@ Future<void> init() async {
   sl.registerFactory(() => VerifyBloc(sl()));
 
   sl.registerFactory(() => UserLoginBloc(sl(), sl()));
+  sl.registerFactory(() => PendingProductsBloc(sl()));
 
   sl.registerLazySingleton(() => UserRepository(sl()));
   sl.registerLazySingleton(() => ProxyRepository(sl()));

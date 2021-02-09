@@ -11,7 +11,7 @@ class PendingProduct {
     return PendingProduct(
       product: Product.fromJson(json['product']),
       units: json['unit'],
-      volume: json['volume'],
+      volume: json['totalVolume'],
     );
   }
 }

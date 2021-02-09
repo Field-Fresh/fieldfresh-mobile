@@ -1,3 +1,4 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:fieldfreshmobile/models/api/product/class_type.dart';
 
 import '../field_fresh_model.dart';
@@ -7,7 +8,6 @@ class Product extends FieldFreshModel {
   String catagory;
   String family;
   String imgUrl;
-  int value;
   String units;
   ProductClass classType;
 
@@ -17,7 +17,6 @@ class Product extends FieldFreshModel {
       this.family,
       this.classType,
       this.imgUrl,
-      this.value,
       this.units,
       id})
       : super(id: id);
@@ -27,9 +26,8 @@ class Product extends FieldFreshModel {
       type: json['type'],
       catagory: json['catagory'],
       family: json['family'],
-      classType: json['classType'],
-      imgUrl: json['imageURL'],
-      value: json['value'],
+      classType: EnumToString.fromString(ProductClass.values, json['classType']),
+      imgUrl: json['imageURL'] ?? "https://source.unsplash.com/daily",
       units: json['units'],
       id: json['productId'],
     );
