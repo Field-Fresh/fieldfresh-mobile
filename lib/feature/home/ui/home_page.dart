@@ -18,7 +18,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +30,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 
 Widget buildHomePageHeader() {
   return Row(
@@ -122,17 +120,32 @@ class HomeScreen extends StatelessWidget {
         options: [
           FieldFreshFABOption(
               label: "Buy",
-              icon: Icon(Icons.shopping_cart, color: AppTheme.colors.white,),
+              icon: Icon(
+                Icons.shopping_cart,
+                color: AppTheme.colors.white,
+              ),
               labelStyle: TextStyle(fontSize: 18),
-              backgroundColor: AppTheme.colors.light.primary),
+              backgroundColor: AppTheme.colors.light.primary,
+              onTap: () {
+                Navigator.pushNamed(context, "/order/buy");
+              }),
           FieldFreshFABOption(
               label: "Sell",
-              icon: Icon(Icons.attach_money, color: AppTheme.colors.white,),
+              icon: Icon(
+                Icons.attach_money,
+                color: AppTheme.colors.white,
+              ),
               labelStyle: TextStyle(fontSize: 18),
-              backgroundColor: AppTheme.colors.light.primary),
+              backgroundColor: AppTheme.colors.light.primary,
+              onTap: () {
+                Navigator.pushNamed(context, "/order/sell");
+              }),
           FieldFreshFABOption(
               label: "Reorder",
-              icon: Icon(Icons.history, color: AppTheme.colors.white,),
+              icon: Icon(
+                Icons.history,
+                color: AppTheme.colors.white,
+              ),
               labelStyle: TextStyle(fontSize: 18),
               backgroundColor: AppTheme.colors.light.primary),
         ],

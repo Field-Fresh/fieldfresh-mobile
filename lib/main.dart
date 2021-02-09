@@ -1,4 +1,6 @@
 import 'package:fieldfreshmobile/feature/main/main.dart';
+import 'package:fieldfreshmobile/feature/order/create/buy/ui/create_buy_order.dart';
+import 'package:fieldfreshmobile/feature/order/create/sell/ui/create_sell_order.dart';
 import 'package:fieldfreshmobile/feature/user/login/ui/login_page.dart';
 import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_bloc.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
@@ -32,6 +34,8 @@ class FieldFreshApp extends StatelessWidget {
             "/": (context) => LoginScreen(),
             "/signup": (context) => UserSignUpScreen(),
             "/main": (context) => Main(),
+            "/order/buy": (context) => CreateBuyOrderPage(),
+            "/order/sell": (context) => CreateSellOrderPage(),
           }),
     );
   }
