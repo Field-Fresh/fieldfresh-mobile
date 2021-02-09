@@ -1,6 +1,7 @@
 import 'package:fieldfreshmobile/models/api/product/class_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
+import 'package:fieldfreshmobile/widgets/floating_action_button.dart';
 import 'package:fieldfreshmobile/widgets/product_card_listItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -192,4 +193,36 @@ Widget buildHomePageHeader2() {
       ],
     ),
   );
+}
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FieldFreshFAB(
+        activeIcon: Icons.remove,
+        icon: Icons.menu,
+        foregroundColor: AppTheme.colors.white,
+        backgroundColor: AppTheme.colors.light.primary,
+        options: [
+          FieldFreshFABOption(
+              label: "Buy",
+              icon: Icon(Icons.shopping_cart, color: AppTheme.colors.white,),
+              labelStyle: TextStyle(fontSize: 18),
+              backgroundColor: AppTheme.colors.light.primary),
+          FieldFreshFABOption(
+              label: "Sell",
+              icon: Icon(Icons.attach_money, color: AppTheme.colors.white,),
+              labelStyle: TextStyle(fontSize: 18),
+              backgroundColor: AppTheme.colors.light.primary),
+          FieldFreshFABOption(
+              label: "Reorder",
+              icon: Icon(Icons.history, color: AppTheme.colors.white,),
+              labelStyle: TextStyle(fontSize: 18),
+              backgroundColor: AppTheme.colors.light.primary),
+        ],
+      ),
+      body: HomePage(),
+    );
+  }
 }

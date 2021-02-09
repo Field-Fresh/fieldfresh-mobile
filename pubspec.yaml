@@ -32,6 +32,7 @@ dependencies:
   google_maps_flutter: ^0.5.32
   geocoder: ^0.2.1
   geolocator: ^6.0.0+4
+  flutter_speed_dial: ^2.1.1
   search_map_place:
     git: https://github.com/lzzy12/search_map_place.git
   flutter_secure_storage: ^3.3.5

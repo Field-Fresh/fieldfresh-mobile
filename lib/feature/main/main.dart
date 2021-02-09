@@ -27,7 +27,6 @@ class _MainState extends State<Main> {
           return Scaffold(
             drawer: NavDrawerWidget(),
             appBar: FieldFreshAppBar(),
-            floatingActionButton: FieldFreshFAB(),
             body: SafeArea(
               child: _bodyForState(state, user),
             ),
@@ -45,7 +44,7 @@ class _MainState extends State<Main> {
   Widget _bodyForNavState(NavDrawerSelectedState state, User user) {
     NavItem item = state.selectedItem;
     if (item == NavItem.home) {
-      return HomePage();
+      return HomeScreen();
     } else if (item == NavItem.profile) {
       return Container();
     } else {

@@ -1,7 +1,6 @@
 import 'package:fieldfreshmobile/models/api/product/class_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ProductClassStamp extends StatelessWidget {
