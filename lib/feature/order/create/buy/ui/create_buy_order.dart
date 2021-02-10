@@ -32,16 +32,19 @@ class _CreateBuyOrderPageState extends State<CreateBuyOrderPage> {
                   color: AppTheme.colors.light.primary,
                   border: Border.all(color: AppTheme.colors.light.primary),
                   borderRadius: BorderRadius.circular(40)),
-              margin: EdgeInsets.only(top: 20),
+              margin: EdgeInsets.only(top: 30, bottom: 30),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  'Place Buy Order',
-                  style: TextStyle(color: AppTheme.colors.white),
+                  'Place Sell Order',
+                  style: TextStyle(
+                      color: AppTheme.colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),
-          )
+          ),
         ],
       )),
     );
@@ -53,15 +56,19 @@ Widget createSearchableDropDown({label}) {
   return Container(
     height: 50,
     width: double.infinity,
-    margin: EdgeInsets.only(left: 6, right: 6, top: 20),
+    margin: EdgeInsets.only(left: 20, right: 20, top: 20),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4), color: AppTheme.colors.white),
+        borderRadius: BorderRadius.circular(4),
+        color: AppTheme.colors.light.secondaryLight),
     child: Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          child: Text(label),
+          child: Text(
+            label,
+            style: TextStyle(fontSize: 16, color: AppTheme.colors.white),
+          ),
           margin: EdgeInsets.only(left: 20),
         ),
         SearchableDropdown(
@@ -86,9 +93,10 @@ Widget createDateField({label, context}) {
     child: Container(
       height: 50,
       width: double.infinity,
-      margin: EdgeInsets.only(left: 6, right: 6, top: 20),
+      margin: EdgeInsets.only(left: 20, right: 20, top: 20),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4), color: AppTheme.colors.white),
+          borderRadius: BorderRadius.circular(4),
+          color: AppTheme.colors.light.secondaryLight),
       child: Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 10),
         child: Row(
@@ -96,11 +104,12 @@ Widget createDateField({label, context}) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              child: Text(label),
+              child: Text(label,
+                  style: TextStyle(fontSize: 16, color: AppTheme.colors.white)),
               margin: EdgeInsets.only(left: 20),
             ),
             Container(
-              margin: EdgeInsets.only(right: 10),
+              margin: EdgeInsets.only(right: 13),
               child: Icon(
                 Icons.calendar_today,
                 color: AppTheme.colors.light.primary,
@@ -125,14 +134,16 @@ Widget createRangeSlider({label}) {
   return Container(
     height: 120,
     width: double.infinity,
-    margin: EdgeInsets.only(left: 6, right: 6, top: 20),
+    margin: EdgeInsets.only(left: 20, right: 20, top: 20),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4), color: AppTheme.colors.white),
+        borderRadius: BorderRadius.circular(4),
+        color: AppTheme.colors.light.secondaryLight),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          child: Text(label),
+          child: Text(label,
+              style: TextStyle(fontSize: 16, color: AppTheme.colors.white)),
           margin: EdgeInsets.only(left: 20, top: 20, bottom: 20),
         ),
         Container(
@@ -141,7 +152,7 @@ Widget createRangeSlider({label}) {
             max: 100,
             activeColor: AppTheme.colors.light.primary,
             inactiveColor: AppTheme.colors.light.secondary,
-            values: RangeValues(1, 100),
+            values: RangeValues(10, 70),
             onChanged: (value) {},
           ),
         )
@@ -154,14 +165,16 @@ Widget createSlider({label}) {
   return Container(
     height: 120,
     width: double.infinity,
-    margin: EdgeInsets.only(left: 6, right: 6, top: 20),
+    margin: EdgeInsets.only(left: 20, right: 20, top: 20),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4), color: AppTheme.colors.white),
+        borderRadius: BorderRadius.circular(4),
+        color: AppTheme.colors.light.secondaryLight),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          child: Text(label),
+          child: Text(label,
+              style: TextStyle(fontSize: 16, color: AppTheme.colors.white)),
           margin: EdgeInsets.only(left: 20, top: 20, bottom: 20),
         ),
         Container(
@@ -183,14 +196,16 @@ Widget createToggleSwitch({String label, List<String> list}) {
   return Container(
     height: 100,
     width: double.infinity,
-    margin: EdgeInsets.only(left: 6, right: 6, top: 20),
+    margin: EdgeInsets.only(left: 20, right: 20, top: 20),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4), color: AppTheme.colors.white),
+        borderRadius: BorderRadius.circular(4),
+        color: AppTheme.colors.light.secondaryLight),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          child: Text(label),
+          child: Text(label,
+              style: TextStyle(fontSize: 16, color: AppTheme.colors.white)),
           margin: EdgeInsets.only(left: 20, top: 20, bottom: 20),
         ),
         Container(
@@ -201,6 +216,8 @@ Widget createToggleSwitch({String label, List<String> list}) {
               initialLabelIndex: 0,
               labels: list,
               activeBgColor: AppTheme.colors.light.primary,
+              inactiveBgColor: AppTheme.colors.light.secondaryDark,
+              inactiveFgColor: AppTheme.colors.light.secondaryLight,
               onToggle: (index) {},
             ),
           ),
