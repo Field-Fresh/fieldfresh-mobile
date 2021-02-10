@@ -38,7 +38,8 @@ class ProductCardListItem extends StatelessWidget {
             ],
           ),
           Text(
-            product.family + " | " + product.type,
+            product.family + " | (" + product.type + ")",
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: Colors.white,
             ),
