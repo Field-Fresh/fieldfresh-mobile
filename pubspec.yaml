@@ -23,7 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_bloc: ^4.0.0
+  flutter_bloc: ^6.0.2
   rxdart: ^0.24.1
   enum_to_string: ^1.0.14
   equatable: ^0.2.0

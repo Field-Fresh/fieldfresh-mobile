@@ -1,9 +1,4 @@
 
-import 'dart:io';
-
-import 'package:fieldfreshmobile/feature/home/bloc/home_event.dart';
-import 'package:fieldfreshmobile/feature/home/bloc/home_state.dart';
-import 'package:fieldfreshmobile/feature/home/state/states.dart';
 import 'package:fieldfreshmobile/feature/products/pending/bloc/pending_product_event.dart';
 import 'package:fieldfreshmobile/feature/products/pending/bloc/pending_product_state.dart';
 import 'package:fieldfreshmobile/feature/products/pending/event/events.dart';
@@ -14,10 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class PendingProductsBloc extends Bloc<PendingProductEvent, PendingProductState> {
   final ProductRepository _productRepository;
 
-  PendingProductsBloc(this._productRepository);
-
-  @override
-  PendingProductState get initialState => PendingProductStateEmpty();
+  PendingProductsBloc(this._productRepository) : super(PendingProductStateEmpty());
 
   @override
   Stream<PendingProductState> mapEventToState(PendingProductEvent event) async* {

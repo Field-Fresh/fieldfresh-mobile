@@ -50,7 +50,7 @@ class _PendingProductListState extends State<PendingProductList> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      bloc: _bloc,
+      cubit: _bloc,
       builder: (BuildContext context, state) {
         if (state is Loaded) {
           return getLoadedState(state);

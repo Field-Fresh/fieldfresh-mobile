@@ -35,7 +35,7 @@ class _VerifyFormState extends State<VerifyForm> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VerifyBloc, VerifyState>(
-        bloc: _verifyBloc,
+        cubit: _verifyBloc,
         builder: (context, state) {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 4),

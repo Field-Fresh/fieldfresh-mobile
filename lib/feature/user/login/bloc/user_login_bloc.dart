@@ -18,7 +18,7 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
 
   StreamSubscription verifySubscription;
 
-  UserLoginBloc(this._userRepository, this._verifyBloc) {
+  UserLoginBloc(this._userRepository, this._verifyBloc) : super(UserLoginStateEmpty()) {
     verifySubscription = _verifyBloc.listen((verifyState) {
       if (verifyState is VerifySuccessState) {
         add(UserVerificationSuccessEvent(email: verifyState.email));
@@ -30,9 +30,6 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
       }
     });
   }
-
-  @override
-  UserLoginState get initialState => UserLoginStateEmpty();
 
   @override
   void onTransition(Transition<UserLoginEvent, UserLoginState> transition) {
@@ -55,7 +52,7 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
 
   Stream<UserLoginState> _mapUserReturnTosLoginEventToState(
       UserReturnToLoginEvent event) async* {
-    yield initialState;
+    yield UserLoginStateEmpty();
   }
 
   // This is where the business logic required to interface with the

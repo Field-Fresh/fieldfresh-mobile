@@ -35,7 +35,7 @@ class _UserSignUpFormState extends State<UserSignUpForm> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserSignUpBloc, UserSignUpState>(
-        bloc: _userSignUpBloc,
+        cubit: _userSignUpBloc,
         builder: (context, state) {
           if (state is SignUpStateSuccess) {
             SchedulerBinding.instance.addPostFrameCallback((_) {

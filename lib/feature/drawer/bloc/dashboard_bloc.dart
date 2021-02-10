@@ -6,8 +6,7 @@ import 'dashboard_event.dart';
 import 'dashboard_state.dart';
 
 class NavDrawerBloc extends Bloc<NavDrawerEvent, NavDrawerState> {
-  @override
-  NavDrawerState get initialState => NavDrawerSelectedState(NavItem.home);
+  NavDrawerBloc() : super(NavDrawerSelectedState(NavItem.home));
 
   @override
   Stream<NavDrawerState> mapEventToState(NavDrawerEvent event) async* {
