@@ -115,11 +115,18 @@ class _PendingProductListState extends State<PendingProductList> {
         ),
       );
 
-  Container getLoadedState(Loaded state) =>
-      createHorizontalList(ListView.builder(
+  Container getLoadedState(Loaded state) => state.pendingProducts.isNotEmpty
+      ? createHorizontalList(ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: state.pendingProducts.length,
           itemBuilder: (context, index) {
             return ProductCardListItem(state.pendingProducts[index]);
-          }));
+          }))
+      : createHorizontalList(Center(
+          child: Text(
+            "No products found",
+            style:
+                TextStyle(color: AppTheme.colors.light.primary.withOpacity(.5)),
+          ),
+        ));
 }
