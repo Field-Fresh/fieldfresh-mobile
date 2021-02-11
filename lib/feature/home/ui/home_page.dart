@@ -1,14 +1,11 @@
 import 'package:fieldfreshmobile/feature/home/bloc/side_type.dart';
+import 'package:fieldfreshmobile/feature/orders/summary/order_count/ui/order_count_badge.dart';
 import 'package:fieldfreshmobile/feature/products/pending/ui/pending_products.dart';
-import 'package:fieldfreshmobile/models/api/product/class_type.dart';
-import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/floating_action_button.dart';
 import 'package:fieldfreshmobile/widgets/no_glow_single_child_scrollview.dart';
-import 'package:fieldfreshmobile/widgets/product_card_listItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,6 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,79 +29,21 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget buildHomePageHeader() {
-  return Row(
-    mainAxisSize: MainAxisSize.max,
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Container(
-        margin: EdgeInsets.only(left: 6, top: 10),
-        color: AppTheme.colors.white.withOpacity(0.3),
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              'graphics/matches_logo_home.svg',
-              width: 50,
-              height: 50,
-            ),
-            Text("10", style: TextStyle(color: Colors.white, fontSize: 25)),
-          ],
-        ),
-      ),
-      Container(
-        margin: EdgeInsets.only(right: 6, top: 10),
-        color: AppTheme.colors.white.withOpacity(0.3),
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              'graphics/orders_logo_home.svg',
-              width: 50,
-              height: 50,
-            ),
-            Text("10", style: TextStyle(color: Colors.white, fontSize: 25)),
-          ],
-        ),
-      ),
-    ],
-  );
-}
-
 Widget buildHomePageHeader2() {
+  var labelStyle = TextStyle(color: AppTheme.colors.white, fontWeight: FontWeight.bold);
   return Container(
     margin: EdgeInsets.only(bottom: 5),
-    child: Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-              color: AppTheme.colors.light.primary,
-              border: Border.all(color: AppTheme.colors.light.primary),
-              borderRadius: BorderRadius.circular(20)),
-          margin: EdgeInsets.only(left: 6, top: 10),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Total Orders: 10',
-              style: TextStyle(color: AppTheme.colors.white),
-            ),
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-              color: AppTheme.colors.light.primary,
-              border: Border.all(color: AppTheme.colors.light.primary),
-              borderRadius: BorderRadius.circular(20)),
-          margin: EdgeInsets.only(right: 6, top: 10),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Total Matches: 20',
-              style: TextStyle(color: AppTheme.colors.white),
-            ),
-          ),
-        )
-      ],
+    child: Container(
+      height: 50,
+      width: double.infinity,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          OrderCountBadge(side: Side.SELL, status: OrderCountType.PENDING, label: Text("Sell Orders", style: labelStyle,),),
+          OrderCountBadge(side: Side.BUY, status: OrderCountType.PENDING, label: Text("Buy Orders", style: labelStyle,),),
+          OrderCountBadge(status: OrderCountType.MATCHED, label: Text("Match Orders", style: labelStyle,),),
+        ],
+      ),
     ),
   );
 }

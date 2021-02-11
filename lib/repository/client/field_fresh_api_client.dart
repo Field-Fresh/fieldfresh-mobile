@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fieldfreshmobile/models/api/user/tokens.dart';
 import 'package:http/http.dart' as http;
 
 class FieldFreshApi {
@@ -11,6 +12,12 @@ class FieldFreshApi {
   final Map<String, String> basePostHeader = {
     "Content-Type": "application/json",
   };
+
+  Map<String, String> addAuthenticationHeader(
+      Map<String, String> headers, Tokens tokens) {
+    headers.putIfAbsent("Authorization", () => "Bearer ${tokens.accessToken}");
+    return headers;
+  }
 
   FieldFreshApi({
     httpClient,

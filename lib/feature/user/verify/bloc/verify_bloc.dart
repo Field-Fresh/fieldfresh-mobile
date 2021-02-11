@@ -16,7 +16,7 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
 
   final UserRepository _userRepository;
 
-  VerifyBloc(this._userRepository);
+  VerifyBloc(this._userRepository) : super(VerifyStateEmpty());
 
   @override
   VerifyState get initialState => VerifyStateEmpty();

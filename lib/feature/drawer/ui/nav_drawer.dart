@@ -23,7 +23,7 @@ class NavDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     User user = UserSingleton().getUser();
     return BlocBuilder(
-      bloc: BlocProvider.of<NavDrawerBloc>(context),
+      cubit: BlocProvider.of<NavDrawerBloc>(context),
       builder: (context, NavDrawerState state) {
         return Drawer(
             child: Container(
