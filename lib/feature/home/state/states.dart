@@ -1,23 +1,7 @@
 import 'package:fieldfreshmobile/feature/home/bloc/home_state.dart';
-import 'package:fieldfreshmobile/feature/user/verify/bloc/verify_state.dart';
 
-class CurrentIndexChanged extends BottomNavigationState {
-  final int currentIndex;
-
-  CurrentIndexChanged(this.currentIndex): super([currentIndex]);
-
+class HomePageStateEmpty extends HomePageState {
   @override
-  String toString() => 'CurrentIndexChanged';
+  String toString() => 'HomePageStateEmpty';
 }
 
-class PageLoading extends BottomNavigationState {
-
-  @override
-  String toString() => 'PageLoading';
-}
-
-class HomePageLoaded extends BottomNavigationState {
-
-  @override
-  String toString() => 'HomePageLoaded';
-}

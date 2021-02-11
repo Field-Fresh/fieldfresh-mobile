@@ -26,7 +26,7 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
   StreamSubscription _verifySubscription;
 
   UserSignUpBloc(
-      this._userRepository, this._verifyBloc, this._proxyRepository) {
+      this._userRepository, this._verifyBloc, this._proxyRepository) : super(SignUpStateEmpty()) {
     _verifySubscription = _verifyBloc.listen((verifyState) {
       if (state is SignUpStateVerificationSuccess) {
         if (verifyState is VerifySuccessState) {
@@ -45,9 +45,6 @@ class UserSignUpBloc extends Bloc<UserSignUpEvent, UserSignUpState> {
     _verifySubscription.cancel();
     return super.close();
   }
-
-  @override
-  UserSignUpState get initialState => SignUpStateEmpty();
 
   @override
   void onTransition(Transition<UserSignUpEvent, UserSignUpState> transition) {

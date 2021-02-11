@@ -42,7 +42,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserLoginBloc, UserLoginState>(
-        bloc: _userLoginBloc,
+        cubit: _userLoginBloc,
         builder: (context, state) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -104,7 +104,7 @@ class _LoginFormState extends State<LoginForm> {
     } else if (state is UserLoginStateSuccess) {
       formCols.addAll(_formForLogin(context));
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushReplacementNamed(context, "/home");
+        Navigator.pushReplacementNamed(context, "/main");
       });
     }
 

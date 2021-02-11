@@ -1,8 +1,4 @@
-import 'dart:ffi';
-
-import 'package:fieldfreshmobile/feature/home/event/events.dart';
 import 'package:fieldfreshmobile/models/api/proxy/proxy.dart';
-import 'package:flutter/foundation.dart';
 
 class CreateProxyRequest {
   final String userid;

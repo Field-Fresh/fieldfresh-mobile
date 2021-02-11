@@ -26,7 +26,7 @@ class _UserVerificationFormState extends State<UserVerificationForm> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserSignUpBloc, UserSignUpState>(
-        bloc: _userSignUpBloc,
+        cubit: _userSignUpBloc,
         builder: (context, state) {
           return Column(
             children: [

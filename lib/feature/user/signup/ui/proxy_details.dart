@@ -37,7 +37,7 @@ class _ProxyDetailsFormState extends State<ProxyDetailsForm> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserSignUpBloc, UserSignUpState>(
-        bloc: _userSignUpBloc,
+        cubit: _userSignUpBloc,
         builder: (context, state) {
           if (state is ProxyDetailsSuccessState) {
             SchedulerBinding.instance.addPostFrameCallback((_) {

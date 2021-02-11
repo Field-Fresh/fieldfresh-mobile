@@ -8,6 +8,7 @@ import 'package:fieldfreshmobile/feature/user/verify/bloc/verify_bloc.dart';
 import 'package:fieldfreshmobile/feature/user/verify/state/states.dart';
 import 'package:fieldfreshmobile/repository/user_repository.dart';
 import 'package:fieldfreshmobile/util/auth.dart';
+import 'package:fieldfreshmobile/util/user_singleton.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // This is technically a state reducer for the signup page
@@ -17,7 +18,7 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
 
   StreamSubscription verifySubscription;
 
-  UserLoginBloc(this._userRepository, this._verifyBloc) {
+  UserLoginBloc(this._userRepository, this._verifyBloc) : super(UserLoginStateEmpty()) {
     verifySubscription = _verifyBloc.listen((verifyState) {
       if (verifyState is VerifySuccessState) {
         add(UserVerificationSuccessEvent(email: verifyState.email));
@@ -29,9 +30,6 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
       }
     });
   }
-
-  @override
-  UserLoginState get initialState => UserLoginStateEmpty();
 
   @override
   void onTransition(Transition<UserLoginEvent, UserLoginState> transition) {
@@ -54,7 +52,7 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
 
   Stream<UserLoginState> _mapUserReturnTosLoginEventToState(
       UserReturnToLoginEvent event) async* {
-    yield initialState;
+    yield UserLoginStateEmpty();
   }
 
   // This is where the business logic required to interface with the
@@ -66,7 +64,9 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
       if (result.verificationRequired) {
         yield UserLoginStateVerificationRequired(event.email);
       } else if (result.user != null && result.tokens != null) {
+        // TODO the singleton pattern might not be the best to use here
         AuthUtil.storeAuth(result.tokens);
+        UserSingleton().updateUser(result.user);
         yield UserLoginStateSuccess(result.user);
       }
     } catch (e) {

@@ -1,30 +1,13 @@
-import 'package:fieldfreshmobile/feature/home/event/events.dart';
-import 'package:fieldfreshmobile/feature/home/state/states.dart';
+
+import 'package:fieldfreshmobile/feature/home/bloc/home_event.dart';
+import 'package:fieldfreshmobile/feature/home/bloc/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'home_event.dart';
-import 'home_state.dart';
-
-// This is technically a state reducer for the signup page
-class BottomNavigationBloc extends Bloc<BottomNavigationEvent, BottomNavigationState> {
-  int currentIndex = 0;
+class NavDrawerBloc extends Bloc<HomePageEvent, HomePageState> {
+  NavDrawerBloc(HomePageState initialState) : super(initialState);
 
   @override
-  BottomNavigationState get initialState => PageLoading();
+  Stream<HomePageState> mapEventToState(HomePageEvent event) async* {
 
-  @override
-  Stream<BottomNavigationState> mapEventToState(BottomNavigationEvent event) async* {
-    if (event is Started) {
-      add(PageTapped(index: this.currentIndex));
-    }
-    if (event is PageTapped) {
-      this.currentIndex = event.index;
-      yield CurrentIndexChanged(this.currentIndex);
-      yield PageLoading();
-
-      if (this.currentIndex == 0) {
-        yield HomePageLoaded();
-      }
-    }
   }
 }
