@@ -3,16 +3,11 @@ import 'package:fieldfreshmobile/feature/products/pending/bloc/pending_product_b
 import 'package:fieldfreshmobile/feature/products/pending/event/events.dart';
 import 'package:fieldfreshmobile/feature/products/pending/state/states.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
-import 'package:fieldfreshmobile/models/api/product/class_type.dart';
-import 'package:fieldfreshmobile/models/api/product/pending_product.dart';
-import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
-import 'package:fieldfreshmobile/widgets/floating_action_button.dart';
 import 'package:fieldfreshmobile/widgets/product_card_listItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 class PendingProductList extends StatefulWidget {
   final Side side;

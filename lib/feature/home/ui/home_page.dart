@@ -6,7 +6,6 @@ import 'package:fieldfreshmobile/widgets/floating_action_button.dart';
 import 'package:fieldfreshmobile/widgets/no_glow_single_child_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,44 +27,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
-
-
-Widget buildHomePageHeader() {
-  return Row(
-    mainAxisSize: MainAxisSize.max,
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Container(
-        margin: EdgeInsets.only(left: 6, top: 10),
-        color: AppTheme.colors.white.withOpacity(0.3),
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              'graphics/matches_logo_home.svg',
-              width: 50,
-              height: 50,
-            ),
-            Text("10", style: TextStyle(color: Colors.white, fontSize: 25)),
-          ],
-        ),
-      ),
-      Container(
-        margin: EdgeInsets.only(right: 6, top: 10),
-        color: AppTheme.colors.white.withOpacity(0.3),
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              'graphics/orders_logo_home.svg',
-              width: 50,
-              height: 50,
-            ),
-            Text("10", style: TextStyle(color: Colors.white, fontSize: 25)),
-          ],
-        ),
-      ),
-    ],
-  );
 }
 
 Widget buildHomePageHeader2() {
@@ -99,17 +60,32 @@ class HomeScreen extends StatelessWidget {
         options: [
           FieldFreshFABOption(
               label: "Buy",
-              icon: Icon(Icons.shopping_cart, color: AppTheme.colors.white,),
+              icon: Icon(
+                Icons.shopping_cart,
+                color: AppTheme.colors.white,
+              ),
               labelStyle: TextStyle(fontSize: 18),
-              backgroundColor: AppTheme.colors.light.primary),
+              backgroundColor: AppTheme.colors.light.primary,
+              onTap: () {
+                Navigator.pushNamed(context, "/order/buy");
+              }),
           FieldFreshFABOption(
               label: "Sell",
-              icon: Icon(Icons.attach_money, color: AppTheme.colors.white,),
+              icon: Icon(
+                Icons.attach_money,
+                color: AppTheme.colors.white,
+              ),
               labelStyle: TextStyle(fontSize: 18),
-              backgroundColor: AppTheme.colors.light.primary),
+              backgroundColor: AppTheme.colors.light.primary,
+              onTap: () {
+                Navigator.pushNamed(context, "/order/sell");
+              }),
           FieldFreshFABOption(
               label: "Reorder",
-              icon: Icon(Icons.history, color: AppTheme.colors.white,),
+              icon: Icon(
+                Icons.history,
+                color: AppTheme.colors.white,
+              ),
               labelStyle: TextStyle(fontSize: 18),
               backgroundColor: AppTheme.colors.light.primary),
         ],
