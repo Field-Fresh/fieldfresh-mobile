@@ -74,11 +74,11 @@ Widget createSearchableDropDown({label}) {
         SearchableDropdown(
           style: TextStyle(color: AppTheme.colors.light.secondaryDark),
           items: [
-            DropdownMenuItem(child: Text('Test')),
-            DropdownMenuItem(child: Text('Test')),
-            DropdownMenuItem(child: Text('Test'))
+            DropdownMenuItem(value: "Test" , child: Text('Test')),
+            DropdownMenuItem(value: "Tia", child: Text('Tia')),
+            DropdownMenuItem(value: "Fa", child: Text('Fa'))
           ],
-          onChanged: () {},
+          onChanged: (selectedResult) {},
           menuBackgroundColor: AppTheme.colors.white,
           iconEnabledColor: AppTheme.colors.light.primary,
           underline: Container(),
