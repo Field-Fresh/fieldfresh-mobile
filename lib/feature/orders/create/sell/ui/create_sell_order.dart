@@ -26,7 +26,6 @@ class _CreateSellOrderPageState extends State<CreateSellOrderPage> {
           createDateField(label: 'Earliest Availability', context: context),
           createRangeSlider(label: 'Requested Inventory (lbs)'),
           createSlider(label: 'Minimum Price Per Unit (\$/lbs)'),
-          createToggleSwitch(label: 'Status', list: ['Active', 'Inactive']),
           Center(
             child: Container(
               decoration: BoxDecoration(
@@ -79,7 +78,7 @@ Widget createSearchableDropDown({label}) {
             DropdownMenuItem(child: Text('Test')),
             DropdownMenuItem(child: Text('Test'))
           ],
-          onChanged: () {},
+          onChanged: (value) {},
           menuBackgroundColor: AppTheme.colors.white,
           iconEnabledColor: AppTheme.colors.light.primary,
           underline: Container(),

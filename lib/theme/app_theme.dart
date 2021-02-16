@@ -10,6 +10,7 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: colors.light.secondary,
     accentColor: colors.light.accent,
+    primaryColor: colors.light.primary,
     appBarTheme: AppBarTheme(
       color: colors.light.primary,
       iconTheme: IconThemeData(
@@ -22,7 +23,8 @@ class AppTheme {
       secondary: colors.light.secondary,
       onPrimary: colors.light.primary,
       onSecondary: colors.light.secondary,
-      secondaryVariant: colors.light.secondaryDark
+      secondaryVariant: colors.light.secondaryDark,
+      
     )
   );
 }

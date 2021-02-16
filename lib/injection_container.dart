@@ -1,5 +1,7 @@
+import 'package:fieldfreshmobile/feature/orders/create/buy/bloc/create_buy_order_cubit.dart';
 import 'package:fieldfreshmobile/feature/orders/summary/order_count/bloc/order_count_badge_cubit.dart';
 import 'package:fieldfreshmobile/feature/products/pending/bloc/pending_product_bloc.dart';
+import 'package:fieldfreshmobile/feature/products/product_search/bloc/product_search_cubit.dart';
 import 'package:fieldfreshmobile/feature/user/login/bloc/user_login_bloc.dart';
 import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_bloc.dart';
 import 'package:fieldfreshmobile/feature/user/verify/bloc/verify_bloc.dart';
@@ -26,6 +28,8 @@ Future<void> init() async {
   sl.registerFactory(() => UserLoginBloc(sl(), sl()));
   sl.registerFactory(() => PendingProductsBloc(sl()));
   sl.registerFactory(() => OrderCountCubit(sl()));
+  sl.registerFactory(() => BuyOrderCreationCubit(sl()));
+  sl.registerFactory(() => ProductSearchCubit(sl()));
 
   sl.registerLazySingleton(() => UserRepository(sl()));
   sl.registerLazySingleton(() => ProxyRepository(sl()));
