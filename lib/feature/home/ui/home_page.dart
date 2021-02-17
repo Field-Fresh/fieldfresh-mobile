@@ -1,11 +1,16 @@
-import 'package:fieldfreshmobile/feature/home/bloc/side_type.dart';
+import 'package:fieldfreshmobile/feature/home/bloc/home_state.dart';
 import 'package:fieldfreshmobile/feature/orders/summary/order_count/ui/order_count_badge.dart';
 import 'package:fieldfreshmobile/feature/products/pending/ui/pending_products.dart';
+import 'package:fieldfreshmobile/injection_container.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
+import 'package:fieldfreshmobile/feature/home/bloc/home_cubit.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/floating_action_button.dart';
 import 'package:fieldfreshmobile/widgets/no_glow_single_child_scrollview.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,24 +18,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  HomePageCubit _cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = sl<HomePageCubit>();
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildHomePageHeader2(),
-          PendingProductList(side: Side.BUY),
-          PendingProductList(side: Side.SELL),
-        ],
-      ),
+    return BlocBuilder(
+      builder: (BuildContext context, HomePageState state) {
+        return Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildHomePageHeader(),
+              PendingProductList(side: Side.BUY),
+              PendingProductList(side: Side.SELL),
+            ],
+          ),
+        );
+      },
+      cubit: _cubit,
     );
   }
 }
 
-Widget buildHomePageHeader2() {
-  var labelStyle = TextStyle(color: AppTheme.colors.white, fontWeight: FontWeight.bold);
+Widget buildHomePageHeader() {
+  var labelStyle =
+      TextStyle(color: AppTheme.colors.white, fontWeight: FontWeight.bold);
   return Container(
     margin: EdgeInsets.only(bottom: 5),
     child: Container(
@@ -39,9 +57,29 @@ Widget buildHomePageHeader2() {
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
-          OrderCountBadge(side: Side.SELL, status: OrderCountType.PENDING, label: Text("Sell Orders", style: labelStyle,),),
-          OrderCountBadge(side: Side.BUY, status: OrderCountType.PENDING, label: Text("Buy Orders", style: labelStyle,),),
-          OrderCountBadge(status: OrderCountType.MATCHED, label: Text("Match Orders", style: labelStyle,),),
+          OrderCountBadge(
+            side: Side.SELL,
+            status: OrderCountType.PENDING,
+            label: Text(
+              "Sell Orders",
+              style: labelStyle,
+            ),
+          ),
+          OrderCountBadge(
+            side: Side.BUY,
+            status: OrderCountType.PENDING,
+            label: Text(
+              "Buy Orders",
+              style: labelStyle,
+            ),
+          ),
+          OrderCountBadge(
+            status: OrderCountType.MATCHED,
+            label: Text(
+              "Match Orders",
+              style: labelStyle,
+            ),
+          ),
         ],
       ),
     ),

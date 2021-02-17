@@ -5,6 +5,7 @@ import 'package:fieldfreshmobile/feature/orders/create/steps/product_selection/p
 import 'package:fieldfreshmobile/injection_container.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
+import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
 import 'package:fieldfreshmobile/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -35,8 +36,46 @@ class _CreateBuyOrderPageState extends State<CreateBuyOrderPage> {
               return buildStep(state);
             }
 
-            return Center(
-              child: CircularProgressIndicator(),
+            if (state is BuyOrderCreating) {
+              return Center(
+                child: Column(
+                  children: [
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              );
+            }
+
+            if (state is BuyOrderCreated) {
+              return ConstrainedBox(
+                constraints: BoxConstraints.expand(),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text(
+                        "Buy Order Created!",
+                        style: TextStyle(
+                            color: AppTheme.colors.light.primary,
+                            fontWeight: FontWeight.bold, fontSize: 28),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Icon(Icons.check_circle, color: AppTheme.colors.white,size: 50,),
+                      ),
+                      Container(margin: EdgeInsets.only(top: 8), child: ThemedButtonFactory.create(100, 40, 18, "Done", () { Navigator.pop(context); }))
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            return ConstrainedBox(
+              constraints: BoxConstraints.expand(),
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           },
           cubit: _cubit,
@@ -86,12 +125,8 @@ class _CreateBuyOrderPageState extends State<CreateBuyOrderPage> {
                   }),
                   ProductInformationStep(state.step == 1, state.product,
                       (BuyOrderProductInfo info) {
-                        _cubit.nextWithInfo(info);
-                      }),
-                  Step(
-                      isActive: state.step == 2,
-                      title: Text("Confirmation"),
-                      content: Container()),
+                    _cubit.nextWithInfo(info);
+                  })
                 ],
               ),
             ),

@@ -1,6 +1,6 @@
-import 'package:fieldfreshmobile/feature/home/bloc/side_type.dart';
 import 'package:fieldfreshmobile/feature/products/pending/bloc/pending_product_bloc.dart';
 import 'package:fieldfreshmobile/feature/products/pending/event/events.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/feature/products/pending/state/states.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';

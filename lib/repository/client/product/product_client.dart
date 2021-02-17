@@ -1,6 +1,6 @@
 
-import 'package:fieldfreshmobile/feature/home/bloc/side_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/repository/client/field_fresh_api_client.dart';
 import 'package:fieldfreshmobile/util/extensions.dart';
 
