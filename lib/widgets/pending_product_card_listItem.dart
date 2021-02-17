@@ -38,13 +38,21 @@ class PendingProductCardListItem extends StatelessWidget {
             ],
           ),
           Text(
-            product.family + " | (" + product.type + ")",
+            product.family,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold
+            ),
+          ),
+          Text(
+            product.type,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: Colors.white,
             ),
           ),
-          Text(_pendingProduct.volume.toString() + " " + _pendingProduct.units,
+          Text(_pendingProduct.volume.toInt().toString() + " " + _pendingProduct.units,
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.w200))
         ],
