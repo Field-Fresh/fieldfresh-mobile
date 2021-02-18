@@ -27,6 +27,7 @@ dependencies:
   toggle_switch: ^0.1.8
   flutter_bloc: ^6.0.2
   rxdart: ^0.24.1
+  shared_preferences: ^0.5.12+4
   enum_to_string: ^1.0.14
   equatable: ^0.2.0
   http: ^0.12.0
@@ -35,6 +36,7 @@ dependencies:
   geocoder: ^0.2.1
   geolocator: ^6.0.0+4
   flutter_speed_dial: ^2.1.1
+  flutter_form_builder: ^4.2.0
   search_map_place:
     git: https://github.com/lzzy12/search_map_place.git
   flutter_secure_storage: ^3.3.5

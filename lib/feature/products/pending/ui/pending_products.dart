@@ -1,10 +1,10 @@
-import 'package:fieldfreshmobile/feature/home/bloc/side_type.dart';
 import 'package:fieldfreshmobile/feature/products/pending/bloc/pending_product_bloc.dart';
 import 'package:fieldfreshmobile/feature/products/pending/event/events.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/feature/products/pending/state/states.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
-import 'package:fieldfreshmobile/widgets/product_card_listItem.dart';
+import 'package:fieldfreshmobile/widgets/pending_product_card_listItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,7 +115,7 @@ class _PendingProductListState extends State<PendingProductList> {
           scrollDirection: Axis.horizontal,
           itemCount: state.pendingProducts.length,
           itemBuilder: (context, index) {
-            return ProductCardListItem(state.pendingProducts[index]);
+            return PendingProductCardListItem(state.pendingProducts[index]);
           }))
       : createHorizontalList(Center(
           child: Text(

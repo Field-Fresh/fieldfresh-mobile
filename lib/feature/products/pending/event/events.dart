@@ -1,5 +1,5 @@
-import 'package:fieldfreshmobile/feature/home/bloc/side_type.dart';
 import 'package:fieldfreshmobile/feature/products/pending/bloc/pending_product_event.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 
 class ProductSelected extends PendingProductEvent {
   final String productId;

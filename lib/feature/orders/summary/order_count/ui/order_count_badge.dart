@@ -1,8 +1,8 @@
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:fieldfreshmobile/feature/home/bloc/side_type.dart';
 import 'package:fieldfreshmobile/feature/orders/summary/order_count/bloc/order_count_badge_cubit.dart';
 import 'package:fieldfreshmobile/feature/orders/summary/order_count/bloc/states.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/order/status_type.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:flutter/material.dart';

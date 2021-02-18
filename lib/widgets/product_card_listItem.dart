@@ -6,47 +6,60 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 class ProductCardListItem extends StatelessWidget {
-  final PendingProduct _pendingProduct;
+  final Product _product;
 
   const ProductCardListItem(
-    this._pendingProduct, {
+    this._product, {
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Product product = _pendingProduct.product;
+    final Product product = _product;
     return Container(
-      color: AppTheme.colors.white.withOpacity(0.3),
-      margin: EdgeInsets.only(left: 8, top: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      margin: EdgeInsets.only(bottom: 12, left: 8, right: 8),
+      color: AppTheme.colors.light.secondaryLight.withOpacity(0.3),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Stack(
             alignment: Alignment.bottomRight,
             children: [
-              Image.network(
-                product.imgUrl,
-                width: 180,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
+              Image.network(product.imgUrl,
+                  width: 80, height: 80, fit: BoxFit.cover),
               Container(
                 child: ProductClassStamp(product.classType),
                 margin: EdgeInsets.all(4),
               )
             ],
           ),
-          Text(
-            product.family + " | (" + product.type + ")",
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Colors.white,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${product.family}",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24
+                  ),
+                ),
+                Text(
+                  product.type,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15
+                  ),
+                )
+              ],
             ),
-          ),
-          Text(_pendingProduct.volume.toString() + " " + _pendingProduct.units,
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w200))
+          )
         ],
       ),
     );
