@@ -49,7 +49,7 @@ class OrderClient {
         headers:
             apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
         body: jsonEncode({
-          "proxyId": "pr_1eZNywO8QSx6REPC2Tf9xt",
+          "proxyId": buyOrder.proxyId,
           "buyProducts": buyOrder.buyProducts.map((bp) =>
             {
               "earliestDate": bp.earliestDate.toIso8601String(),

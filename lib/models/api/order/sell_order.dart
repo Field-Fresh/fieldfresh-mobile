@@ -1,6 +1,6 @@
 import 'package:enum_to_string/enum_to_string.dart';
-import 'file:///C:/src/fieldfresh-mobile/lib/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/order/order.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/order/status_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 

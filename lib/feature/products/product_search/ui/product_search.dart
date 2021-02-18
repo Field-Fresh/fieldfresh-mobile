@@ -34,6 +34,7 @@ class _ProductSearchState extends State<ProductSearch> {
     _cubit = sl<ProductSearchCubit>();
     _searchController.addListener(() {
       _cubit.searchTextUpdated(_searchController.value.text);
+      // another event
     });
   }
 

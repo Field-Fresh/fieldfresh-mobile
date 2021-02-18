@@ -1,6 +1,7 @@
 import 'package:enum_to_string/enum_to_string.dart';
-import 'file:///C:/src/fieldfresh-mobile/lib/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/field_fresh_model.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
+
 
 class Order extends FieldFreshModel {
 

@@ -1,6 +1,6 @@
 import 'package:enum_to_string/enum_to_string.dart';
-import 'file:///C:/src/fieldfresh-mobile/lib/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/order/order.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/order/status_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 
@@ -10,11 +10,11 @@ class BuyOrder extends Order {
 
   List<BuyProduct> buyProducts;
 
-  BuyOrder(this.buyProducts, {id, isActive,})
-      : super(id: id, isActive: isActive, side: Side.SELL);
+  BuyOrder(this.buyProducts, proxyId, {id, isActive,})
+      : super(id: id, isActive: isActive, side: Side.SELL, proxyId: proxyId);
 
   static BuyOrder fromJson(Map<String, dynamic> json) {
-    return BuyOrder([]);
+    return BuyOrder([], "");
   }
 }
 
