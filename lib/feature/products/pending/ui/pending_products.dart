@@ -4,7 +4,7 @@ import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/feature/products/pending/state/states.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
-import 'package:fieldfreshmobile/widgets/pending_product_card_listItem.dart';
+import 'file:///C:/src/fieldfresh-mobile/lib/widgets/product/pending_product_card_listItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

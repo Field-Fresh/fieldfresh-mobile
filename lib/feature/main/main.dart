@@ -3,7 +3,7 @@ import 'package:fieldfreshmobile/feature/drawer/bloc/dashboard_state.dart';
 import 'package:fieldfreshmobile/feature/drawer/state/states.dart';
 import 'package:fieldfreshmobile/feature/drawer/ui/nav_drawer.dart';
 import 'package:fieldfreshmobile/feature/home/ui/home_page.dart';
-import 'package:fieldfreshmobile/feature/orders/pending_orders/ui/order_page.dart';
+import 'package:fieldfreshmobile/feature/orders/pending_orders/ui/pending_orders_view.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
 import 'package:fieldfreshmobile/models/api/user/user.dart';
 import 'package:fieldfreshmobile/util/user_singleton.dart';
@@ -48,7 +48,7 @@ class _MainState extends State<Main> {
     } else if (item == NavItem.profile) {
       return Container();
     } else if (item == NavItem.active_orders) {
-      return OrderPage();
+      return PendingOrders();
     } else {
       return Container();
     }

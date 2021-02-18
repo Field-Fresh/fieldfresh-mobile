@@ -1,7 +1,7 @@
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
-import 'package:fieldfreshmobile/widgets/product_card_listItem.dart';
+import 'file:///C:/src/fieldfresh-mobile/lib/widgets/product/product_card_listItem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
