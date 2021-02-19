@@ -5,7 +5,10 @@ import 'package:flutter/widgets.dart';
 class ProductImage extends StatelessWidget {
   final Product _product;
 
-  const ProductImage(this._product, {Key key}) : super(key: key);
+  final double width;
+  final double height;
+
+  const ProductImage(this._product, {Key key, this.width=180, this.height=100}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +17,8 @@ class ProductImage extends StatelessWidget {
       children: [
         Image.network(
           _product.imgUrl,
-          width: 180,
-          height: 100,
+          width: this.width,
+          height: this.height,
           fit: BoxFit.cover,
         ),
         Container(

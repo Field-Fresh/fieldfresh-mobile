@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:fieldfreshmobile/models/api/order/buy_order.dart';
+import 'package:fieldfreshmobile/models/api/order/sell_order.dart';
+import 'package:fieldfreshmobile/models/api/order/status_type.dart';
 import 'package:fieldfreshmobile/models/api/user/tokens.dart';
 import 'package:fieldfreshmobile/repository/client/field_fresh_api_client.dart';
 import 'package:fieldfreshmobile/repository/client/orders/requests.dart';
@@ -64,6 +66,48 @@ class OrderClient {
     final results = json.decode(response.body);
     if (response.statusCode == 200) {
       return BuyOrder.fromJson(results);
+    } else {
+      print(results);
+      throw Error();
+    }
+  }
+
+  Future<List<BuyProduct>> getBuyProducts(Status status, String proxyId) async {
+    Map<String, String> params = {};
+    params.putIfNotNull("proxyId", proxyId);
+    params.putIfNotNull("status", EnumToString.convertToString(status));
+    Uri url = Uri.http(apiClient.baseURL, "$_orderUrl/buy", params);
+    Tokens tokens = await AuthUtil.getAuth();
+    final response = await apiClient.httpClient.get(
+      url,
+      headers:
+      apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+    );
+    final results = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      return (results as List).map((e) => BuyProduct.fromJson(e)).toList();
+    } else {
+      print(results);
+      throw Error();
+    }
+  }
+
+  Future<List<SellProduct>> getSellProducts(Status status, String proxyId) async {
+    Map<String, String> params = {};
+    params.putIfNotNull("proxyId", proxyId);
+    params.putIfNotNull("status", EnumToString.convertToString(status));
+    Uri url = Uri.http(apiClient.baseURL, "$_orderUrl/sell", params);
+    Tokens tokens = await AuthUtil.getAuth();
+    final response = await apiClient.httpClient.get(
+      url,
+      headers:
+      apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+    );
+    final results = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      return (results as List).map((e) => SellProduct.fromJson(e)).toList();
     } else {
       print(results);
       throw Error();

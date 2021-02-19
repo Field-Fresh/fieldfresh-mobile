@@ -3,10 +3,14 @@ import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 
 abstract class PendingOrdersState extends Equatable {
-  PendingOrdersState([List props = const []]) : super(props);
+  final Side side;
+
+  PendingOrdersState(this.side, [List props = const []]) : super(props);
 }
 
 class Empty extends PendingOrdersState {
+  Empty() : super(null);
+
   @override
   String toString() {
     return "Empty";
@@ -14,10 +18,8 @@ class Empty extends PendingOrdersState {
 }
 
 class Loading extends PendingOrdersState {
-  final Side side;
-  final String proxyId;
 
-  Loading(this.side, this.proxyId) : super([side, proxyId]);
+  Loading(side) : super(side, [side]);
 
   @override
   String toString() {
@@ -26,16 +28,26 @@ class Loading extends PendingOrdersState {
 }
 
 class Loaded extends PendingOrdersState {
-  final Side side;
   final String proxyId;
   final List<PendingOrderItemData> pendingOrders;
 
-  Loaded(this.side, this.proxyId, this.pendingOrders)
-      : super([side, proxyId, pendingOrders]);
+  Loaded(side, this.proxyId, this.pendingOrders)
+      : super(side, [side, proxyId, pendingOrders]);
 
   @override
   String toString() {
     return "Loaded";
+  }
+}
+
+class Error extends PendingOrdersState {
+  final String proxyId;
+
+  Error(side, this.proxyId) : super(side, [side, proxyId]);
+
+  @override
+  String toString() {
+    return "Error";
   }
 }
 

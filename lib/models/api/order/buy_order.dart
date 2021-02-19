@@ -31,6 +31,11 @@ class BuyProduct extends FieldFreshModel {
       this.maxPriceCents, this.volume, this.product, this.serviceRadius});
 
   static BuyProduct fromJson(Map<String, dynamic> json) {
-    return BuyProduct();
+    return BuyProduct(
+      status: EnumToString.fromString(Status.values, json["status"]),
+      maxPriceCents: json["maxPriceCents"],
+      volume: json["volume"],
+      product: Product.fromJson(json["product"]),
+    );
   }
 }

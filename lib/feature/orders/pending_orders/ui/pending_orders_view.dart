@@ -14,20 +14,16 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PendingOrders extends StatefulWidget {
-  final String proxyId;
-
-  const PendingOrders({Key key, this.proxyId}) : super(key: key);
+  const PendingOrders({Key key}) : super(key: key);
 
   @override
-  _PendingOrdersState createState() => _PendingOrdersState(proxyId: proxyId);
+  _PendingOrdersState createState() => _PendingOrdersState();
 }
 
 class _PendingOrdersState extends State<PendingOrders> {
-  final String proxyId;
-
   PendingOrdersCubit _pendingOrdersCubit;
 
-  _PendingOrdersState({this.proxyId});
+  _PendingOrdersState();
 
   @override
   void initState() {
@@ -51,17 +47,34 @@ class _PendingOrdersState extends State<PendingOrders> {
 
   BlocBuilder _getListBody(Side side) => BlocBuilder(
         cubit: _pendingOrdersCubit,
+        buildWhen: (prev, cur) => (cur.side == side || cur is Empty),
         builder: (BuildContext context, state) {
           Widget content = CircularProgressIndicator();
-          if (state is Loaded &&
-              state.side == side &&
-              state.proxyId == proxyId) {
-            content = ListView.builder(
-                itemCount: state.pendingOrders.length,
-                itemBuilder: (context, index) =>
-                    PendingOrderItemView(state.pendingOrders[index]));
+          if (state is Loaded) {
+            content = state.pendingOrders.isNotEmpty
+                ? Expanded(
+                  child: ListView.builder(
+                      itemCount: state.pendingOrders.length,
+                      itemBuilder: (context, index) =>
+                          PendingOrderItemView(state.pendingOrders[index])),
+                )
+                : Text(
+                    "No Orders found",
+                    style: TextStyle(
+                        color: AppTheme.colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  );
+          } else if (state is Error) {
+            content = Text(
+              "Error loading orders",
+              style: TextStyle(
+                  color: AppTheme.colors.light.errorRed,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            );
           } else {
-            _pendingOrdersCubit.loadOrders(side: side, proxyId: proxyId);
+            _pendingOrdersCubit.loadOrders(side: side);
           }
 
           return ConstrainedBox(
@@ -87,9 +100,7 @@ class _PendingOrdersState extends State<PendingOrders> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      content
-                    ],
+                    children: [content],
                   ),
                 ),
               ],
