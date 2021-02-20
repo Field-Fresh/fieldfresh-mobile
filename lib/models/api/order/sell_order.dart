@@ -26,7 +26,15 @@ class SellProduct extends FieldFreshModel {
   final double volume;
   final Product product;
 
-  SellProduct(this.status, this.earliestDate, this.latestDate,
-      this.minPriceCents, this.volume, this.product);
+  SellProduct({this.status, this.earliestDate, this.latestDate,
+      this.minPriceCents, this.volume, this.product});
 
+  static SellProduct fromJson(Map<String, dynamic> json) {
+    return SellProduct(
+      status: EnumToString.fromString(Status.values, json["status"]),
+      minPriceCents: json["minPriceCents"],
+      volume: json["volume"],
+      product: Product.fromJson(json["product"]),
+    );
+  }
 }

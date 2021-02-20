@@ -1,8 +1,10 @@
 import 'package:fieldfreshmobile/models/api/order/buy_order.dart';
+import 'package:fieldfreshmobile/models/api/order/sell_order.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
+import 'package:fieldfreshmobile/models/api/order/status_type.dart';
 import 'package:fieldfreshmobile/repository/client/orders/order_client.dart';
 import 'package:fieldfreshmobile/repository/client/orders/requests.dart';
 import 'package:fieldfreshmobile/repository/client/orders/response.dart';
-
 
 class OrderRepository {
   final OrderClient _orderClient;
@@ -13,8 +15,15 @@ class OrderRepository {
     return _orderClient.getOrders(request);
   }
 
+  Future<List<BuyProduct>> getBuyOrdersFor(Status status, String proxyId) {
+    return _orderClient.getBuyProducts(status, proxyId);
+  }
+
+  Future<List<SellProduct>> getSellOrdersFor(Status status, String proxyId) {
+    return _orderClient.getSellProducts(status, proxyId);
+  }
+
   Future<BuyOrder> createBuyOrder(BuyOrder buyOrder) {
     return _orderClient.createBuyOrder(buyOrder);
   }
-
 }
