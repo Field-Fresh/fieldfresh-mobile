@@ -1,3 +1,4 @@
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
@@ -7,28 +8,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart' as intl;
 
-typedef ProductInfoSubmittedCallback = void Function(BuyOrderProductInfo info);
+// typedef ProductInfoSubmittedCallback = void Function(OrderProductInfo info);
 
-class ProductInformationStep extends Step {
+typedef ProductInfoSubmittedCallback<type> = void Function(type info);
+
+
+class ProductInformationStep<type> extends Step {
   ProductInformationStep(
-      bool isActive, Product product, ProductInfoSubmittedCallback callback,
+      bool isActive, Product product, ProductInfoSubmittedCallback<type> callback,
       {StepState state = StepState.indexed})
       : super(
             title: Text("Info"),
-            content: ProductInformationStepContent(product, callback),
+            content: ProductInformationStepContent<type>(product, callback),
             isActive: isActive,
             state: state);
 }
 
-class ProductInformationStepContent extends StatefulWidget {
+class ProductInformationStepContent<type> extends StatefulWidget {
   final Product _product;
-  final ProductInfoSubmittedCallback callback;
+  final ProductInfoSubmittedCallback<type> callback;
 
   const ProductInformationStepContent(this._product, this.callback, {Key key})
       : super(key: key);
 
   @override
-  _ProductInformationStepContentState createState() =>
+  _BuyProductInformationStepContentState createState() =>
+      _ProductInformationStepContentState(_product, callback);
+
+  @override
+  _SellProductInformationStepContentState createState() =>
       _ProductInformationStepContentState(_product, callback);
 }
 
@@ -69,7 +77,7 @@ class _ProductInformationStepContentState
                     decoration: InputDecoration(
                       labelStyle:
                           TextStyle(color: AppTheme.colors.white, fontSize: 20),
-                      labelText: 'Service Radius (Km)',
+                      labelText: 'Service Radius (Km) yer reddy',
                     ),
                     min: 5,
                     max: 250,
@@ -184,7 +192,7 @@ class _ProductInformationStepContentState
                 if (_formKey.currentState.validate()) {
                   List<DateTime> matchingPeriod =
                       _formKey.currentState.value['matching_period'];
-                  var info = BuyOrderProductInfo(
+                  var info = SellOrderProductInfo(
                       serviceRadius: _formKey.currentState.value['service_radius'],
                       volume:
                           double.parse(_formKey.currentState.value['volume']),
@@ -203,7 +211,7 @@ class _ProductInformationStepContentState
   }
 }
 
-class BuyOrderProductInfo {
+class BuyOrderProductInfo{
   final double serviceRadius;
   final double volume;
   final double unitMaxPrice;
@@ -216,4 +224,19 @@ class BuyOrderProductInfo {
       this.unitMaxPrice,
       this.matchingPeriodStart,
       this.matchingPeriodEnd});
+}
+
+class SellOrderProductInfo{
+  final double serviceRadius;
+  final double volume;
+  final double unitMaxPrice;
+  final DateTime matchingPeriodStart;
+  final DateTime matchingPeriodEnd;
+
+  SellOrderProductInfo(
+      {this.serviceRadius,
+        this.volume,
+        this.unitMaxPrice,
+        this.matchingPeriodStart,
+        this.matchingPeriodEnd});
 }
