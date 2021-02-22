@@ -123,7 +123,7 @@ class _CreateSellOrderPageState extends State<CreateSellOrderPage> {
               ProductSelectionStep(state.step == 0, (Product product) {
                 _cubit.nextWithProduct(product);
               }),
-              ProductInformationStep(state.step == 1, state.product,
+              SellProductInformationStep(state.step == 1, state.product,
                       (SellOrderProductInfo info) {
                     _cubit.nextWithInfo(info);
                   })

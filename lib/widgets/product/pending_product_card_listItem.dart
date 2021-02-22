@@ -2,7 +2,6 @@ import 'package:fieldfreshmobile/models/api/product/pending_product.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/product/product_image.dart';
-import 'file:///C:/src/fieldfresh-mobile/lib/widgets/product/product_class_stamp.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 

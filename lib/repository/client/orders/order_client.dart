@@ -3,10 +3,7 @@ import 'dart:convert';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:fieldfreshmobile/models/api/order/buy_order.dart';
 import 'package:fieldfreshmobile/models/api/order/sell_order.dart';
-<<<<<<< Updated upstream
 import 'package:fieldfreshmobile/models/api/order/status_type.dart';
-=======
->>>>>>> Stashed changes
 import 'package:fieldfreshmobile/models/api/user/tokens.dart';
 import 'package:fieldfreshmobile/repository/client/field_fresh_api_client.dart';
 import 'package:fieldfreshmobile/repository/client/orders/requests.dart';
@@ -74,7 +71,7 @@ class OrderClient {
       throw Error();
     }
   }
-<<<<<<< Updated upstream
+
 
   Future<List<BuyProduct>> getBuyProducts(Status status, String proxyId) async {
     Map<String, String> params = {};
@@ -112,7 +109,12 @@ class OrderClient {
 
     if (response.statusCode == 200) {
       return (results as List).map((e) => SellProduct.fromJson(e)).toList();
-=======
+    }else{
+      print(results);
+      throw Error();
+    }
+  }
+
   Future<SellOrder> createSellOrder(SellOrder sellOrder) async {
     Uri url = Uri.http(
       apiClient.baseURL,
@@ -129,7 +131,7 @@ class OrderClient {
           {
             "earliestDate": sp.earliestDate.toIso8601String(),
             "latestDate": sp.latestDate.toIso8601String(),
-            "maxPriceCents": sp.maxPriceCents,
+            "minPriceCents": sp.minPriceCents,
             "serviceRadius": sp.serviceRadius,
             "volume": sp.volume,
             "productId": sp.product.id
@@ -139,7 +141,7 @@ class OrderClient {
     final results = json.decode(response.body);
     if (response.statusCode == 200) {
       return SellOrder.fromJson(results);
->>>>>>> Stashed changes
+
     } else {
       print(results);
       throw Error();

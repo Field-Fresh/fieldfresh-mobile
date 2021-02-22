@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'feature/user/signup/ui/user_signup.dart';
+import 'models/api/order/side_type.dart';
 
 void main() async {
   await init();
@@ -34,7 +35,7 @@ class FieldFreshApp extends StatelessWidget {
             "/": (context) => LoginScreen(),
             "/signup": (context) => UserSignUpScreen(),
             "/main": (context) => Main(),
-            // "/order/buy": (context) => CreateSellOrderPage(),
+            "/order/buy": (context) => CreateBuyOrderPage(),
             "/order/sell": (context) => CreateSellOrderPage()
           }),
     );

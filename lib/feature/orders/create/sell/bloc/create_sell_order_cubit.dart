@@ -34,7 +34,7 @@ class SellOrderCreationCubit extends Cubit<SellOrderCreationState> {
           SellProduct(
               earliestDate: _info.matchingPeriodStart,
               latestDate: _info.matchingPeriodEnd,
-              maxPriceCents: (_info.unitMaxPrice*100).toInt(),
+              minPriceCents: (_info.unitMinPrice*100).toInt(),
               volume: _info.volume,
               serviceRadius: _info.serviceRadius,
               product: _selectedProduct
@@ -43,7 +43,7 @@ class SellOrderCreationCubit extends Cubit<SellOrderCreationState> {
         await PreferenceUtil.get(DEFAULT_PROXY)
     );
     _orderRepository.createSellOrder(sellOrder)
-        .then((buyOrder) => this.emit(SellOrderCreated(buyOrder)));
+        .then((sellOrder) => this.emit(SellOrderCreated(sellOrder)));
     emit(SellOrderCreating(sellOrder));
   }
 

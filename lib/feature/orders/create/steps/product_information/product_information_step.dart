@@ -1,42 +1,96 @@
+
+
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
-import 'file:///C:/src/fieldfresh-mobile/lib/widgets/product/product_card_listItem.dart';
+import 'package:fieldfreshmobile/widgets/product/product_card_listItem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart' as intl;
 
-// typedef ProductInfoSubmittedCallback = void Function(OrderProductInfo info);
+// typedef BuyProductInfoSubmittedCallback = void Function(BuyOrderProductInfo info);
+// typedef SellProductInfoSubmittedCallback = void Function(SellOrderProductInfo info);
 
-typedef ProductInfoSubmittedCallback<T> = void Function(T info);
+typedef ProductInfoSubmittedCallback<T extends OrderProductInfo> = void Function(T info);
 
-class ProductInformationStep extends Step {
-  ProductInformationStep(bool isActive, Product product,
-      ProductInfoSubmittedCallback callback,
+// // ============================================================
+// // Steps
+// // ============================================================
+
+
+class BuyProductInformationStep extends Step {
+  BuyProductInformationStep(bool isActive, Product product,
+      // BuyProductInfoSubmittedCallback callback,
+      ProductInfoSubmittedCallback<BuyOrderProductInfo> callback,
       {StepState state = StepState.indexed})
       : super(
       title: Text("Info"),
-      content: ProductInformationStepContent<T>(product, callback),
+      content: BuyProductInformationStepContent(product, callback),
       isActive: isActive,
       state: state);
 }
 
-abstract class ProductInformationStepContent<O> extends StatefulWidget {
-  final Product product;
-  final ProductInfoSubmittedCallback<O> callback;
+class SellProductInformationStep extends Step {
+  SellProductInformationStep(bool isActive, Product product,
+      ProductInfoSubmittedCallback<SellOrderProductInfo> callback,
+      // SellProductInfoSubmittedCallback callback,
+      {StepState state = StepState.indexed})
+      : super(
+      title: Text("Info"),
+      content: SellProductInformationStepContent(product, callback),
+      isActive: isActive,
+      state: state);
+}
 
-  const ProductInformationStepContent(this.product,
+// // ============================================================
+// // Step Content
+// // ============================================================
+//
+
+
+class BuyProductInformationStepContent extends StatefulWidget {
+  final Product product;
+  // final BuyProductInfoSubmittedCallback callback;
+  final ProductInfoSubmittedCallback<BuyOrderProductInfo> callback;
+
+  const BuyProductInformationStepContent(this.product,
       this.callback, {
         Key key,
       }) : super(key: key);
+
+  @override
+  _BuyProductInformationStepContentState createState() {
+    return _BuyProductInformationStepContentState(product, callback);
+  }
 }
 
+class SellProductInformationStepContent extends StatefulWidget {
+  final Product product;
+  final ProductInfoSubmittedCallback<SellOrderProductInfo> callback;
+  // final SellProductInfoSubmittedCallback callback;
+
+  const SellProductInformationStepContent(this.product,
+      this.callback, {
+        Key key,
+      }) : super(key: key);
+
+  @override
+  _SellProductInformationStepContentState createState() {
+    return _SellProductInformationStepContentState(product, callback);
+  }
+}
+//
+// // ============================================================
+// // Step Content State
+// // ============================================================
+//
 abstract class _ProductInformationStepContentState<O extends OrderProductInfo>
-    extends State<ProductInformationStepContent<O>> {
+    extends State {
   final _formKey = GlobalKey<FormBuilderState>();
   final ProductInfoSubmittedCallback<O> callback;
+  // final BuyProductInfoSubmittedCallback callback;
   final Product _product;
 
   _ProductInformationStepContentState(this._product, this.callback);
@@ -85,39 +139,19 @@ abstract class _ProductInformationStepContentState<O extends OrderProductInfo>
 
   List<Widget> getFormContent(Product product);
 
-  O handleValidSubmission(FormBuilderState formState);
+  OrderProductInfo handleValidSubmission(FormBuilderState formState);
 }
 
 class _BuyProductInformationStepContentState
     extends _ProductInformationStepContentState<BuyOrderProductInfo> {
   _BuyProductInformationStepContentState(Product product,
       ProductInfoSubmittedCallback<BuyOrderProductInfo> callback)
+      // BuyProductInfoSubmittedCallback callback)
       : super(product, callback);
 
   @override
   List<Widget> getFormContent(Product product) =>
       [
-        Container(
-          child: FormBuilderSlider(
-            validator: FormBuilderValidators.required(context),
-            label: "Service Radius (Km)",
-            divisions: 245,
-            textStyle: TextStyle(
-                color: AppTheme.colors.light.primary,
-                fontWeight: FontWeight.bold,
-                fontSize: 18),
-            name: "service_radius",
-            decoration: InputDecoration(
-              labelStyle: TextStyle(color: AppTheme.colors.white, fontSize: 20),
-              labelText: 'Service Radius (Km) yer reddy',
-            ),
-            min: 5,
-            max: 250,
-            minTextStyle: TextStyle(color: AppTheme.colors.white),
-            maxTextStyle: TextStyle(color: AppTheme.colors.white),
-            initialValue: 50,
-          ),
-        ),
         Container(
           child: FormBuilderDateRangePicker(
             name: "matching_period",
@@ -224,7 +258,9 @@ class _BuyProductInformationStepContentState
 class _SellProductInformationStepContentState
     extends _ProductInformationStepContentState<SellOrderProductInfo> {
   _SellProductInformationStepContentState(Product product,
-      ProductInfoSubmittedCallback<SellOrderProductInfo> callback)
+      ProductInfoSubmittedCallback<SellOrderProductInfo> callback
+      // BuyProductInfoSubmittedCallback callback
+      )
       : super(product, callback);
 
   @override
@@ -242,7 +278,7 @@ class _SellProductInformationStepContentState
             name: "service_radius",
             decoration: InputDecoration(
               labelStyle: TextStyle(color: AppTheme.colors.white, fontSize: 20),
-              labelText: 'Service Radius (Km) yer reddy',
+              labelText: 'Service Radius (Km)',
             ),
             min: 5,
             max: 250,

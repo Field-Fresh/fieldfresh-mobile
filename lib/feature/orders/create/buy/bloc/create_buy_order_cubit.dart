@@ -9,7 +9,8 @@ import 'package:fieldfreshmobile/util/constants.dart';
 import 'package:fieldfreshmobile/util/preference.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BuyOrderCreationCubit extends Cubit<BuyOrderCreationState> {
+
+class BuyOrderCreationCubit extends Cubit<BuyOrderCreationState>{
 
   final OrderRepository _orderRepository;
 
@@ -27,7 +28,7 @@ class BuyOrderCreationCubit extends Cubit<BuyOrderCreationState> {
     emit(BuyOrderCreationStep(_currentStep));
   }
 
-  Future<void> nextWithInfo(BuyOrderProductInfo info) async {
+  Future<void> nextWithInfo(covariant BuyOrderProductInfo info) async {
     _info = info;
     BuyOrder buyOrder = BuyOrder(
       [
