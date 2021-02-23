@@ -1,5 +1,5 @@
 import 'package:fieldfreshmobile/feature/home/bloc/home_cubit.dart';
-import 'package:fieldfreshmobile/feature/orders/create/buy/bloc/create_buy_order_cubit.dart';
+import 'package:fieldfreshmobile/feature/orders/create/bloc/create_order_cubit.dart';
 import 'package:fieldfreshmobile/feature/orders/pending_orders/bloc/pending_orders_cubit.dart';
 import 'package:fieldfreshmobile/feature/orders/summary/order_count/bloc/order_count_badge_cubit.dart';
 import 'package:fieldfreshmobile/feature/products/pending/bloc/pending_product_bloc.dart';
@@ -31,8 +31,8 @@ Future<void> init() async {
   sl.registerFactory(() => UserLoginBloc(sl(), sl()));
   sl.registerFactory(() => PendingProductsBloc(sl()));
   sl.registerFactory(() => OrderCountCubit(sl()));
-  sl.registerFactory(() => BuyOrderCreationCubit(sl()));
-  sl.registerFactory(() => SellOrderCreationCubit(sl()));
+  sl.registerFactory(() => OrderCreationCubit(sl()));
+  // sl.registerFactory(() => SellOrderCreationCubit(sl()));
   sl.registerFactory(() => ProductSearchCubit(sl()));
   sl.registerFactory(() => HomePageCubit());
 
