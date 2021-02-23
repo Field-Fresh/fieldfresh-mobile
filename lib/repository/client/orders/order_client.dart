@@ -57,7 +57,6 @@ class OrderClient {
               "earliestDate": bp.earliestDate.toIso8601String(),
               "latestDate": bp.latestDate.toIso8601String(),
               "maxPriceCents": bp.maxPriceCents,
-              "serviceRadius": bp.serviceRadius,
               "volume": bp.volume,
               "productId": bp.product.id
             }

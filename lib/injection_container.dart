@@ -19,7 +19,6 @@ import 'package:fieldfreshmobile/repository/user_repository.dart';
 import 'package:get_it/get_it.dart';
 
 import 'feature/drawer/bloc/dashboard_bloc.dart';
-import 'feature/orders/create/sell/bloc/create_sell_order_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -32,7 +31,6 @@ Future<void> init() async {
   sl.registerFactory(() => PendingProductsBloc(sl()));
   sl.registerFactory(() => OrderCountCubit(sl()));
   sl.registerFactory(() => OrderCreationCubit(sl()));
-  // sl.registerFactory(() => SellOrderCreationCubit(sl()));
   sl.registerFactory(() => ProductSearchCubit(sl()));
   sl.registerFactory(() => HomePageCubit());
 

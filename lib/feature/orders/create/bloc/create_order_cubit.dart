@@ -12,7 +12,7 @@ import 'package:fieldfreshmobile/util/preference.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
-class OrderCreationCubit extends Cubit<OrderCreationState>{
+class OrderCreationCubit extends Cubit<OrderCreationState> {
 
   final OrderRepository _orderRepository;
 
@@ -31,38 +31,14 @@ class OrderCreationCubit extends Cubit<OrderCreationState>{
   }
 
   Future<void> nextWithInfo(OrderProductInfo info) async {
-    if(info is BuyOrderProductInfo) {
-      _info = info;
-      BuyOrder buyOrder = BuyOrder([
-        BuyProduct(
-            earliestDate: info.matchingPeriodStart,
-            latestDate: info.matchingPeriodEnd,
-            maxPriceCents: (info.unitMaxPrice * 100).toInt(),
-            volume: info.volume,
-            serviceRadius: info.serviceRadius,
-            product: _selectedProduct)
-      ], await PreferenceUtil.get(DEFAULT_PROXY));
-      _orderRepository
-          .createBuyOrder(buyOrder)
-          .then((buyOrder) => this.emit(OrderCreated(buyOrder)));
-      emit(OrderCreating(buyOrder));
-    }else if (info is SellOrderProductInfo){
-      SellOrder sellOrder = SellOrder(
-          [
-            SellProduct(
-                earliestDate: info.matchingPeriodStart,
-                latestDate: info.matchingPeriodEnd,
-                minPriceCents: (info.unitMinPrice*100).toInt(),
-                volume: info.volume,
-                serviceRadius: info.serviceRadius,
-                product: _selectedProduct
-            )
-          ],
-          await PreferenceUtil.get(DEFAULT_PROXY)
-      );
-      _orderRepository.createSellOrder(sellOrder)
-          .then((sellOrder) => this.emit(OrderCreated(sellOrder)));
-      emit(OrderCreating(sellOrder));
+    String proxyId = await PreferenceUtil.get(DEFAULT_PROXY);
+    switch (info.runtimeType) {
+      case BuyOrderProductInfo:
+        _createBuyOrder(info, proxyId);
+        break;
+      case SellOrderProductInfo:
+        _createSellOrder(info, proxyId);
+        break;
     }
   }
 
@@ -73,4 +49,38 @@ class OrderCreationCubit extends Cubit<OrderCreationState>{
   }
 
   int getCurrentStep() => _currentStep;
+
+  void _createBuyOrder(BuyOrderProductInfo info, String proxyId) {
+    BuyOrder buyOrder = BuyOrder([
+      BuyProduct(
+          earliestDate: info.matchingPeriodStart,
+          latestDate: info.matchingPeriodEnd,
+          maxPriceCents: (info.unitMaxPrice * 100).toInt(),
+          volume: info.volume,
+          product: _selectedProduct)
+    ], proxyId);
+    _orderRepository
+        .createBuyOrder(buyOrder)
+        .then((buyOrder) => this.emit(OrderCreated(buyOrder)));
+    emit(OrderCreating(buyOrder));
+  }
+
+  void _createSellOrder(SellOrderProductInfo info, String proxyId) {
+    SellOrder sellOrder = SellOrder(
+        [
+          SellProduct(
+              earliestDate: info.matchingPeriodStart,
+              latestDate: info.matchingPeriodEnd,
+              minPriceCents: (info.unitMinPrice * 100).toInt(),
+              volume: info.volume,
+              serviceRadius: info.serviceRadius,
+              product: _selectedProduct
+          )
+        ], proxyId
+    );
+    _orderRepository.createSellOrder(sellOrder)
+        .then((sellOrder) => this.emit(OrderCreated(sellOrder)));
+    emit(OrderCreating(sellOrder));
+  }
+
 }

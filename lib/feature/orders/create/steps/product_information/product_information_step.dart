@@ -1,5 +1,3 @@
-
-
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
@@ -13,23 +11,25 @@ import 'package:intl/intl.dart' as intl;
 // typedef BuyProductInfoSubmittedCallback = void Function(BuyOrderProductInfo info);
 // typedef SellProductInfoSubmittedCallback = void Function(SellOrderProductInfo info);
 
-typedef ProductInfoSubmittedCallback<T extends OrderProductInfo> = void Function(T info);
+typedef ProductInfoSubmittedCallback<T extends OrderProductInfo> = void
+    Function(T info);
 
 // // ============================================================
 // // Steps
 // // ============================================================
 
-
 class BuyProductInformationStep extends Step {
-  BuyProductInformationStep(bool isActive, Product product,
+  BuyProductInformationStep(
+      bool isActive,
+      Product product,
       // BuyProductInfoSubmittedCallback callback,
       ProductInfoSubmittedCallback<BuyOrderProductInfo> callback,
       {StepState state = StepState.indexed})
       : super(
-      title: Text("Info"),
-      content: BuyProductInformationStepContent(product, callback),
-      isActive: isActive,
-      state: state);
+            title: Text("Info"),
+            content: BuyProductInformationStepContent(product, callback),
+            isActive: isActive,
+            state: state);
 }
 
 class SellProductInformationStep extends Step {
@@ -38,10 +38,10 @@ class SellProductInformationStep extends Step {
       // SellProductInfoSubmittedCallback callback,
       {StepState state = StepState.indexed})
       : super(
-      title: Text("Info"),
-      content: SellProductInformationStepContent(product, callback),
-      isActive: isActive,
-      state: state);
+            title: Text("Info"),
+            content: SellProductInformationStepContent(product, callback),
+            isActive: isActive,
+            state: state);
 }
 
 // // ============================================================
@@ -49,16 +49,17 @@ class SellProductInformationStep extends Step {
 // // ============================================================
 //
 
-
 class BuyProductInformationStepContent extends StatefulWidget {
   final Product product;
+
   // final BuyProductInfoSubmittedCallback callback;
   final ProductInfoSubmittedCallback<BuyOrderProductInfo> callback;
 
-  const BuyProductInformationStepContent(this.product,
-      this.callback, {
-        Key key,
-      }) : super(key: key);
+  const BuyProductInformationStepContent(
+    this.product,
+    this.callback, {
+    Key key,
+  }) : super(key: key);
 
   @override
   _BuyProductInformationStepContentState createState() {
@@ -69,18 +70,21 @@ class BuyProductInformationStepContent extends StatefulWidget {
 class SellProductInformationStepContent extends StatefulWidget {
   final Product product;
   final ProductInfoSubmittedCallback<SellOrderProductInfo> callback;
+
   // final SellProductInfoSubmittedCallback callback;
 
-  const SellProductInformationStepContent(this.product,
-      this.callback, {
-        Key key,
-      }) : super(key: key);
+  const SellProductInformationStepContent(
+    this.product,
+    this.callback, {
+    Key key,
+  }) : super(key: key);
 
   @override
   _SellProductInformationStepContentState createState() {
     return _SellProductInformationStepContentState(product, callback);
   }
 }
+
 //
 // // ============================================================
 // // Step Content State
@@ -90,6 +94,7 @@ abstract class _ProductInformationStepContentState<O extends OrderProductInfo>
     extends State {
   final _formKey = GlobalKey<FormBuilderState>();
   final ProductInfoSubmittedCallback<O> callback;
+
   // final BuyProductInfoSubmittedCallback callback;
   final Product _product;
 
@@ -98,6 +103,7 @@ abstract class _ProductInformationStepContentState<O extends OrderProductInfo>
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         if (_product != null)
           Container(
@@ -109,7 +115,7 @@ abstract class _ProductInformationStepContentState<O extends OrderProductInfo>
             height: 400,
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: getFormContent(_product),
             ),
           ),
@@ -134,6 +140,59 @@ abstract class _ProductInformationStepContentState<O extends OrderProductInfo>
     );
   }
 
+  Container getVolumePrice(BuildContext context) => Container(
+        margin: EdgeInsets.only(bottom: 32),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: 100,
+              child: FormBuilderTextField(
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.min(context, 1.0,
+                      errorText: "Must be greater than 1"),
+                  FormBuilderValidators.required(context),
+                ]),
+                style: TextStyle(color: AppTheme.colors.light.primary),
+                decoration: InputDecoration(
+                    suffix: Text(
+                      "Lbs",
+                      style: TextStyle(color: AppTheme.colors.white),
+                    ),
+                    labelText: "Volume",
+                    labelStyle: TextStyle(color: AppTheme.colors.white)),
+                keyboardType: TextInputType.number,
+                name: "volume",
+              ),
+            ),
+            Container(
+              width: 150,
+              child: FormBuilderTextField(
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.min(context, 1.0,
+                      errorText: "Must be greater than 1"),
+                  FormBuilderValidators.required(context),
+                ]),
+                style: TextStyle(color: AppTheme.colors.light.primary),
+                decoration: InputDecoration(
+                    suffix: Text("/Lbs",
+                        style: TextStyle(color: AppTheme.colors.white)),
+                    prefix: Container(
+                      margin: EdgeInsets.only(right: 8),
+                      child: Text("CAD",
+                          style: TextStyle(color: AppTheme.colors.white)),
+                    ),
+                    labelText: "Min cost per unit",
+                    labelStyle:
+                        TextStyle(color: AppTheme.colors.white, fontSize: 16)),
+                keyboardType: TextInputType.number,
+                name: "cost_per_unit",
+              ),
+            )
+          ],
+        ),
+      );
+
   List<DateTime> getMatchingPeriod(FormBuilderState formState) =>
       formState.value['matching_period'];
 
@@ -150,8 +209,7 @@ class _BuyProductInformationStepContentState
       : super(product, callback);
 
   @override
-  List<Widget> getFormContent(Product product) =>
-      [
+  List<Widget> getFormContent(Product product) => [
         Container(
           child: FormBuilderDateRangePicker(
             name: "matching_period",
@@ -176,80 +234,21 @@ class _BuyProductInformationStepContentState
               helperStyle: TextStyle(color: AppTheme.colors.white),
               helperMaxLines: 4,
               helperText:
-              'Please select the first and last day you would like to receive order matches. '
+                  'Please select the first and last day you would like to receive order matches. '
                   'Please account for your lead time and product quality.',
             ),
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(bottom: 32),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                child: Row(
-                  children: [
-                    Container(
-                      width: 90,
-                      child: FormBuilderTextField(
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.min(context, 1.0,
-                              errorText: "Must be greater than 1"),
-                          FormBuilderValidators.required(context),
-                        ]),
-                        style: TextStyle(color: AppTheme.colors.light.primary),
-                        decoration: InputDecoration(
-                            labelText: "Volume",
-                            labelStyle:
-                            TextStyle(color: AppTheme.colors.white)),
-                        keyboardType: TextInputType.number,
-                        name: "volume",
-                      ),
-                    ),
-                    Text(
-                      "Lbs",
-                      style: TextStyle(color: AppTheme.colors.light.primary),
-                    )
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: 100,
-                    child: FormBuilderTextField(
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.min(context, 1.0,
-                            errorText: "Must be greater than 1"),
-                        FormBuilderValidators.required(context),
-                      ]),
-                      style: TextStyle(color: AppTheme.colors.light.primary),
-                      decoration: InputDecoration(
-                          labelText: "Max Cost per Unit",
-                          labelStyle: TextStyle(color: AppTheme.colors.white)),
-                      keyboardType: TextInputType.number,
-                      name: "cost_per_unit",
-                    ),
-                  ),
-                  Text("/Lbs",
-                      style: TextStyle(color: AppTheme.colors.light.primary))
-                ],
-              )
-            ],
-          ),
-        )
+        getVolumePrice(context)
       ];
 
   @override
   BuyOrderProductInfo handleValidSubmission(FormBuilderState formState) {
     var matchingPeriod = getMatchingPeriod(formState);
     return BuyOrderProductInfo(
-        serviceRadius:
-        _formKey.currentState.value['service_radius'],
-        volume:
-        double.parse(_formKey.currentState.value['volume']),
-        unitMaxPrice: double.parse(
-            _formKey.currentState.value['cost_per_unit']),
+        volume: double.parse(_formKey.currentState.value['volume']),
+        unitMaxPrice:
+            double.parse(_formKey.currentState.value['cost_per_unit']),
         matchingPeriodStart: matchingPeriod[0],
         matchingPeriodEnd: matchingPeriod[1]);
   }
@@ -264,8 +263,7 @@ class _SellProductInformationStepContentState
       : super(product, callback);
 
   @override
-  List<Widget> getFormContent(Product product) =>
-      [
+  List<Widget> getFormContent(Product product) => [
         Container(
           child: FormBuilderSlider(
             validator: FormBuilderValidators.required(context),
@@ -311,80 +309,22 @@ class _SellProductInformationStepContentState
               helperStyle: TextStyle(color: AppTheme.colors.white),
               helperMaxLines: 4,
               helperText:
-              'Please select the first and last day you would like to receive order matches. '
+                  'Please select the first and last day you would like to receive order matches. '
                   'Please account for your lead time and product quality.',
             ),
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(bottom: 32),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                child: Row(
-                  children: [
-                    Container(
-                      width: 90,
-                      child: FormBuilderTextField(
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.min(context, 1.0,
-                              errorText: "Must be greater than 1"),
-                          FormBuilderValidators.required(context),
-                        ]),
-                        style: TextStyle(color: AppTheme.colors.light.primary),
-                        decoration: InputDecoration(
-                            labelText: "Volume",
-                            labelStyle:
-                            TextStyle(color: AppTheme.colors.white)),
-                        keyboardType: TextInputType.number,
-                        name: "volume",
-                      ),
-                    ),
-                    Text(
-                      "Lbs",
-                      style: TextStyle(color: AppTheme.colors.light.primary),
-                    )
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: 100,
-                    child: FormBuilderTextField(
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.min(context, 1.0,
-                            errorText: "Must be greater than 1"),
-                        FormBuilderValidators.required(context),
-                      ]),
-                      style: TextStyle(color: AppTheme.colors.light.primary),
-                      decoration: InputDecoration(
-                          labelText: "Max Cost per Unit",
-                          labelStyle: TextStyle(color: AppTheme.colors.white)),
-                      keyboardType: TextInputType.number,
-                      name: "cost_per_unit",
-                    ),
-                  ),
-                  Text("/Lbs",
-                      style: TextStyle(color: AppTheme.colors.light.primary))
-                ],
-              )
-            ],
-          ),
-        )
+        getVolumePrice(context)
       ];
 
   @override
   SellOrderProductInfo handleValidSubmission(FormBuilderState formState) {
     var matchingPeriod = getMatchingPeriod(formState);
     return SellOrderProductInfo(
-        serviceRadius:
-        _formKey.currentState.value['service_radius'],
-        volume:
-        double.parse(_formKey.currentState.value['volume']),
-        unitMinPrice: double.parse(
-            _formKey.currentState.value['cost_per_unit']),
+        serviceRadius: _formKey.currentState.value['service_radius'],
+        volume: double.parse(_formKey.currentState.value['volume']),
+        unitMinPrice:
+            double.parse(_formKey.currentState.value['cost_per_unit']),
         matchingPeriodStart: matchingPeriod[0],
         matchingPeriodEnd: matchingPeriod[1]);
   }
@@ -395,19 +335,15 @@ abstract class OrderProductInfo {
   final DateTime matchingPeriodEnd;
   final double volume;
 
-  OrderProductInfo(this.matchingPeriodStart, this.matchingPeriodEnd,
-      this.volume);
+  OrderProductInfo(
+      this.matchingPeriodStart, this.matchingPeriodEnd, this.volume);
 }
 
 class BuyOrderProductInfo extends OrderProductInfo {
-  final double serviceRadius;
   final double unitMaxPrice;
 
-  BuyOrderProductInfo({this.serviceRadius,
-    volume,
-    this.unitMaxPrice,
-    matchingPeriodStart,
-    matchingPeriodEnd})
+  BuyOrderProductInfo(
+      {volume, this.unitMaxPrice, matchingPeriodStart, matchingPeriodEnd})
       : super(matchingPeriodStart, matchingPeriodEnd, volume);
 }
 
@@ -415,10 +351,11 @@ class SellOrderProductInfo extends OrderProductInfo {
   final double serviceRadius;
   final double unitMinPrice;
 
-  SellOrderProductInfo({this.serviceRadius,
-    volume,
-    this.unitMinPrice,
-    matchingPeriodStart,
-    matchingPeriodEnd})
+  SellOrderProductInfo(
+      {this.serviceRadius,
+      volume,
+      this.unitMinPrice,
+      matchingPeriodStart,
+      matchingPeriodEnd})
       : super(matchingPeriodStart, matchingPeriodEnd, volume);
 }
