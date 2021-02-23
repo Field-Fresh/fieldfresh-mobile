@@ -23,12 +23,11 @@ class BuyProduct extends FieldFreshModel {
   final DateTime earliestDate;
   final DateTime latestDate;
   final int maxPriceCents;
-  final double serviceRadius;
   final double volume;
   final Product product;
 
   BuyProduct({this.status, this.earliestDate, this.latestDate,
-      this.maxPriceCents, this.volume, this.product, this.serviceRadius});
+      this.maxPriceCents, this.volume, this.product});
 
   static BuyProduct fromJson(Map<String, dynamic> json) {
     return BuyProduct(

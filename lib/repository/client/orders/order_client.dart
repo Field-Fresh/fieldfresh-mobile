@@ -57,7 +57,6 @@ class OrderClient {
               "earliestDate": bp.earliestDate.toIso8601String(),
               "latestDate": bp.latestDate.toIso8601String(),
               "maxPriceCents": bp.maxPriceCents,
-              "serviceRadius": bp.serviceRadius,
               "volume": bp.volume,
               "productId": bp.product.id
             }
@@ -71,6 +70,7 @@ class OrderClient {
       throw Error();
     }
   }
+
 
   Future<List<BuyProduct>> getBuyProducts(Status status, String proxyId) async {
     Map<String, String> params = {};
@@ -108,6 +108,39 @@ class OrderClient {
 
     if (response.statusCode == 200) {
       return (results as List).map((e) => SellProduct.fromJson(e)).toList();
+    }else{
+      print(results);
+      throw Error();
+    }
+  }
+
+  Future<SellOrder> createSellOrder(SellOrder sellOrder) async {
+    Uri url = Uri.http(
+      apiClient.baseURL,
+      "$_orderUrl/sell",
+    );
+
+    Tokens tokens = await AuthUtil.getAuth();
+    final response = await apiClient.httpClient.post(url,
+        headers:
+        apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+        body: jsonEncode({
+          "proxyId": sellOrder.proxyId,
+          "sellProducts": sellOrder.sellProducts.map((sp) =>
+          {
+            "earliestDate": sp.earliestDate.toIso8601String(),
+            "latestDate": sp.latestDate.toIso8601String(),
+            "minPriceCents": sp.minPriceCents,
+            "serviceRadius": sp.serviceRadius,
+            "volume": sp.volume,
+            "productId": sp.product.id
+          }
+          ).toList()
+        }));
+    final results = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return SellOrder.fromJson(results);
+
     } else {
       print(results);
       throw Error();

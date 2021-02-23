@@ -1,8 +1,9 @@
-import 'package:fieldfreshmobile/feature/orders/create/buy/bloc/create_buy_order_cubit.dart';
-import 'package:fieldfreshmobile/feature/orders/create/buy/bloc/states.dart';
+import 'package:fieldfreshmobile/feature/orders/create/bloc/create_order_cubit.dart';
+import 'package:fieldfreshmobile/feature/orders/create/bloc/states.dart';
 import 'package:fieldfreshmobile/feature/orders/create/steps/product_information/product_information_step.dart';
 import 'package:fieldfreshmobile/feature/orders/create/steps/product_selection/product_selection_step.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
@@ -11,18 +12,65 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CreateBuyOrderPage extends StatefulWidget {
+class CreateOrderPage extends StatefulWidget {
+
+  final Side _side;
+
+  CreateOrderPage(this._side);
+
+
   @override
-  _CreateBuyOrderPageState createState() => _CreateBuyOrderPageState();
+  _CreateOrderPageState createState() => _CreateOrderPageState(_side);
 }
 
-class _CreateBuyOrderPageState extends State<CreateBuyOrderPage> {
-  BuyOrderCreationCubit _cubit;
+class _CreateOrderPageState extends State<CreateOrderPage> {
+  OrderCreationCubit _cubit;
+  final Side _side;
+
+  _CreateOrderPageState(this._side);
+
 
   @override
   void initState() {
     super.initState();
-    _cubit = sl<BuyOrderCreationCubit>();
+    _cubit = sl<OrderCreationCubit>();
+  }
+
+  Widget _CompletionBox(String text) => ConstrainedBox(
+    constraints: BoxConstraints.expand(),
+    child: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            text,
+            style: TextStyle(
+                color: AppTheme.colors.light.primary,
+                fontWeight: FontWeight.bold, fontSize: 28),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Icon(Icons.check_circle, color: AppTheme.colors.white,size: 50,),
+          ),
+          Container(margin: EdgeInsets.only(top: 8), child: ThemedButtonFactory.create(100, 40, 18, "Done", () { Navigator.pop(context); }))
+        ],
+      ),
+    ),
+  );
+
+  Step _buildProductInformationStep(OrderCreationStep state){
+    switch(_side){
+      case Side.BUY:
+        return BuyProductInformationStep(state.step == 1, state.product, (BuyOrderProductInfo info) {
+          _cubit.nextWithInfo(info);
+        });
+      case Side.SELL:
+        return SellProductInformationStep(state.step == 1, state.product, (SellOrderProductInfo info) {
+          _cubit.nextWithInfo(info);
+        });
+
+    }
   }
 
   @override
@@ -31,12 +79,12 @@ class _CreateBuyOrderPageState extends State<CreateBuyOrderPage> {
       appBar: FieldFreshAppBar(),
       body: Container(
         child: BlocBuilder(
-          builder: (context, BuyOrderCreationState state) {
-            if (state is BuyOrderCreationStep) {
+          builder: (context, OrderCreationState state) {
+            if (state is OrderCreationStep) {
               return buildStep(state);
             }
 
-            if (state is BuyOrderCreating) {
+            if (state is OrderCreating) {
               return Center(
                 child: Column(
                   children: [
@@ -46,29 +94,13 @@ class _CreateBuyOrderPageState extends State<CreateBuyOrderPage> {
               );
             }
 
-            if (state is BuyOrderCreated) {
-              return ConstrainedBox(
-                constraints: BoxConstraints.expand(),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        "Buy Order Created!",
-                        style: TextStyle(
-                            color: AppTheme.colors.light.primary,
-                            fontWeight: FontWeight.bold, fontSize: 28),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: Icon(Icons.check_circle, color: AppTheme.colors.white,size: 50,),
-                      ),
-                      Container(margin: EdgeInsets.only(top: 8), child: ThemedButtonFactory.create(100, 40, 18, "Done", () { Navigator.pop(context); }))
-                    ],
-                  ),
-                ),
-              );
+            if (state is OrderCreated) {
+              switch(_side){
+                case Side.BUY:
+                  return _CompletionBox("Buy Order Created!");
+                case Side.SELL:
+                  return _CompletionBox("Sell Order Created!");
+              }
             }
 
             return ConstrainedBox(
@@ -84,7 +116,8 @@ class _CreateBuyOrderPageState extends State<CreateBuyOrderPage> {
     );
   }
 
-  Widget buildStep(BuyOrderCreationStep state) => Column(
+
+  Widget buildStep(OrderCreationStep state) => Column(
         children: [
           Expanded(
             child: Theme(
@@ -123,10 +156,7 @@ class _CreateBuyOrderPageState extends State<CreateBuyOrderPage> {
                   ProductSelectionStep(state.step == 0, (Product product) {
                     _cubit.nextWithProduct(product);
                   }),
-                  ProductInformationStep(state.step == 1, state.product,
-                      (BuyOrderProductInfo info) {
-                    _cubit.nextWithInfo(info);
-                  })
+                  _buildProductInformationStep(state)
                 ],
               ),
             ),
