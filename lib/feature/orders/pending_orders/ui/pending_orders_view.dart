@@ -1,14 +1,11 @@
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:fieldfreshmobile/feature/home/ui/home_page.dart';
 import 'package:fieldfreshmobile/feature/orders/pending_orders/bloc/pending_orders_cubit.dart';
 import 'package:fieldfreshmobile/feature/orders/pending_orders/bloc/states.dart';
 import 'package:fieldfreshmobile/feature/orders/pending_orders/ui/pending_order_view.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
-import 'package:fieldfreshmobile/models/api/proxy/proxy.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/no_glow_single_child_scrollview.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,12 +32,19 @@ class _PendingOrdersState extends State<PendingOrders> {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints.expand(),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Flexible(child: _getListBody(Side.SELL)),
-          Flexible(child: _getListBody(Side.BUY)),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(top: 12.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Flexible(child: _getListBody(Side.SELL)),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
+              child: Divider(height: 2, color: AppTheme.colors.white.withOpacity(0.3), thickness: 2,),
+            ),
+            Flexible(child: _getListBody(Side.BUY)),
+          ],
+        ),
       ),
     );
   }
@@ -108,13 +112,4 @@ class _PendingOrdersState extends State<PendingOrders> {
           );
         },
       );
-}
-
-class PendingOrdersScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: NoGlowSingleChildScrollView(child: PendingOrders()),
-    );
-  }
 }
