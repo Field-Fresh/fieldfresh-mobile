@@ -58,10 +58,11 @@ class PendingOrderItemView extends StatelessWidget {
                       fontSize: 18),
                 ),
               ),
-              Text(
-                product.type,
-                style: TextStyle(color: AppTheme.colors.white, fontSize: 14),
-              ),
+              if (product.type != null)
+                Text(
+                  product.type,
+                  style: TextStyle(color: AppTheme.colors.white, fontSize: 14),
+                ),
             ],
           ),
         ),

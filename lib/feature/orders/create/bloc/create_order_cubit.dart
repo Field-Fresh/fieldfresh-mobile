@@ -4,7 +4,6 @@ import 'package:fieldfreshmobile/feature/orders/create/bloc/states.dart';
 import 'package:fieldfreshmobile/feature/orders/create/steps/product_information/product_information_step.dart';
 import 'package:fieldfreshmobile/models/api/order/buy_order.dart';
 import 'package:fieldfreshmobile/models/api/order/sell_order.dart';
-import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/repository/orders_repository.dart';
 import 'package:fieldfreshmobile/util/constants.dart';
@@ -61,7 +60,10 @@ class OrderCreationCubit extends Cubit<OrderCreationState> {
     ], proxyId);
     _orderRepository
         .createBuyOrder(buyOrder)
-        .then((buyOrder) => this.emit(OrderCreated(buyOrder)));
+        .then((buyOrder) => this.emit(OrderCreated(buyOrder)))
+        .catchError((error) {emit(Error(_info, error));})
+    ;
+
     emit(OrderCreating(buyOrder));
   }
 

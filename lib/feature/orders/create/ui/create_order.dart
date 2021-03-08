@@ -36,6 +36,29 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     _cubit = sl<OrderCreationCubit>();
   }
 
+  Widget _ErrorBox(String error) => ConstrainedBox(
+    constraints: BoxConstraints.expand(),
+    child: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            error,
+            style: TextStyle(
+                color: AppTheme.colors.light.primary,
+                fontWeight: FontWeight.bold, fontSize: 28),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Icon(Icons.error, color: AppTheme.colors.light.errorRed,size: 50,),
+          ),
+          Container(margin: EdgeInsets.only(top: 8), child: ThemedButtonFactory.create(200, 40, 18, "Create new order", () { Navigator.pop(context); }))
+        ],
+      ),
+    ),
+  );
+
   Widget _CompletionBox(String text) => ConstrainedBox(
     constraints: BoxConstraints.expand(),
     child: Center(
@@ -87,6 +110,8 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
             if (state is OrderCreating) {
               return Center(
                 child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CircularProgressIndicator(),
                   ],
@@ -101,6 +126,10 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                 case Side.SELL:
                   return _CompletionBox("Sell Order Created!");
               }
+            }
+
+            if (state is Error) {
+              return _ErrorBox("Error creating order");
             }
 
             return ConstrainedBox(

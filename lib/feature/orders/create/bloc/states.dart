@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:fieldfreshmobile/feature/orders/create/steps/product_information/product_information_step.dart';
 import 'package:fieldfreshmobile/models/api/order/order.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 
@@ -32,4 +33,14 @@ class OrderCreated extends OrderCreationState {
 
   @override
   String toString() => 'BuyOrderCreated';
+}
+
+class Error extends OrderCreationState {
+  final BuyOrderProductInfo _buyOrderInfo;
+  final dynamic error;
+
+  Error(this._buyOrderInfo, this.error): super([_buyOrderInfo]);
+
+  @override
+  String toString() => 'Error';
 }

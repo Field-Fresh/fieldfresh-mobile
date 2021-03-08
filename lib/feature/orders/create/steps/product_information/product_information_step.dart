@@ -1,4 +1,3 @@
-import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
@@ -140,7 +139,7 @@ abstract class _ProductInformationStepContentState<O extends OrderProductInfo>
     );
   }
 
-  Container getVolumePrice(BuildContext context) => Container(
+  Container getVolumePrice(BuildContext context, String priceText) => Container(
         margin: EdgeInsets.only(bottom: 32),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,7 +158,7 @@ abstract class _ProductInformationStepContentState<O extends OrderProductInfo>
                       "Lbs",
                       style: TextStyle(color: AppTheme.colors.white),
                     ),
-                    labelText: "Volume",
+                    labelText: "Quantity",
                     labelStyle: TextStyle(color: AppTheme.colors.white)),
                 keyboardType: TextInputType.number,
                 name: "volume",
@@ -169,8 +168,8 @@ abstract class _ProductInformationStepContentState<O extends OrderProductInfo>
               width: 150,
               child: FormBuilderTextField(
                 validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.min(context, 1.0,
-                      errorText: "Must be greater than 1"),
+                  FormBuilderValidators.min(context, 0,
+                      errorText: "Must be greater than 0"),
                   FormBuilderValidators.required(context),
                 ]),
                 style: TextStyle(color: AppTheme.colors.light.primary),
@@ -182,7 +181,7 @@ abstract class _ProductInformationStepContentState<O extends OrderProductInfo>
                       child: Text("CAD",
                           style: TextStyle(color: AppTheme.colors.white)),
                     ),
-                    labelText: "Min cost per unit",
+                    labelText: priceText,
                     labelStyle:
                         TextStyle(color: AppTheme.colors.white, fontSize: 16)),
                 keyboardType: TextInputType.number,
@@ -239,7 +238,7 @@ class _BuyProductInformationStepContentState
             ),
           ),
         ),
-        getVolumePrice(context)
+        getVolumePrice(context, "Max price per unit")
       ];
 
   @override
@@ -314,7 +313,7 @@ class _SellProductInformationStepContentState
             ),
           ),
         ),
-        getVolumePrice(context)
+        getVolumePrice(context, "Min price per unit")
       ];
 
   @override
