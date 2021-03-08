@@ -49,13 +49,14 @@ class ProductCardListItem extends StatelessWidget {
                     fontSize: 24
                   ),
                 ),
-                Text(
-                  product.type,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15
-                  ),
+                if (product.type != null)
+                  Text(
+                    product.type,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15
+                    ),
                 )
               ],
             ),

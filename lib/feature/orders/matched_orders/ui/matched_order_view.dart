@@ -1,4 +1,4 @@
-import 'package:fieldfreshmobile/feature/orders/pending_orders/bloc/states.dart';
+import 'package:fieldfreshmobile/feature/orders/matched_orders/bloc/states.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/product/product_image.dart';
@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-class PendingOrderItemView extends StatelessWidget {
-  final PendingOrderItemData _data;
+class MatchedOrderItemView extends StatelessWidget {
+  final MatchedOrderItemData _data;
 
-  const PendingOrderItemView(this._data, {Key key}) : super(key: key);
+  const MatchedOrderItemView(this._data, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +58,10 @@ class PendingOrderItemView extends StatelessWidget {
                       fontSize: 18),
                 ),
               ),
-              if (product.type != null)
-                Text(
-                  product.type,
-                  style: TextStyle(color: AppTheme.colors.white, fontSize: 14),
-                ),
+              Text(
+                product.type,
+                style: TextStyle(color: AppTheme.colors.white, fontSize: 14),
+              ),
             ],
           ),
         ),

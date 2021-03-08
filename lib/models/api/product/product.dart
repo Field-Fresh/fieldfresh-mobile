@@ -27,7 +27,7 @@ class Product extends FieldFreshModel {
       catagory: json['catagory'],
       family: json['family'],
       classType: EnumToString.fromString(ProductClass.values, json['classType']),
-      imgUrl: json['imageURL'] ?? "https://source.unsplash.com/daily",
+      imgUrl: json['imageUrl'],
       units: json['units'],
       id: json['productId'],
     );
