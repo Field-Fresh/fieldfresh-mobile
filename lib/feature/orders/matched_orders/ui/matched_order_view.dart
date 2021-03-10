@@ -75,9 +75,9 @@ class MatchedOrderItemView extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _getPillWithText("${_data.volume} ${_data.units}"),
+              _getPillWithText("${(_data.percentageFulfilled*100).toInt()}% filled"),
               _getPillWithText(
-                  "\$ ${_data.unitPrice / 100}/${_data.units}"),
+                  "\$ ${_data.unitPrice}/${_data.product.units}"),
             ],
           ),
         ),

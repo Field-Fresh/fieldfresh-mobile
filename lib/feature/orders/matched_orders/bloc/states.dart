@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:fieldfreshmobile/models/api/order/buy_order.dart';
+import 'package:fieldfreshmobile/models/api/order/match.dart';
 import 'package:fieldfreshmobile/models/api/order/sell_order.dart';
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
@@ -61,8 +62,8 @@ class MatchedOrderItemData {
   final String units;
   final double unitPrice;
   final Side side;
-  final int proxyCount;
+  final double percentageFulfilled;
 
   MatchedOrderItemData(this.product, this.volume, this.units, this.unitPrice,
-      this.side, this.proxyCount);
+      this.side, this.percentageFulfilled);
 }

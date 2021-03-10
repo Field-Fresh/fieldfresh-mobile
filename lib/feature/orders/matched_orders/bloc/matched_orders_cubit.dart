@@ -1,12 +1,9 @@
 import 'dart:async';
-import 'dart:async';
 import 'dart:core';
 
 import 'package:fieldfreshmobile/feature/orders/matched_orders/bloc/states.dart';
-import 'package:fieldfreshmobile/models/api/order/buy_order.dart';
-import 'package:fieldfreshmobile/models/api/order/sell_order.dart';
+import 'package:fieldfreshmobile/models/api/order/match.dart';
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
-import 'package:fieldfreshmobile/models/api/order/status_type.dart';
 import 'package:fieldfreshmobile/repository/orders_repository.dart';
 import 'package:fieldfreshmobile/util/constants.dart';
 import 'package:fieldfreshmobile/util/preference.dart';
@@ -45,12 +42,14 @@ class MatchedOrdersCubit extends Cubit<MatchedOrdersState> {
     }
 
     try {
-      final List<BuyProduct> buyProducts =
-          await _orderRepository.getBuyOrdersFor(Status.MATCHED, proxyId);
-      _buyMatches = buyProducts
-          .map((bp) => MatchedOrderItemData(bp.product, bp.volume,
-              bp.product.units, bp.maxPriceCents?.toDouble(), Side.BUY, 1))
-          .toList();
+      _buyMatches = (await _orderRepository.getMatches(proxyId, Side.BUY))?.map(
+          (e) => MatchedOrderItemData(
+              e.product,
+              e.quantity,
+              e.product.units,
+              e.unitPriceCents / 100,
+              Side.BUY,
+              e.quantity / e.originalBuyQuantity))?.toList();
       emit(Loaded(Side.BUY, _buyMatches));
     } catch (e) {
       emit(Error(Side.BUY));
@@ -63,12 +62,14 @@ class MatchedOrdersCubit extends Cubit<MatchedOrdersState> {
     }
 
     try {
-      final List<SellProduct> sellProducts =
-          await _orderRepository.getSellOrdersFor(Status.MATCHED, proxyId);
-      _sellMatches = sellProducts
-          .map((bp) => MatchedOrderItemData(bp.product, bp.volume,
-              bp.product.units, bp.minPriceCents?.toDouble(), Side.SELL, 0))
-          .toList();
+      _sellMatches = (await _orderRepository.getMatches(proxyId, Side.SELL))?.map(
+              (e) => MatchedOrderItemData(
+              e.product,
+              e.quantity,
+              e.product.units,
+              e.unitPriceCents / 100,
+              Side.BUY,
+              e.quantity / e.originalSellQuantity))?.toList();
       emit(Loaded(Side.SELL, _sellMatches));
     } catch (e) {
       emit(Error(Side.SELL));
