@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:fieldfreshmobile/feature/orders/create/bloc/create_order_cubit.dart';
 import 'package:fieldfreshmobile/feature/orders/create/bloc/states.dart';
 import 'package:fieldfreshmobile/feature/orders/create/steps/product_information/product_information_step.dart';
@@ -9,6 +10,7 @@ import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/ThemedButtonFactory.dart';
 import 'package:fieldfreshmobile/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,28 +61,19 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     ),
   );
 
-  Widget _CompletionBox(String text) => ConstrainedBox(
-    constraints: BoxConstraints.expand(),
-    child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-                color: AppTheme.colors.light.primary,
-                fontWeight: FontWeight.bold, fontSize: 28),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Icon(Icons.check_circle, color: AppTheme.colors.white,size: 50,),
-          ),
-          Container(margin: EdgeInsets.only(top: 8), child: ThemedButtonFactory.create(100, 40, 18, "Done", () { Navigator.pop(context); }))
-        ],
-      ),
-    ),
-  );
+  Widget _CompletionBox(String text) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.SUCCES,
+        animType: AnimType.BOTTOMSLIDE,
+        title: text,
+        desc: "Your order has been created!",
+        btnOkOnPress: () { Navigator.pop(context); },
+      ).show();
+    });
+    return Container();
+  }
 
   Step _buildProductInformationStep(OrderCreationStep state){
     switch(_side){
