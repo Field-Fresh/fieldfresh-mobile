@@ -8,6 +8,7 @@ class HomePageCubit extends Cubit<HomePageState> {
   bool loadBit = false;
 
   Future<void> reload() async {
-    emit(Empty(!loadBit));
+    loadBit = !loadBit;
+    emit(Empty(loadBit));
   }
 }
