@@ -1,4 +1,4 @@
-import 'package:fieldfreshmobile/feature/orders/pending_orders/bloc/states.dart';
+import 'package:fieldfreshmobile/feature/orders/pending_orders/list/bloc/states.dart';
 import 'package:fieldfreshmobile/models/api/order/buy_order.dart';
 import 'package:fieldfreshmobile/models/api/order/sell_order.dart';
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
@@ -34,6 +34,10 @@ class PendingOrdersCubit extends Cubit<PendingOrdersState> {
     }
   }
 
+  Future<void> reload() async {
+    emit(Empty());
+  }
+
   Future<void> _loadBuyOrders(String proxyId) async {
     if (_buyProductItemData?.isNotEmpty ?? false) {
       emit(Loaded(Side.BUY, proxyId, _buyProductItemData));
@@ -47,7 +51,8 @@ class PendingOrdersCubit extends Cubit<PendingOrdersState> {
           bp.volume,
           bp.product.units,
           bp.maxPriceCents?.toDouble(),
-          Side.BUY)).toList();
+          Side.BUY,
+          bp.id)).toList();
       emit(Loaded(Side.BUY, proxyId, _buyProductItemData));
     } catch (e) {
       emit(Error(Side.BUY, proxyId));
@@ -67,7 +72,8 @@ class PendingOrdersCubit extends Cubit<PendingOrdersState> {
           bp.volume,
           bp.product.units,
           bp.minPriceCents?.toDouble(),
-          Side.SELL)).toList();
+          Side.SELL,
+          bp.id)).toList();
       emit(Loaded(Side.SELL, proxyId, _sellProductsItemData));
     } catch (e) {
       emit(Error(Side.SELL, proxyId));

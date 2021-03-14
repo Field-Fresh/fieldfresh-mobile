@@ -1,11 +1,11 @@
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:fieldfreshmobile/feature/orders/pending_orders/bloc/pending_orders_cubit.dart';
-import 'package:fieldfreshmobile/feature/orders/pending_orders/bloc/states.dart';
-import 'package:fieldfreshmobile/feature/orders/pending_orders/ui/pending_order_view.dart';
+import 'package:fieldfreshmobile/feature/orders/pending_orders/details/args.dart';
+import 'package:fieldfreshmobile/feature/orders/pending_orders/list/bloc/pending_orders_cubit.dart';
+import 'package:fieldfreshmobile/feature/orders/pending_orders/list/bloc/states.dart';
+import 'package:fieldfreshmobile/feature/orders/pending_orders/list/ui/pending_order_view.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
-import 'package:fieldfreshmobile/widgets/no_glow_single_child_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +17,7 @@ class PendingOrders extends StatefulWidget {
   _PendingOrdersState createState() => _PendingOrdersState();
 }
 
-class _PendingOrdersState extends State<PendingOrders> {
+class _PendingOrdersState extends State<PendingOrders> with WidgetsBindingObserver {
   PendingOrdersCubit _pendingOrdersCubit;
 
   _PendingOrdersState();
@@ -39,8 +39,13 @@ class _PendingOrdersState extends State<PendingOrders> {
           children: [
             Flexible(child: _getListBody(Side.SELL)),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
-              child: Divider(height: 2, color: AppTheme.colors.white.withOpacity(0.3), thickness: 2,),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
+              child: Divider(
+                height: 2,
+                color: AppTheme.colors.white.withOpacity(0.3),
+                thickness: 2,
+              ),
             ),
             Flexible(child: _getListBody(Side.BUY)),
           ],
@@ -57,11 +62,24 @@ class _PendingOrdersState extends State<PendingOrders> {
           if (state is Loaded) {
             content = state.pendingOrders.isNotEmpty
                 ? Expanded(
-                  child: ListView.builder(
-                      itemCount: state.pendingOrders.length,
-                      itemBuilder: (context, index) =>
-                          PendingOrderItemView(state.pendingOrders[index])),
-                )
+                    child: ListView.builder(
+                        itemCount: state.pendingOrders.length,
+                        itemBuilder: (context, index) {
+                          var pendingOrder = state.pendingOrders[index];
+                          return GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  "/order",
+                                  arguments: PendingOrderDetailsArguments(
+                                    pendingOrder.id,
+                                    side,
+                                  ),
+                                ).then((value) => _pendingOrdersCubit.reload());
+                              },
+                              child: PendingOrderItemView(pendingOrder));
+                        }),
+                  )
                 : Text(
                     "No Orders found",
                     style: TextStyle(

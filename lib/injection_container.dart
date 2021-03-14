@@ -1,7 +1,8 @@
 import 'package:fieldfreshmobile/feature/home/bloc/home_cubit.dart';
 import 'package:fieldfreshmobile/feature/orders/create/bloc/create_order_cubit.dart';
 import 'package:fieldfreshmobile/feature/orders/matched_orders/bloc/matched_orders_cubit.dart';
-import 'package:fieldfreshmobile/feature/orders/pending_orders/bloc/pending_orders_cubit.dart';
+import 'package:fieldfreshmobile/feature/orders/pending_orders/details/bloc/pending_buy_order_details_cubit.dart';
+import 'package:fieldfreshmobile/feature/orders/pending_orders/details/bloc/pending_sell_order_details_cubit.dart';
 import 'package:fieldfreshmobile/feature/orders/summary/order_count/bloc/order_count_badge_cubit.dart';
 import 'package:fieldfreshmobile/feature/products/pending/bloc/pending_product_bloc.dart';
 import 'package:fieldfreshmobile/feature/products/product_search/bloc/product_search_cubit.dart';
@@ -20,6 +21,7 @@ import 'package:fieldfreshmobile/repository/user_repository.dart';
 import 'package:get_it/get_it.dart';
 
 import 'feature/drawer/bloc/dashboard_bloc.dart';
+import 'feature/orders/pending_orders/list/bloc/pending_orders_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -34,6 +36,8 @@ Future<void> init() async {
   sl.registerFactory(() => OrderCreationCubit(sl()));
   sl.registerFactory(() => ProductSearchCubit(sl()));
   sl.registerFactory(() => MatchedOrdersCubit(sl()));
+  sl.registerFactory(() => PendingBuyOrderDetailsCubit(sl()));
+  sl.registerFactory(() => PendingSellOrderDetailsCubit(sl()));
   sl.registerFactory(() => HomePageCubit());
 
   sl.registerLazySingleton(() => UserRepository(sl()));

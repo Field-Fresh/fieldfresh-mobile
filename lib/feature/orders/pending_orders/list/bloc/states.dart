@@ -18,7 +18,6 @@ class Empty extends PendingOrdersState {
 }
 
 class Loading extends PendingOrdersState {
-
   Loading(side) : super(side, [side]);
 
   @override
@@ -57,7 +56,8 @@ class PendingOrderItemData {
   final String units;
   final double unitPrice;
   final Side side;
+  final String id;
 
-  PendingOrderItemData(
-      this.product, this.volume, this.units, this.unitPrice, this.side);
+  PendingOrderItemData(this.product, this.volume, this.units, this.unitPrice,
+      this.side, this.id);
 }
