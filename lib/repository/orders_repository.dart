@@ -16,6 +16,14 @@ class OrderRepository {
     return _orderClient.getOrders(request);
   }
 
+  Future<SellOrderDetailsResponse> getSellOrder(String id) {
+    return _orderClient.getSellOrder(id);
+  }
+
+  Future<BuyOrderDetailsResponse> getBuyOrder(String id) {
+    return _orderClient.getBuyOrder(id);
+  }
+
   Future<List<Match>> getMatches(String proxyId, Side side) {
     return _orderClient.getMatches(proxyId, side);
   }
@@ -34,6 +42,14 @@ class OrderRepository {
 
   Future<SellOrder> createSellOrder(SellOrder sellOrder) {
     return _orderClient.createSellOrder(sellOrder);
+  }
+
+  Future<void> cancelSellOrder(String id) {
+    return _orderClient.cancelSellOrder(id);
+  }
+
+  Future<void> cancelBuyOrder(String id) {
+    return _orderClient.cancelBuyOrder(id);
   }
 
 }

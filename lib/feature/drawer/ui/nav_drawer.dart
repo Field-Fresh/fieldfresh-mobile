@@ -12,11 +12,8 @@ class NavDrawerWidget extends StatelessWidget {
   final List<_NavigationItem> _listItems = [
     _NavigationItem(true, NavItem.profile, "Profile", null),
     _NavigationItem(false, NavItem.home, "Home", Icons.trending_up),
-    _NavigationItem(false, NavItem.proxy, "Outlets", Icons.store),
-    _NavigationItem(false, NavItem.profile, "Profile", Icons.person),
     _NavigationItem(false, NavItem.active_orders, "My Orders", Icons.toll),
     _NavigationItem(false, NavItem.matches, "My Matches", Icons.check),
-    _NavigationItem(false, NavItem.history, "Order History", Icons.history),
   ];
 
   @override
@@ -118,7 +115,10 @@ class NavDrawerWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Divider(height: 1, color: AppTheme.colors.light.secondary.withOpacity(0.7),),
+            child: Divider(
+              height: 1,
+              color: AppTheme.colors.light.secondary.withOpacity(0.7),
+            ),
           )
         ],
       );

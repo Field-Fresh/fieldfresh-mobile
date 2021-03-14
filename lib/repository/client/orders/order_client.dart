@@ -42,6 +42,42 @@ class OrderClient {
     }
   }
 
+  Future<SellOrderDetailsResponse> getSellOrder(String id) async {
+    Uri url = Uri.http(apiClient.baseURL, "$_orderUrl/sell/$id");
+    Tokens tokens = await AuthUtil.getAuth();
+    final response = await apiClient.httpClient.get(
+      url,
+      headers:
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+    );
+    final results = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      return SellOrderDetailsResponse.fromJson(results);
+    } else {
+      print(results);
+      throw Error();
+    }
+  }
+
+  Future<BuyOrderDetailsResponse> getBuyOrder(String id) async {
+    Uri url = Uri.http(apiClient.baseURL, "$_orderUrl/buy/$id");
+    Tokens tokens = await AuthUtil.getAuth();
+    final response = await apiClient.httpClient.get(
+      url,
+      headers:
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+    );
+    final results = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      return BuyOrderDetailsResponse.fromJson(results);
+    } else {
+      print(results);
+      throw Error();
+    }
+  }
+
   Future<BuyOrder> createBuyOrder(BuyOrder buyOrder) async {
     Uri url = Uri.http(
       apiClient.baseURL,
@@ -165,6 +201,46 @@ class OrderClient {
       return SellOrder.fromJson(results);
     } else {
       print(results);
+      throw Error();
+    }
+  }
+
+  Future<void> cancelSellOrder(String id) async {
+    Uri url = Uri.http(
+      apiClient.baseURL,
+      "$_orderUrl/sell/$id/cancel",
+    );
+
+    Tokens tokens = await AuthUtil.getAuth();
+    final response = await apiClient.httpClient.put(
+      url,
+      headers:
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      print(response);
+      throw Error();
+    }
+  }
+
+  Future<void> cancelBuyOrder(String id) async {
+    Uri url = Uri.http(
+      apiClient.baseURL,
+      "$_orderUrl/buy/$id/cancel",
+    );
+
+    Tokens tokens = await AuthUtil.getAuth();
+    final response = await apiClient.httpClient.put(
+      url,
+      headers:
+      apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      print(response);
       throw Error();
     }
   }

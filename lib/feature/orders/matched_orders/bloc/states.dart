@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:fieldfreshmobile/feature/orders/matched_orders/ui/matched_order_view.dart';
 import 'package:fieldfreshmobile/models/api/order/buy_order.dart';
 import 'package:fieldfreshmobile/models/api/order/match.dart';
 import 'package:fieldfreshmobile/models/api/order/sell_order.dart';
@@ -54,16 +55,4 @@ class Error extends MatchedOrdersState {
   String toString() {
     return "Error";
   }
-}
-
-class MatchedOrderItemData {
-  final Product product;
-  final double volume;
-  final String units;
-  final double unitPrice;
-  final Side side;
-  final double percentageFulfilled;
-
-  MatchedOrderItemData(this.product, this.volume, this.units, this.unitPrice,
-      this.side, this.percentageFulfilled);
 }

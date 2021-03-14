@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:fieldfreshmobile/feature/orders/matched_orders/bloc/states.dart';
+import 'package:fieldfreshmobile/feature/orders/matched_orders/ui/matched_order_view.dart';
 import 'package:fieldfreshmobile/models/api/order/match.dart';
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/repository/orders_repository.dart';

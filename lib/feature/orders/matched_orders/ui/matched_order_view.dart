@@ -1,4 +1,5 @@
 import 'package:fieldfreshmobile/feature/orders/matched_orders/bloc/states.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/product/product_image.dart';
@@ -75,9 +76,9 @@ class MatchedOrderItemView extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _getPillWithText("${(_data.percentageFulfilled*100).toInt()}% filled"),
               _getPillWithText(
-                  "\$ ${_data.unitPrice}/${_data.product.units}"),
+                  "${(_data.percentageFulfilled * 100).toInt()}% filled"),
+              _getPillWithText("\$ ${_data.unitPrice}/${_data.product.units}"),
             ],
           ),
         ),
@@ -100,4 +101,16 @@ class MatchedOrderItemView extends StatelessWidget {
           ),
         ),
       );
+}
+
+class MatchedOrderItemData {
+  final Product product;
+  final double volume;
+  final String units;
+  final double unitPrice;
+  final Side side;
+  final double percentageFulfilled;
+
+  MatchedOrderItemData(this.product, this.volume, this.units, this.unitPrice,
+      this.side, this.percentageFulfilled);
 }

@@ -1,4 +1,4 @@
-import 'package:fieldfreshmobile/feature/orders/pending_orders/bloc/states.dart';
+import 'package:fieldfreshmobile/feature/orders/pending_orders/list/bloc/states.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/product/product_image.dart';
