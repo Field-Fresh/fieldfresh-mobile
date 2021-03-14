@@ -1,8 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:fieldfreshmobile/feature/orders/matched_orders/ui/matched_order_view.dart';
-import 'package:fieldfreshmobile/models/api/order/buy_order.dart';
-import 'package:fieldfreshmobile/models/api/order/match.dart';
-import 'package:fieldfreshmobile/models/api/order/sell_order.dart';
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 
