@@ -1,9 +1,11 @@
+import 'package:fieldfreshmobile/models/api/user/tokens.dart';
 import 'package:fieldfreshmobile/models/api/user/user.dart';
 
 class UserSingleton {
   static final UserSingleton _instance = UserSingleton._internal();
 
   User _user;
+  Tokens _tokens;
 
   factory UserSingleton() {
     return _instance;
@@ -11,6 +13,14 @@ class UserSingleton {
 
   void updateUser(User user) {
     this._user = user;
+  }
+
+  void updateTokens(Tokens tokens) {
+    this._tokens = tokens;
+  }
+
+  Tokens getTokens() {
+    return _tokens;
   }
 
   User getUser() {

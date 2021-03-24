@@ -1,16 +1,14 @@
 
-import 'package:fieldfreshmobile/models/api/product/product.dart';
-import 'package:fieldfreshmobile/models/api/order/side_type.dart';
-import 'package:fieldfreshmobile/repository/client/field_fresh_api_client.dart';
-import 'package:fieldfreshmobile/util/extensions.dart';
-
-
 import 'dart:convert';
 
-import 'package:fieldfreshmobile/repository/client/product/response.dart';
+import 'package:enum_to_string/enum_to_string.dart';
+import 'package:fieldfreshmobile/client/field_fresh_api_client.dart';
+import 'package:fieldfreshmobile/models/api/order/side_type.dart';
+import 'package:fieldfreshmobile/models/api/product/product.dart';
+import 'package:fieldfreshmobile/util/extensions.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:enum_to_string/enum_to_string.dart';
+import 'response.dart';
 
 class ProductClient {
   final FieldFreshApi apiClient;

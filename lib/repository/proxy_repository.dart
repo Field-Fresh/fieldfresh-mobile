@@ -1,7 +1,7 @@
+import 'package:fieldfreshmobile/client/proxy/proxy_client.dart';
+import 'package:fieldfreshmobile/client/proxy/request.dart';
 import 'package:fieldfreshmobile/models/api/proxy/proxy.dart';
 
-import 'client/proxy/proxy_client.dart';
-import 'client/proxy/request.dart';
 
 class ProxyRepository {
   final ProxyClient _proxyClient;
@@ -10,6 +10,14 @@ class ProxyRepository {
 
   Future<Proxy> createProxy(Proxy proxy) async {
     return _proxyClient.createProxy(CreateProxyRequest.fromModel(proxy));
+  }
+
+  Future<Proxy> getProxy(String id) async {
+    return _proxyClient.getById(id);
+  }
+
+  Future<List<Proxy>> getProxies() async {
+    return _proxyClient.getProxies();
   }
 
   Future<Proxy> updateProxy(Proxy proxy) async {

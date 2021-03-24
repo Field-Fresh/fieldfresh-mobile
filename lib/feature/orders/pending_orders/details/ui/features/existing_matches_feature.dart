@@ -1,4 +1,4 @@
-import 'package:fieldfreshmobile/feature/orders/matched_orders/ui/matched_order_view.dart';
+import 'package:fieldfreshmobile/feature/orders/matched_orders/list/ui/matched_order_view.dart';
 import 'package:fieldfreshmobile/models/api/order/match.dart';
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
@@ -29,6 +29,7 @@ class MatchesFeature extends StatelessWidget {
           ListView.builder(itemBuilder: (context, index) {
             var match = matches[index];
             return MatchedOrderItemView(MatchedOrderItemData(
+                match.id,
                 match.product,
                 match.quantity,
                 match.product.units,

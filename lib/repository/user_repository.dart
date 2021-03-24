@@ -1,7 +1,7 @@
+import 'package:fieldfreshmobile/client/user/requests.dart';
+import 'package:fieldfreshmobile/client/user/responses.dart';
+import 'package:fieldfreshmobile/client/user/user_client.dart';
 import 'package:fieldfreshmobile/models/api/user/user.dart';
-import 'package:fieldfreshmobile/repository/client/user/requests.dart';
-import 'package:fieldfreshmobile/repository/client/user/responses.dart';
-import 'package:fieldfreshmobile/repository/client/user/user_client.dart';
 
 class UserRepository {
   final UserClient userClient;

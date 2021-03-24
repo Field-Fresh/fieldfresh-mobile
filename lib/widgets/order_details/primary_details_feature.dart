@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 * */
 class PrimaryDetailsFeature extends StatelessWidget {
   final double unitPrice;
-  final double quantity;
+  final int quantity;
   final String unit;
 
   const PrimaryDetailsFeature(this.unitPrice, this.quantity, this.unit,

@@ -1,9 +1,11 @@
-import 'package:fieldfreshmobile/feature/orders/matched_orders/bloc/matched_orders_cubit.dart';
-import 'package:fieldfreshmobile/feature/orders/matched_orders/bloc/states.dart';
-import 'package:fieldfreshmobile/feature/orders/matched_orders/ui/matched_order_view.dart';
+import 'package:fieldfreshmobile/feature/orders/matched_orders/details/args.dart';
+import 'package:fieldfreshmobile/feature/orders/matched_orders/list/bloc/matched_orders_cubit.dart';
+import 'package:fieldfreshmobile/feature/orders/matched_orders/list/bloc/states.dart';
+import 'package:fieldfreshmobile/feature/orders/matched_orders/list/ui/matched_order_view.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
+import 'package:fieldfreshmobile/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,7 +45,9 @@ class _MatchedOrdersState extends State<MatchedOrders> {
                   children: [
                     Text("Buy",
                         style: TextStyle(
-                            color: state.side == Side.BUY ? AppTheme.colors.light.primary : AppTheme.colors.white,
+                            color: state.side == Side.BUY
+                                ? AppTheme.colors.light.primary
+                                : AppTheme.colors.white,
                             fontSize: state.side == Side.BUY ? 20 : 16,
                             fontWeight: FontWeight.bold)),
                     Switch(
@@ -54,7 +58,9 @@ class _MatchedOrdersState extends State<MatchedOrders> {
                     Text(
                       "Sell",
                       style: TextStyle(
-                          color: state.side == Side.SELL ? AppTheme.colors.light.primary : AppTheme.colors.white,
+                          color: state.side == Side.SELL
+                              ? AppTheme.colors.light.primary
+                              : AppTheme.colors.white,
                           fontSize: state.side == Side.SELL ? 20 : 16,
                           fontWeight: FontWeight.bold),
                     ),
@@ -63,8 +69,13 @@ class _MatchedOrdersState extends State<MatchedOrders> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
-              child: Divider(height: 2, color: AppTheme.colors.white.withOpacity(0.3), thickness: 2,),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
+              child: Divider(
+                height: 2,
+                color: AppTheme.colors.white.withOpacity(0.3),
+                thickness: 2,
+              ),
             ),
             Expanded(child: _getDisplayContent(state))
           ],
@@ -84,8 +95,17 @@ class _MatchedOrdersState extends State<MatchedOrders> {
       return state.items.isNotEmpty
           ? ListView.builder(
               itemCount: state.items.length,
-              itemBuilder: (context, index) =>
-                  MatchedOrderItemView(state.items[index]))
+              itemBuilder: (context, index) => Column(
+                    children: [
+                      Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(
+                              vertical: 14, horizontal: 10),
+                          color: AppTheme.colors.white.withOpacity(0.1),
+                          child: getMatchesList(
+                              state.items.entries.toList()[index].value)),
+                    ],
+                  ))
           : Center(
               child: Text(
                 "No matched orders.",
@@ -95,5 +115,26 @@ class _MatchedOrdersState extends State<MatchedOrders> {
     }
 
     return Container();
+  }
+
+  Container getMatchesList(List<MatchedOrderItemData> items) {
+    return Container(
+        child: ListView(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      children: items
+          .map((e) => GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  "/match",
+                  arguments: MatchedOrderDetailsArguments(
+                    e.id,
+                  ),
+                );
+              },
+              child: MatchedOrderItemView(e)))
+          .toList(),
+    ));
   }
 }

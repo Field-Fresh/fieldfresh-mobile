@@ -59,8 +59,6 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
     yield UserLoginStateEmpty();
   }
 
-  // This is where the business logic required to interface with the
-  // api will go
   Stream<UserLoginState> _mapUserLoginRequestEventToState(
       UserLoginRequestEvent event) async* {
     try {
@@ -68,7 +66,6 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
       if (result.verificationRequired) {
         yield UserLoginStateVerificationRequired(event.email);
       } else if (result.user != null && result.tokens != null) {
-        // TODO the singleton pattern might not be the best to use here
         AuthUtil.storeAuth(result.tokens);
         UserSingleton().updateUser(result.user);
 

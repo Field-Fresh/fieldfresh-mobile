@@ -151,6 +151,7 @@ abstract class _ProductInformationStepContentState<O extends OrderProductInfo>
                   FormBuilderValidators.min(context, 1.0,
                       errorText: "Must be greater than 1"),
                   FormBuilderValidators.required(context),
+                  FormBuilderValidators.integer(context)
                 ]),
                 style: TextStyle(color: AppTheme.colors.light.primary),
                 decoration: InputDecoration(
@@ -245,7 +246,7 @@ class _BuyProductInformationStepContentState
   BuyOrderProductInfo handleValidSubmission(FormBuilderState formState) {
     var matchingPeriod = getMatchingPeriod(formState);
     return BuyOrderProductInfo(
-        volume: double.parse(_formKey.currentState.value['volume']),
+        volume: int.parse(_formKey.currentState.value['volume']),
         unitMaxPrice:
             double.parse(_formKey.currentState.value['cost_per_unit']),
         matchingPeriodStart: matchingPeriod[0],
@@ -321,7 +322,7 @@ class _SellProductInformationStepContentState
     var matchingPeriod = getMatchingPeriod(formState);
     return SellOrderProductInfo(
         serviceRadius: _formKey.currentState.value['service_radius'],
-        volume: double.parse(_formKey.currentState.value['volume']),
+        volume: int.parse(_formKey.currentState.value['volume']),
         unitMinPrice:
             double.parse(_formKey.currentState.value['cost_per_unit']),
         matchingPeriodStart: matchingPeriod[0],
@@ -332,7 +333,7 @@ class _SellProductInformationStepContentState
 abstract class OrderProductInfo {
   final DateTime matchingPeriodStart;
   final DateTime matchingPeriodEnd;
-  final double volume;
+  final int volume;
 
   OrderProductInfo(
       this.matchingPeriodStart, this.matchingPeriodEnd, this.volume);
