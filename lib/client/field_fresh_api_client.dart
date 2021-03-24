@@ -9,7 +9,7 @@ class FieldFreshApi {
 
   final String baseURL = AppConfig.getInstance().apiHost;
 
-  final Map<String, String> basePostHeader = {
+  Map<String, String> basePostHeader() => {
     "Content-Type": "application/json",
   };
 

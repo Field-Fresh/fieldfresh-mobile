@@ -21,7 +21,7 @@ class UserClient {
       "$_authUrl/signup",
     );
     final response = await apiClient.httpClient.post(url,
-        headers: apiClient.basePostHeader,
+        headers: apiClient.basePostHeader(),
         body: jsonEncode({
           "email": request.email,
           "password": request.password,
@@ -44,7 +44,7 @@ class UserClient {
       "$_authUrl/verify",
     );
     final response = await apiClient.httpClient.post(url,
-        headers: apiClient.basePostHeader,
+        headers: apiClient.basePostHeader(),
         body: jsonEncode({"email": request.email, "code": request.code}));
     final results = json.decode(response.body);
     if (response.statusCode == 200) {
@@ -61,7 +61,7 @@ class UserClient {
       "$_authUrl/verify/resend",
     );
     final response = await apiClient.httpClient.put(url,
-        headers: apiClient.basePostHeader,
+        headers: apiClient.basePostHeader(),
         body: jsonEncode({
           "email": request.email,
         }));
@@ -78,7 +78,7 @@ class UserClient {
       "$_authUrl/signin",
     );
     final response = await apiClient.httpClient.post(url,
-        headers: apiClient.basePostHeader,
+        headers: apiClient.basePostHeader(),
         body:
             jsonEncode({"email": request.email, "password": request.password}));
     final results = json.decode(response.body);

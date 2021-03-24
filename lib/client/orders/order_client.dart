@@ -31,7 +31,7 @@ class OrderClient {
     final response = await apiClient.httpClient.get(
       url,
       headers:
-          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
     );
     final results = json.decode(response.body);
 
@@ -49,7 +49,7 @@ class OrderClient {
     final response = await apiClient.httpClient.get(
       url,
       headers:
-          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
     );
     final results = json.decode(response.body);
 
@@ -67,7 +67,7 @@ class OrderClient {
     final response = await apiClient.httpClient.get(
       url,
       headers:
-          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
     );
     final results = json.decode(response.body);
 
@@ -88,7 +88,7 @@ class OrderClient {
     Tokens tokens = await AuthUtil.getAuth();
     final response = await apiClient.httpClient.post(url,
         headers:
-            apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+            apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
         body: jsonEncode({
           "proxyId": buyOrder.proxyId,
           "buyProducts": buyOrder.buyProducts
@@ -119,7 +119,7 @@ class OrderClient {
     final response = await apiClient.httpClient.get(
       url,
       headers:
-          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
     );
     final results = json.decode(response.body);
 
@@ -141,7 +141,7 @@ class OrderClient {
     final response = await apiClient.httpClient.get(
       url,
       headers:
-          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
     );
     final results = json.decode(response.body);
 
@@ -162,7 +162,7 @@ class OrderClient {
     final response = await apiClient.httpClient.get(
       url,
       headers:
-          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
     );
     final results = json.decode(response.body);
 
@@ -182,7 +182,7 @@ class OrderClient {
     final response = await apiClient.httpClient.get(
       url,
       headers:
-          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
     );
     final results = json.decode(response.body);
     if (response.statusCode == 200) {
@@ -202,7 +202,7 @@ class OrderClient {
     Tokens tokens = await AuthUtil.getAuth();
     final response = await apiClient.httpClient.post(url,
         headers:
-            apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+            apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
         body: jsonEncode({
           "proxyId": sellOrder.proxyId,
           "sellProducts": sellOrder.sellProducts
@@ -235,7 +235,7 @@ class OrderClient {
     final response = await apiClient.httpClient.put(
       url,
       headers:
-          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
     );
     if (response.statusCode == 200) {
       return;
@@ -255,7 +255,7 @@ class OrderClient {
     final response = await apiClient.httpClient.put(
       url,
       headers:
-          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
     );
     if (response.statusCode == 200) {
       return;

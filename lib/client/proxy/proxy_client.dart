@@ -21,7 +21,7 @@ class ProxyClient {
       "$_proxyUrl/new",
     );
     final response = await apiClient.httpClient.post(url,
-        headers: apiClient.basePostHeader,
+        headers: apiClient.basePostHeader(),
         body: jsonEncode({
           "userId": request.userid,
           "name": request.name,
@@ -50,7 +50,7 @@ class ProxyClient {
     final response = await apiClient.httpClient.get(
       url,
       headers:
-      apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+      apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
     );
     final results = json.decode(response.body);
     if (response.statusCode == 200) {
@@ -68,7 +68,7 @@ class ProxyClient {
     final response = await apiClient.httpClient.get(
       url,
       headers:
-      apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+      apiClient.addAuthenticationHeader(apiClient.basePostHeader(), tokens),
     );
     final results = json.decode(response.body);
     if (response.statusCode == 200) {
