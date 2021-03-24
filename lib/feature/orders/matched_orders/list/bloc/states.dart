@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:fieldfreshmobile/feature/orders/matched_orders/ui/matched_order_view.dart';
+import 'package:fieldfreshmobile/feature/orders/matched_orders/list/ui/matched_order_view.dart';
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
-import 'package:fieldfreshmobile/models/api/product/product.dart';
 
 abstract class MatchedOrdersState extends Equatable {
   final Side side;
@@ -33,9 +32,9 @@ class Loading extends MatchedOrdersState {
 
 class Loaded extends MatchedOrdersState {
   final Side side;
-  final List<MatchedOrderItemData> items;
+  final Map<String, List<MatchedOrderItemData>> items;
 
-  Loaded(this.side, this.items) : super(side, items);
+  Loaded(this.side, this.items) : super(side, [items]);
 
   @override
   String toString() {

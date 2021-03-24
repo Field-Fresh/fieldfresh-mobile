@@ -26,7 +26,7 @@ class BuyProduct extends FieldFreshModel {
   final DateTime earliestDate;
   final DateTime latestDate;
   final int maxPriceCents;
-  final double volume;
+  final int volume;
   final Product product;
   final bool isCancelable;
 

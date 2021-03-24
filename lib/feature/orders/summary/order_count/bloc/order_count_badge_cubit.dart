@@ -1,8 +1,8 @@
+import 'package:fieldfreshmobile/client/orders/requests.dart';
+import 'package:fieldfreshmobile/client/orders/response.dart';
 import 'package:fieldfreshmobile/feature/orders/summary/order_count/bloc/states.dart';
 import 'package:fieldfreshmobile/models/api/order/status_type.dart';
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
-import 'package:fieldfreshmobile/repository/client/orders/requests.dart';
-import 'package:fieldfreshmobile/repository/client/orders/response.dart';
 import 'package:fieldfreshmobile/repository/orders_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

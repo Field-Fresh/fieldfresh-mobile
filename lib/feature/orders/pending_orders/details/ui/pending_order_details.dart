@@ -4,8 +4,6 @@ import 'package:fieldfreshmobile/feature/orders/pending_orders/details/bloc/pend
 import 'package:fieldfreshmobile/feature/orders/pending_orders/details/bloc/pending_sell_order_details_cubit.dart';
 import 'package:fieldfreshmobile/feature/orders/pending_orders/details/bloc/states.dart';
 import 'package:fieldfreshmobile/feature/orders/pending_orders/details/ui/features/date_range_feature.dart';
-import 'package:fieldfreshmobile/feature/orders/pending_orders/details/ui/features/primary_details_feature.dart';
-import 'package:fieldfreshmobile/feature/orders/pending_orders/details/ui/features/product_header.dart';
 import 'package:fieldfreshmobile/feature/orders/pending_orders/details/ui/features/service_range_feature.dart';
 import 'package:fieldfreshmobile/injection_container.dart';
 import 'package:fieldfreshmobile/models/api/order/buy_order.dart';
@@ -14,6 +12,8 @@ import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/product/product.dart';
 import 'package:fieldfreshmobile/theme/app_theme.dart';
 import 'package:fieldfreshmobile/widgets/app_bar.dart';
+import 'package:fieldfreshmobile/widgets/order_details/primary_details_feature.dart';
+import 'package:fieldfreshmobile/widgets/order_details/product_header.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -222,7 +222,7 @@ abstract class _PendingOrderDetailsState extends State<PendingOrderDetails> {
         ),
       );
 
-  Widget buildContent(Text title, Product product, double quantity,
+  Widget buildContent(Text title, Product product, int quantity,
           double price, isCancellable, List<Widget> additionalFeatures) =>
       Container(
         child: Stack(

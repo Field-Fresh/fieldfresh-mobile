@@ -12,6 +12,7 @@ class NavDrawerWidget extends StatelessWidget {
   final List<_NavigationItem> _listItems = [
     _NavigationItem(true, NavItem.profile, "Profile", null),
     _NavigationItem(false, NavItem.home, "Home", Icons.trending_up),
+    _NavigationItem(false, NavItem.proxy, "Outlet", Icons.store),
     _NavigationItem(false, NavItem.active_orders, "My Orders", Icons.toll),
     _NavigationItem(false, NavItem.matches, "My Matches", Icons.check),
   ];

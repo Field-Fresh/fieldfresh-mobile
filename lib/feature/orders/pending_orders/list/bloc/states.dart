@@ -52,7 +52,7 @@ class Error extends PendingOrdersState {
 
 class PendingOrderItemData {
   final Product product;
-  final double volume;
+  final int volume;
   final String units;
   final double unitPrice;
   final Side side;

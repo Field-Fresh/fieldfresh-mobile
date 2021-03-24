@@ -58,10 +58,11 @@ class MatchedOrderItemView extends StatelessWidget {
                       fontSize: 18),
                 ),
               ),
-              Text(
-                product.type,
-                style: TextStyle(color: AppTheme.colors.white, fontSize: 14),
-              ),
+              if (product.type != null)
+                Text(
+                  product.type,
+                  style: TextStyle(color: AppTheme.colors.white, fontSize: 14),
+                ),
             ],
           ),
         ),
@@ -76,7 +77,7 @@ class MatchedOrderItemView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               _getPillWithText(
-                  "${(_data.percentageFulfilled * 100).toInt()}% filled"),
+                  "${(_data.percentageFulfilled * 100).round()}% filled"),
               _getPillWithText("\$ ${_data.unitPrice}/${_data.product.units}"),
             ],
           ),
@@ -103,13 +104,14 @@ class MatchedOrderItemView extends StatelessWidget {
 }
 
 class MatchedOrderItemData {
+  final String id;
   final Product product;
-  final double volume;
+  final int volume;
   final String units;
   final double unitPrice;
   final Side side;
   final double percentageFulfilled;
 
-  MatchedOrderItemData(this.product, this.volume, this.units, this.unitPrice,
+  MatchedOrderItemData(this.id, this.product, this.volume, this.units, this.unitPrice,
       this.side, this.percentageFulfilled);
 }

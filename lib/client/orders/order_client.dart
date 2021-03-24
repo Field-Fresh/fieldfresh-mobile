@@ -1,18 +1,19 @@
 import 'dart:convert';
 
 import 'package:enum_to_string/enum_to_string.dart';
+import 'package:fieldfreshmobile/client/field_fresh_api_client.dart';
 import 'package:fieldfreshmobile/models/api/order/buy_order.dart';
 import 'package:fieldfreshmobile/models/api/order/match.dart';
 import 'package:fieldfreshmobile/models/api/order/sell_order.dart';
 import 'package:fieldfreshmobile/models/api/order/side_type.dart';
 import 'package:fieldfreshmobile/models/api/order/status_type.dart';
 import 'package:fieldfreshmobile/models/api/user/tokens.dart';
-import 'package:fieldfreshmobile/repository/client/field_fresh_api_client.dart';
-import 'package:fieldfreshmobile/repository/client/orders/requests.dart';
-import 'package:fieldfreshmobile/repository/client/orders/response.dart';
 import 'package:fieldfreshmobile/util/auth.dart';
 import 'package:fieldfreshmobile/util/extensions.dart';
 import 'package:flutter/foundation.dart';
+
+import 'requests.dart';
+import 'response.dart';
 
 class OrderClient {
   final FieldFreshApi apiClient;
@@ -154,9 +155,9 @@ class OrderClient {
 
   Future<List<Match>> getMatches(String proxyId, Side orderSide) async {
     Map<String, String> params = {};
-    params.putIfNotNull("proxyId", proxyId);
     params.putIfNotNull("side", EnumToString.convertToString(orderSide));
-    Uri url = Uri.http(apiClient.baseURL, "$_orderUrl/matches", params);
+    Uri url =
+        Uri.http(apiClient.baseURL, "$_orderUrl/$proxyId/matches", params);
     Tokens tokens = await AuthUtil.getAuth();
     final response = await apiClient.httpClient.get(
       url,
@@ -167,6 +168,25 @@ class OrderClient {
 
     if (response.statusCode == 200) {
       return (results as List).map((e) => Match.fromJson(e)).toList();
+    } else {
+      print(results);
+      throw Error();
+    }
+  }
+
+  Future<MatchOrderDetailsResponse> getMatchDetails(
+      String matchId, String proxyId) async {
+    Uri url =
+        Uri.http(apiClient.baseURL, "$_orderUrl/$proxyId/match/$matchId");
+    Tokens tokens = await AuthUtil.getAuth();
+    final response = await apiClient.httpClient.get(
+      url,
+      headers:
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+    );
+    final results = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return MatchOrderDetailsResponse.fromJson(results);
     } else {
       print(results);
       throw Error();
@@ -235,7 +255,7 @@ class OrderClient {
     final response = await apiClient.httpClient.put(
       url,
       headers:
-      apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
+          apiClient.addAuthenticationHeader(apiClient.basePostHeader, tokens),
     );
     if (response.statusCode == 200) {
       return;

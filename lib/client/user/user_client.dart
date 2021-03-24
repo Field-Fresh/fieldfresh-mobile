@@ -1,11 +1,11 @@
-import 'dart:collection';
 import 'dart:convert';
 
+import 'package:fieldfreshmobile/client/field_fresh_api_client.dart';
 import 'package:fieldfreshmobile/models/api/user/user.dart';
-import 'package:fieldfreshmobile/repository/client/field_fresh_api_client.dart';
-import 'package:fieldfreshmobile/repository/client/user/requests.dart';
-import 'package:fieldfreshmobile/repository/client/user/responses.dart';
 import 'package:flutter/foundation.dart';
+
+import 'requests.dart';
+import 'responses.dart';
 
 class UserClient {
   final FieldFreshApi apiClient;
