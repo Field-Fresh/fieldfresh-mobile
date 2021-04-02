@@ -23,7 +23,6 @@ class ProxyClient {
     final response = await apiClient.httpClient.post(url,
         headers: apiClient.basePostHeader(),
         body: jsonEncode({
-          "userId": request.userid,
           "name": request.name,
           "description": request.description,
           "streetAddress": request.streetAddress,

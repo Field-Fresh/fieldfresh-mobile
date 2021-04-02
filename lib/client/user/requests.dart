@@ -1,14 +1,21 @@
+import 'package:fieldfreshmobile/models/api/proxy/proxy.dart';
 import 'package:flutter/foundation.dart';
 
-class CreateUserRequest {
+class UserSignupRequest {
   final String email;
   final String password;
   final String firstName;
   final String lastName;
   final String phone;
+  final Proxy proxy;
 
-  CreateUserRequest(
-      {this.email, this.password, this.firstName, this.lastName, this.phone});
+  UserSignupRequest(
+      {this.email,
+      this.password,
+      this.firstName,
+      this.lastName,
+      this.phone,
+      this.proxy});
 }
 
 class VerifyCodeRequest {

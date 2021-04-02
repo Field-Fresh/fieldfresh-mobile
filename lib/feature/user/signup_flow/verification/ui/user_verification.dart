@@ -1,5 +1,5 @@
-import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_bloc.dart';
-import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_state.dart';
+import 'package:fieldfreshmobile/feature/user/signup_flow/verification/bloc/user_signup_verification_bloc.dart';
+import 'package:fieldfreshmobile/feature/user/signup_flow/verification/bloc/user_signup_verification_state.dart';
 import 'package:fieldfreshmobile/feature/user/verify/ui/verify_form.dart';
 import 'package:fieldfreshmobile/widgets/no_glow_single_child_scrollview.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,26 +7,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../injection_container.dart';
+import '../../../../../injection_container.dart';
 
 class UserVerificationForm extends StatefulWidget {
+  final String email;
+
+  const UserVerificationForm({Key key, this.email}) : super(key: key);
+
   @override
-  _UserVerificationFormState createState() => _UserVerificationFormState();
+  _UserVerificationFormState createState() =>
+      _UserVerificationFormState(this.email);
 }
 
 class _UserVerificationFormState extends State<UserVerificationForm> {
-  UserSignUpBloc _userSignUpBloc;
+  final String email;
+  UserSignupVerificationBloc _userSignupVerificationBloc;
+
+  _UserVerificationFormState(this.email);
 
   @override
   void initState() {
     super.initState();
-    _userSignUpBloc = BlocProvider.of<UserSignUpBloc>(context);
+    _userSignupVerificationBloc = sl<UserSignupVerificationBloc>();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _userSignupVerificationBloc.close();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserSignUpBloc, UserSignUpState>(
-        cubit: _userSignUpBloc,
+    return BlocBuilder<UserSignupVerificationBloc, UserSignupVerificationState>(
+        cubit: _userSignupVerificationBloc,
         builder: (context, state) {
           return Column(
             children: [
@@ -59,13 +73,16 @@ class _UserVerificationFormState extends State<UserVerificationForm> {
   Container _userDetailsFormContent() => Container(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 38),
-          child: VerifyForm(_userSignUpBloc.user.email),
+          child: VerifyForm(email),
         ),
       );
-
 }
 
 class UserVerificationScreen extends StatelessWidget {
+  final String email;
+
+  const UserVerificationScreen({Key key, this.email}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +90,7 @@ class UserVerificationScreen extends StatelessWidget {
       child: NoGlowSingleChildScrollView(
           child: Padding(
         padding: EdgeInsets.all(8),
-        child: UserVerificationForm(),
+        child: UserVerificationForm(email: email,),
       )),
     ));
   }

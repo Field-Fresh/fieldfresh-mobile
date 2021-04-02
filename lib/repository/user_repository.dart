@@ -1,6 +1,7 @@
 import 'package:fieldfreshmobile/client/user/requests.dart';
 import 'package:fieldfreshmobile/client/user/responses.dart';
 import 'package:fieldfreshmobile/client/user/user_client.dart';
+import 'package:fieldfreshmobile/models/api/proxy/proxy.dart';
 import 'package:fieldfreshmobile/models/api/user/user.dart';
 
 class UserRepository {
@@ -9,13 +10,25 @@ class UserRepository {
   UserRepository(this.userClient);
   
   Future<User> createUser(User user, String password) async {
-    return userClient.createUser(
-      CreateUserRequest(
+    return userClient.signup(
+      UserSignupRequest(
         email: user.email,
         password: password,
         firstName: user.firstName,
         lastName: user.lastName
       )
+    );
+  }
+
+  Future<User> signup(User user, Proxy proxy, String password) async {
+    return userClient.signup(
+        UserSignupRequest(
+            email: user.email,
+            password: password,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            proxy: proxy,
+        )
     );
   }
 

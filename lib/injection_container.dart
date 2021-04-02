@@ -14,7 +14,8 @@ import 'package:fieldfreshmobile/feature/products/pending/bloc/pending_product_b
 import 'package:fieldfreshmobile/feature/products/product_search/bloc/product_search_cubit.dart';
 import 'package:fieldfreshmobile/feature/proxy/bloc/proxy_page_cubit.dart';
 import 'package:fieldfreshmobile/feature/user/login/bloc/user_login_bloc.dart';
-import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_bloc.dart';
+import 'package:fieldfreshmobile/feature/user/signup_flow/creation/bloc/user_signup_flow_cubit.dart';
+import 'package:fieldfreshmobile/feature/user/signup_flow/verification/bloc/user_signup_verification_bloc.dart';
 import 'package:fieldfreshmobile/feature/user/verify/bloc/verify_bloc.dart';
 import 'package:fieldfreshmobile/repository/orders_repository.dart';
 import 'package:fieldfreshmobile/repository/product_repository.dart';
@@ -28,7 +29,7 @@ import 'feature/orders/pending_orders/list/bloc/pending_orders_cubit.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  sl.registerFactory(() => UserSignUpBloc(sl(), sl(), sl()));
+  sl.registerFactory(() => UserSignupVerificationBloc(sl()));
 
   sl.registerFactory(() => VerifyBloc(sl()));
 
@@ -42,6 +43,7 @@ Future<void> init() async {
   sl.registerFactory(() => PendingSellOrderDetailsCubit(sl()));
   sl.registerFactory(() => MatchDetailsCubit(sl()));
   sl.registerFactory(() => ProxyCubit(sl()));
+  sl.registerFactory(() => UserSignupFlowCubit(sl()));
   sl.registerFactory(() => HomePageCubit());
 
   sl.registerLazySingleton(() => UserRepository(sl()));

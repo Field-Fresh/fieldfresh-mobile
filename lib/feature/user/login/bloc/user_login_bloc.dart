@@ -6,6 +6,7 @@ import 'package:fieldfreshmobile/feature/user/login/event/events.dart';
 import 'package:fieldfreshmobile/feature/user/login/state/states.dart';
 import 'package:fieldfreshmobile/feature/user/verify/bloc/verify_bloc.dart';
 import 'package:fieldfreshmobile/feature/user/verify/state/states.dart';
+import 'package:fieldfreshmobile/models/api/error.dart';
 import 'package:fieldfreshmobile/repository/user_repository.dart';
 import 'package:fieldfreshmobile/util/auth.dart';
 import 'package:fieldfreshmobile/util/constants.dart';
@@ -74,7 +75,11 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
         yield UserLoginStateSuccess(result.user);
       }
     } catch (e) {
-      yield UserLoginStateFailed("Incorrect credentials!");
+      if (e is APIError) {
+        yield UserLoginStateFailed(e.message);
+      } else {
+        yield UserLoginStateFailed("Incorrect credentials!");
+      }
     }
   }
 }
