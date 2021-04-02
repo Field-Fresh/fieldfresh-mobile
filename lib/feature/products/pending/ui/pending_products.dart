@@ -79,19 +79,6 @@ class _PendingProductListState extends State<PendingProductList> {
                           padding: const EdgeInsets.only(top: 10, left: 6),
                           child: title,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, right: 6),
-                          child: GestureDetector(
-                            child: Text(
-                              'View All',
-                              style: TextStyle(
-                                  color: AppTheme.colors.light.primary,
-                                  fontSize: 15,
-                                  decoration: TextDecoration.underline),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                     Container(
