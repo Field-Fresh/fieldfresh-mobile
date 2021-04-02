@@ -41,4 +41,16 @@ class Proxy extends FieldFreshModel {
       id: json['id'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "description": description,
+    "streetAddress": streetAddress,
+    "city": city,
+    "province": province,
+    "country": country,
+    "postalCode": postalCode,
+    "lat": lat,
+    "long": long,
+  };
 }

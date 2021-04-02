@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fieldfreshmobile/client/field_fresh_api_client.dart';
+import 'package:fieldfreshmobile/models/api/error.dart';
 import 'package:fieldfreshmobile/models/api/user/user.dart';
 import 'package:flutter/foundation.dart';
 
@@ -15,7 +16,7 @@ class UserClient {
 
   UserClient({@required this.apiClient});
 
-  Future<User> createUser(CreateUserRequest request) async {
+  Future<User> signup(UserSignupRequest request) async {
     Uri url = Uri.http(
       apiClient.baseURL,
       "$_authUrl/signup",
@@ -28,13 +29,14 @@ class UserClient {
           "firstName": request.firstName,
           "lastName": request.lastName,
           "phone": request.phone,
+          "proxy": request.proxy.toJson()
         }));
     final results = json.decode(response.body);
     if (response.statusCode == 200) {
       return User.fromJson(results);
     } else {
       print(results);
-      throw Error();
+      throw APIError.fromResponse(response);
     }
   }
 
@@ -86,7 +88,7 @@ class UserClient {
       return LoginResponse.fromJson(results);
     } else {
       print(results);
-      throw Error();
+      throw APIError.fromResponse(response);
     }
   }
 }

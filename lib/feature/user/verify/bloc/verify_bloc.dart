@@ -1,14 +1,8 @@
-import 'package:fieldfreshmobile/feature/user/login/bloc/user_login_state.dart';
-import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_event.dart';
-import 'package:fieldfreshmobile/feature/user/signup/bloc/user_signup_state.dart';
-import 'package:fieldfreshmobile/feature/user/signup/event/events.dart';
-import 'package:fieldfreshmobile/feature/user/signup/state/states.dart';
 import 'package:fieldfreshmobile/feature/user/verify/bloc/verify_event.dart';
 import 'package:fieldfreshmobile/feature/user/verify/bloc/verify_state.dart';
 import 'package:fieldfreshmobile/feature/user/verify/event/events.dart';
 import 'package:fieldfreshmobile/feature/user/verify/state/states.dart';
 import 'package:fieldfreshmobile/repository/user_repository.dart';
-import 'package:fieldfreshmobile/resources/strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // This is technically a state reducer for the signup page

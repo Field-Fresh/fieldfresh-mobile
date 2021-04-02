@@ -40,9 +40,7 @@ class NavDrawerWidget extends StatelessWidget {
       data.header ? _makeHeaderItem(context, user) : _makeListItem(data, state);
 
   Widget _makeHeaderItem(context, user) => GestureDetector(
-        onTap: () {
-          _handleItemClick(context, NavItem.profile);
-        },
+        onTap: () {},
         child: UserAccountsDrawerHeader(
           accountName: Text(user?.firstName ?? "User",
               style: TextStyle(color: AppTheme.colors.light.secondaryDark)),
