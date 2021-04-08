@@ -23,23 +23,24 @@ class PendingProductCardListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ProductImage(product),
+          Text.rich(TextSpan(
+              text: product.family,
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+              children: <InlineSpan>[
+                if (product.type != null)
+                  TextSpan(
+                    text: " ${product.type}",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white.withOpacity(0.7),
+                    ),
+                  ),
+              ])),
           Text(
-            product.family,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold
-            ),
-          ),
-          if (product.type != null)
-            Text(
-              product.type,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          Text(_pendingProduct.volume.toInt().toString() + " " + _pendingProduct.units,
+              _pendingProduct.volume.toInt().toString() +
+                  " " +
+                  _pendingProduct.units,
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.w200))
         ],
